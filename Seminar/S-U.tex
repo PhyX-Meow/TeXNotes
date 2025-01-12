@@ -1,0 +1,1338 @@
+% !TeX program = xelatex
+\DocumentMetadata{pdfversion=1.7}
+\documentclass[UTF8,12pt]{article}
+\usepackage[concrete]{phyxmeow-common}
+\usepackage{comment}
+\geometry{a4paper,margin=1in}
+\linespread{1.2}
+\allowdisplaybreaks{}
+
+\theoremstyle{plain}\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{definition}\newtheorem{example}[theorem]{Example}
+\theoremstyle{plain}\newtheorem{axiom}[theorem]{Axiom}
+\theoremstyle{plain}\newtheorem{assertion}[theorem]{Assertion}
+\theoremstyle{plain}\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{plain}\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{plain}\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{plain}\newtheorem{prop}[theorem]{Proposition}
+\theoremstyle{plain}\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{plain}\newtheorem{conj}[theorem]{Conjecture}
+\theoremstyle{plain}\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}\newtheorem{notation}[theorem]{Notation}
+\theoremstyle{definition}\newtheorem*{question}{Question}
+\theoremstyle{definition}\newtheorem*{answer}{Answer}
+\theoremstyle{definition}\newtheorem*{goal}{Goal}
+\theoremstyle{plain}\newtheorem*{application}{Application}
+\theoremstyle{plain}\newtheorem*{exercise}{Exercise}
+\theoremstyle{remark}\newtheorem*{remark}{Remark}
+\theoremstyle{remark}\newtheorem*{note}{\small{Note}}
+\numberwithin{equation}{section}
+\numberwithin{theorem}{section}
+\numberwithin{figure}{section}
+
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Hess}{Hess}
+\newcommand{\Eps}{\mathcal{E}}
+
+\title{Sacks \& Uhlenbeck's Minimal Sphere Immersion}
+\author{Xue Haotian}
+\date{June 2023}
+
+\begin{document}
+\maketitle
+
+\begin{comment}
+\section{Preliminaries}
+A priori \(L^p\) estimate and Schauder estimate for elliptic equation:
+\begin{theorem}[\(L^p\) estimate]
+    Let \(\Omega\) be open set in \(\mathbb{R}^n\) and \(u\in W_{\text{loc}}^{2,p}
+    (\Omega)\cap L^p(\Omega)\), \(1<p<\infty\). Assume \(u\) is a strong solution
+    of equation \[
+        Lu=a^{ij}u_{ij}+b^i u_i+cu=f
+    .\] Suppose the coefficients satisfy
+    \begin{itemize}
+    \item \(a^{ij}\in C^0(\Omega)\), \(b^i,c\in L^\infty(\Omega)\), \(f\in
+        L^p(\Omega)\);
+    \item \(a^{ij}\xi_i\xi_j\ge \lambda|\xi|^2\), for some \(\lambda>0\),
+        \(\forall\,x\in \Omega\xi\in \mathbb{R}^n\);
+    \item \(|a^{ij}|,|b^i|,|c|\le M\) for some \(M>0\).
+    \end{itemize}
+    Then for any \(\Omega'\subset \subset \Omega\), \[
+        \|u\|_{W^{2,p}(\Omega')}\le C(\|u\|_{L^p(\Omega)}+\|f\|_{L^p(\Omega)})
+    .\] 
+\end{theorem}
+\begin{theorem}[Schauder estimate]
+    Let \(\Omega\) be an open set in \(\mathbb{R}^n\), \(u\in C^{2,\alpha}(\Omega)\)
+    be a bounded solution of equation \[
+        Lu=a^{ij}u_{ij}+b^i u_i+cu=f
+    .\] Suppose the coefficients satisfy
+    \begin{itemize}
+    \item \(a^{ij}\xi_i\xi_j\ge \lambda|\xi|^2\), for some \(\lambda>0\),
+        \(\forall\,x\in \Omega,\xi\in \mathbb{R}^n\);
+    \item \(\|a^{ij}\|_{C^{0,\alpha}(\Omega)}^{(0)},\|b^i\|_{C^{0,\alpha}(\Omega)}
+        ^{(1)},\|c\|_{C^{0,\alpha}(\Omega)}^{(2)}\le M\) for some \(M>0\).
+    \end{itemize}
+    Then \[
+        \|u\|_{C^{2,\alpha}(\Omega)}^*\le C(\|u\|_{C^0(\Omega)}
+        +\|f\|_{C^{0,\alpha}(\Omega)}^{(2)})
+    .\] 
+\end{theorem}
+Reference: Gilbarg-Trudinger, thm 9.11 and thm 6.2.
+\end{comment}
+
+\section{Introduction and First Results}
+Through out this note, let \(M\) denote a compact orientable Riemannian 2-manifold with
+given conformal structure, \(N\) a compact Riemannian manifold, with dimension \(\ge
+2\). We always consider an isometric embedding \(N\hookrightarrow\mathbb{R}^k\) for
+some \(k\), the embedding exists by Nash embedding theorem. Denote by \(\dd{\mu_g}\)
+the volume form on \(M\).\ \(u\) is always assumed to be a map from \(U\subset M\) to
+\(N\), where \(U\) is some open subset of \(M\). Sometimes we also use letter \(u\) to
+denote its composition with \(N\hookrightarrow\mathbb{R}^k\).
+
+\begin{definition}
+    A map \(u\in W^{1,2}(M,N)\) is called \emph{weakly harmonic} if it is critical
+    point of Dirichlet energy \[
+        E(u)=\int_{M}|\nabla u|^2\dd{\mu}
+    .\] One can easily derive the Euler-Lagrange equation that \(u\) satisfy: \[
+        \lap^{M\to N} u=0
+    .\] Where in local coordinates, \[
+        \lap_g^{M\to N} u=g^{ij}\left(\pdv{u^\gamma}{x^i}{x^j}
+        -\Gamma_{ij}^k\pdv{u^\gamma}{x^k}
+        +\Gamma_{\alpha\beta}^\gamma\pdv{u^\alpha}{x^i}\pdv{u^\beta}{x^j}\right)
+        \pd{\xi^\gamma}
+    .\] \(u\) is considered to satisfy the equation in \(\mathcal{D}'\) sense.
+\end{definition}
+Let \(\II^N\) be the second fundamental form of \(N\hookrightarrow\mathbb{R}^k\),
+let \(A=\op{tr}_g\otimes\II^N\). Then if \(u\) is viewed as \(M\to N\hookrightarrow
+\mathbb{R}^k\), the equation writes as \[
+    -\lap_g^{M\to\mathbb{R}^k} u+A(\nabla u,\nabla u)=0
+.\] Note that the second fundamental form eats 2 tangent vector on \(N\) and gives
+a normal vector of \(N\) inside \(\mathbb{R}^k\).
+
+For simplicity, we denote \(\lap\) to be \(\lap_g^{M\to \mathbb{R}^k}\),
+\(\lap'\) to be \(\lap_g^{M\to N}\) from now on.
+
+\begin{lemma}
+    \(E\) is conformal invariant.
+\end{lemma}
+\begin{proof}
+    If \(\tilde{g}=\lambda g,\lambda\in C^\infty(M)\), then
+    \begin{align*}
+        \tilde{E}(u)&=\int_{M}|\nabla u|_{\tilde{g}}^2\dd{\tilde{\mu}}
+        =\int_{M}\sum_\alpha\tilde{g}^{ij}u^{\alpha}_i u^\alpha_j
+        \sqrt{\det\tilde{g}}\dd{x} \\
+        &=\int_{M}\sum_\alpha \frac{1}{\lambda}g^{ij}u_i^\alpha u_j^\alpha
+        \sqrt{\lambda^{\dim M}\det g}\dd{x} \\
+        &=\int_{M}|\nabla u|^2\dd{\mu_g}
+    .\end{align*}
+\end{proof}
+\begin{remark}
+    This fact is heavily relying on \(\dim M=2\), and will play a central role in
+    may theorem later. So there is a fundamental difficulty to generalize the results
+    to higher dimension.
+\end{remark}
+
+For weakly harmonic maps, we have regularity theorem:
+\begin{theorem}
+    If \(u\) is weakly harmonic and continuous, then \(u\in C^\infty(M,N)\). Such map
+    \(u\) is called harmonic.
+\end{theorem}
+\begin{proof}
+    We for now refer the reader to thm 9.4.1 of Jost's book \emph{Riemannian
+    Geometry}.
+\end{proof}
+
+\begin{lemma}
+    If \(u\) is a harmonic conformal immersion, then \(u(M)\) is a minimal
+    immersed surface.
+\end{lemma}
+\begin{proof}
+    Choose metric on \(M\) such that \(u\) is isometric.\ \(u\) is still critical since
+    \(E\) is conformal invariant. Then the lemma follows by definition of a minimal 
+    surface.
+\end{proof}
+
+Note that on Riemannian surfaces, conformal structures can be identified with complex
+structures. Give \(M\) a complex structure compatible to the conformal structure,
+with coordinate \(z=x+iy\). Define quadratic differential
+\begin{equation}\label{eq:quad-diff}
+    \phi=\left(|u_x|^2-|u_y|^2-2i\left<u_x,u_y\right> \right)\dd{z}^2
+.\end{equation}
+\(u\) is called \emph{weakly conformal} if \(\phi\equiv 0\). One can easily verify
+\(\phi\equiv 0\) if \(u\) is conformal.
+\begin{lemma}
+    If \(u\) is harmonic, then \(\phi\) is holomorphic.
+\end{lemma}
+\begin{proof}
+    Only need to prove \(\overline{\partial}\phi=0\). Notice \[
+        |u_x|^2-|u_y|^2-2i\left<u_x,u_y\right> =4\left<\partial u,\partial u\right> 
+    .\] So \[
+        \overline{\partial}\phi=8\left<\overline{\partial}\partial u,\partial u\right> 
+        =-8\left<\lap u,\partial_z u\right> =0
+    \] since \(\lap u=A(\nabla u,\nabla u)\perp TN\ni \nabla u\)
+\end{proof}
+
+We introduce a black-boxed criterion to \emph{branched immersions}. We need not to
+understand this theorem until we get to the final result.
+\begin{theorem}
+    \(u\) is harmonic and weakly conformal implies that \(u\) is a branched immersion.
+\end{theorem}
+
+\begin{lemma}
+    There is no non-trivial holomorphic quadratic differential on \(\mathbb{S}^2\).
+\end{lemma}
+\begin{proof}
+    Suppose there is one, write it as \[
+        \phi=f(z)\dd{z}^2
+    ,\] where \(f\) is a entire function, \(z\) is stereographic coordinate. Let
+    \(w=\frac{1}{z}\), then in \(w\)-coordinate, \[
+        \phi=\frac{1}{w^4}f(\frac{1}{w})\dd{w}^2
+    ,\] which should be holomorphic in \(w\). So \(f(\frac{1}{w})\to 0\) as \(w\to 0\).
+    By Liouville theorem, \(f\) must be \(0\).
+\end{proof}
+\begin{corollary}\label{thm:harmonic-is-conformal}
+    If \(u\colon \mathbb{S}^2\to N\) is harmonic. Then \(u\) is a
+    smooth conformal branched minimal immersion.
+\end{corollary}
+
+For \(M\) genus larger than 0, things become more complicated, we state a sufficient
+condition here without proof.
+\begin{theorem}
+    If \(u\) is a smooth critical map of \(E\) with respect not only to variation of
+    \(u\), but also to variation of conformal structure on \(M\), then \(u\) is a
+    conformal branched immersion.
+\end{theorem}
+
+\begin{remark}\hfill
+\begin{itemize}
+\item \(u\) critical in energy \(E\) implies \(u\) critical in area and in domain
+    diffeomorphism. This is analog to geodesics.
+\item For non-zero genus surface, we need \(u\) also to be critical in variation of
+    complex structures on \(M\) to get minimality.
+\end{itemize}
+\end{remark}
+
+\section{The Perturbed Problem}
+Instead of \(E\), we consider a perturbed energy to gain extra regularity and to
+obtain convergence properties. Normalize \(g\) such that \(M\) has volume 1. Let \[
+    E_\alpha(u)=\int_{M}(1+|\nabla u|^2)^{\alpha}\dd{\mu_g}
+.\] If \(\alpha=1\), clearly \(E_\alpha=1+E\) is equivalent to \(E\). The natural
+mapping space is \(W^{1,2\alpha}\) instead of \(W^{1,2}\). Note that by Morrey's
+inequality, we have \[
+    \|u\|_{C^{0,1-\frac{n}{p}}}\le C\|\nabla u\|_{L^p}
+.\] Take \(n=2,p=2\alpha\) for \(\alpha>1\), we got \[
+    W^{1,2\alpha}(M,N)\subset C^{0,1-\frac{1}{\alpha}}(M,N)\subset C^0(M,N)
+.\] Further, we claim that
+\begin{theorem}
+    The homotopy type of the mapping spaces \(W^{1,2\alpha}(M,N)\), \(C^0(M,N)\) and
+    \(C^\infty(M,N)\) are the same.
+\end{theorem}
+We claim that \(W^{1,2\alpha}(M,N)\) is a \(C^2\) separable Banach manifold for
+\(\alpha>1\).
+\begin{definition}
+    A \(C^1\) functional \(I\) on a separable Banach manifold \(L\) satisfies the
+    \emph{Palais-Smale condition} if every sequence \(\{u_k\}\subset L\) such that:
+    \begin{itemize}
+    \item \(I(u_k)\) is bounded, and 
+    \item \(I'(u_k)\to 0\) in \(L\)
+    \end{itemize}
+    has a convergent subsequence in \(L\).
+\end{definition}
+\begin{theorem}\label{thm:ps-critical}
+    If \(I\) is a \(C^2\) function on a separable \(C^2\) Banach manifold \(L\), which
+    satisfies the Palais-Smale condition, then 
+    \begin{enumerate}[(1)]
+    \item \(I\) takes minimum in every component of \(L\),
+    \item \(I\) satisfies a Morse theory. \ie\ If there are no critical values of
+        \(I\) in interval \([a,b]\), then there exists a deformation retraction \[
+            \rho\colon I^{-1}(-\infty,b]\longrightarrow I^{-1}(-\infty,a]
+        .\] 
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    Reference to \emph{Lusternik-Schnirelman Theory on Banach Manifolds} by
+    Richard S. Palais (1966).
+\end{proof}
+\begin{theorem}
+    \(E_\alpha\) is a \(C^2\) functional on \(W^{1,2\alpha}(M,N)\), satisfying the
+    Palais-Smale condition under metric induced from \(W^{1,2\alpha}(M,\mathbb{R}^k)\)
+    when \(\alpha>1\).
+\end{theorem}
+\begin{proof}
+    First we have compact embedding \[
+        W^{1,2\alpha}\hookrightarrow{} C^{0,1-\frac{1}{\alpha}}
+        \hookrightarrow C^{0,1-\frac{1}{\alpha}-\eps}
+    .\] Then boundedness of \(E_\alpha\) gives uniform boundedness under
+    \(W^{1,2\alpha}\) norm. Note that boundedness of any \(L^p\) norm is guaranteed by
+    compactness of \(M,N\). Hence we can find a strongly convergent subsequence in
+    \(C^{0,1-\frac{1}{\alpha}-\eps}\) norm, in particular, in \(C^0\) norm.
+    \begin{align*}
+        E_\alpha'(u)\vphi&=2\alpha\int_{M}(1+|\nabla u|^2)^{\alpha-1}
+        \left<\nabla u,\nabla\vphi\right> \dd{\mu_g}\\
+        &=-2\alpha\int_{M}\big(\left<\nabla(1+|\nabla u|^2)^{\alpha-1},\nabla u\right>
+        +(1+|\nabla u|^2)^{\alpha-1}\lap' u\big)\cdot\vphi\dd{\mu_g} \\
+        &=2\alpha\int_{M}\big(-\nabla^*((1+|\nabla u|^2)^{\alpha-1}\nabla u)
+        +(1+|\nabla u|^2)^{\alpha-1}A(\nabla u,\nabla u)\big)\cdot\vphi\dd{\mu_g}
+    .\end{align*}
+    Note that this \(\vphi\) can be chosen to be any vector valued function on \(M\),
+    since the term in bracket is parallel to \(TN\). Consider
+    \begin{align*}
+        (E_\alpha'(u)-E_\alpha'(v))(u-v)=&2\alpha\int_{M}
+        ((1+|\nabla u|^2)^{\alpha-1}\nabla u-(1+|\nabla v|^2)^{\alpha-1}\nabla v)
+        \cdot (\nabla u-\nabla v) \\
+        &+(1+|\nabla u|^2)^{\alpha-1}(A(\nabla u,\nabla u)-A(\nabla v,\nabla v))
+        \cdot (u-v)\dd{\mu_g}
+    .\end{align*}
+    We claim that \[
+        ((1+|x|^2)^{\alpha-1}x-(1+|y|^2)^{\alpha-1}y)\cdot (x-y)
+        \ge |x-y|^2+|x-y|^{2\alpha}
+    .\] Then we have estimate 
+    \begin{align*}
+        &\|E_\alpha'(u)-E_\alpha'(v)\|\|u-v\|_{W^{1,2\alpha}}
+        +C\|A\|_{L^\infty}(\|\nabla u\|_{L^{2\alpha}}^{2\alpha}
+        +\|\nabla v\|_{L^{2\alpha}}^{2\alpha})\|u-v\|_{L^\infty} \\
+        \ge &\|\nabla u-\nabla v\|_{L^2}^2
+        +\|\nabla u-\nabla v\|_{L^{2\alpha}}^{2\alpha}
+    .\end{align*}
+    By uniform convergence, we see that \(u_k\) converges in \(W^{1,2\alpha}\).
+\end{proof}
+\begin{remark}
+    If \(\alpha=1\), \(E\) cannot satisfy any kind of Palais-Smale condition.
+    We will see why later.
+\end{remark}
+
+Now we prove the regularity of critical maps of \(E_\alpha\). It is true for all
+\(\alpha>1\), but here we give a simple proof for case \(\alpha-1\) small.
+\begin{theorem}\label{thm:regularity-alpha}
+    The critical maps of \(E_\alpha\) in \(W^{1,2\alpha}(M,N)\) are \(C^\infty\) if
+    \(\alpha>1\).
+\end{theorem}
+\begin{proof}
+    The Euler-Lagrange equation of \(E_\alpha\) writes as \[
+        -\nabla^*((1+|\nabla u|^2)^{\alpha-1}\nabla u)+(1+|\nabla u|^2)^{\alpha-1}
+        A(\nabla u,\nabla u)=0
+    .\] By Morrey 1.11.1 and the fact that \(u\in C^{0,1-\frac{1}{\alpha}}\), we
+    have that \(\nabla u\in W^{1,2}(M,N)\). Now we can expand and divide to get
+    \begin{equation}\label{eq:e-l-alpha}
+        -\lap u-2(\alpha-1)\frac{\left<\left<\nabla^2 u,\nabla u\right>_{g,h},
+        \nabla u\right>_g}{1+|\nabla u|^2}+A(\nabla u,\nabla u)=0
+    .\end{equation}
+    We use the following notation to reduce expression size \[
+        (\nabla^2 u,\nabla u)\cdot\nabla u
+        :=\left<\left<\nabla^2 u,\nabla u\right>_{g,h},\nabla u\right>_g
+        =g^{ik}g^{jl}h_{\alpha\beta}u_{ij}^\alpha u_k^\beta u_l^\gamma \pd{\xi^\gamma}
+    .\] When \(\alpha-1\) is small, we have nice inverse for operator \[
+        L_s\colon W^{2,p}(M,N)\longrightarrow L^p(M,N),\quad
+        L_s v=\lap v+2(\alpha-1) \frac{(\nabla^2 v,\nabla u)\nabla u}
+        {1+|\nabla u|^2}
+    .\] \(\nabla u\in W^{1,2}\) implies that \(\nabla u\in L^p\) for any
+    \(p<2^*=\infty\). Hence we have \(u\in W^{2,p}\), then \(u\in C^{1,\beta}\)
+    by Morrey's lemma. Now the equation can be view as a linear equation with H\"older
+    continuous coefficients. Schauder estimate (Morrey thm 5.6.3) gives
+    \(u\in C^{2,\beta}\), then we can bootstrap to get \(u\in C^\infty\).
+\end{proof}
+We have nearly prove the existence of non-trivial critical maps of \(E_\alpha\),
+\(\alpha>1\). The only gap is \[
+    N_0=\{u\equiv \xi\in N\}\cong N
+,\] set of trivial critical maps, for which \(E_\alpha\) takes its minimum value 1.
+
+\begin{prop}
+    Let \(\alpha>1\). In every connected component of \(W^{1,2\alpha}(M,N)\),
+    the minimum value of \(E_\alpha\) is realised by a smooth \(u_\alpha\),
+    which also minimizes \(E_\alpha\) in its connected component in \(C^\infty(M,N)\).
+    There exists \(B>0\) independent of \(\alpha\) such that \[
+        \min E_\alpha \le (1+B^2)^\alpha
+    \] in that component.
+\end{prop}
+\begin{proof}
+    Since \(E_\alpha\) satisfies (PS), it takes minimum at some \(u_\alpha\) in 
+    each connected component of \(W^{1,2\alpha}(M,N)\). By regularity theorem
+    \(u_\alpha\) is smooth. In each component of \(C^\infty(M,N)\), choose a map \(v\)
+    and let \(B=\|\nabla v\|_{L^\infty}\). Then \[
+        \min E_\alpha\le E_\alpha(v)\le (1+B^2)^\alpha
+    \] in that component.
+
+    Note that this \(B\) may depend on the component.
+\end{proof}
+Now we need to analyze the structure of \(N_0\subset W^{1,2\alpha}(M,N)\). Note that
+for \(\xi\in N_0\), \[
+    T_\xi W^{1,2\alpha}(M,N)\cong W^{1,2\alpha}(M,T_\xi N)
+.\] And \(T_\xi N_0\) is those constant variation vector fields, \[
+    T_\xi N_0=\{V\in W^{1,2\alpha}(M,T_\xi N):\dd{V}=0\}.
+.\] Note that we identify point \(\xi\in N\) with constant map to \(\xi\).
+
+We can construct a normal bundle to \(N_0\) as follows:
+\begin{gather*}
+    \mathcal{N}_\xi=\{V\in W^{1,2\alpha}(M,T_\xi N):\int_{M}V\dd{\mu_g}=0\}, \\
+    \mathcal{N}=\bigcup_{\xi\in N_0}\mathcal{N}_\xi\subset
+    \eval{TW^{1,2\alpha}(M,N)}_{N_0}.
+\end{gather*}
+Let \(\exp\colon TN\to N\) be the exponential map on \(N\). Define \[
+    \op{Exp}\,\colon TW^{1,2\alpha}(M,N)\longrightarrow W^{1,2\alpha}(M,N),\quad
+    \op{Exp}(u,V)=(x\mapsto \exp(u(x),V(x)))
+.\] 
+\begin{lemma}
+    \(\eval{\Exp}_{\mathcal{N}}\to W^{1,2\alpha}(M,N)\) is a diffeomorphism from
+    a neighbourhood of zero section to a neighbourhood of \(N_0\subset
+    W^{1,2\alpha}(M,N)\).
+\end{lemma}
+\begin{proof}
+    We'd like to apply inverse function theorem, \[
+        \eval{\dd{\Exp}}_{(\xi,0)}(\nu,W)
+        =\big(x\mapsto\eval{\dd\exp}_{(\xi,0)}(\nu,W(x))\big)
+        =(x\mapsto \nu+W(x))
+    \] for \(\nu\in T_\xi N,W\in \mathcal{N}_\xi\). From our construction of
+    \(\mathcal{N}\), \[
+        \eval{\dd{\Exp}}_{(\xi,0)}\colon T_\xi N\oplus\mathcal{N}_\xi
+        \longrightarrow T_\xi W^{1,2\alpha}(M,N)\cong W^{1,2\alpha}(M,T_\xi N)
+    \] is an isomorphism. Note that for \(W\) small in \(W^{1,2\alpha}\) norm,
+    it must be small in \(L^\infty\) norm. Hence the inverse function theorem applies
+    and we are done.
+\end{proof}
+\begin{lemma}
+    \(\alpha>1\), \(u\in W^{1,2\alpha}(M,\mathbb{R}^k)\), then there exists
+    \(C_\alpha>0\) such that \[
+        \|u-\int_M u\|_{L^\infty}\le C_\alpha \|\nabla u\|_{L^{2\alpha}}.
+    .\]
+\end{lemma}
+\begin{proof}
+    Suppose such \(C_\alpha\) does not exist, then for any \(k\), there exist \(u_k\)
+    such that \[
+        \|u_k-\int_{M}u_k\|_{L^\infty}\ge k \|\nabla u_k\|_{L^{2\alpha}}
+    .\] Further we can assume \(\int_{M}u_k=0\) and \(\|u_k\|_{L^\infty}=1\).
+    Then \[
+        \|\nabla u_k\|_{L^{2\alpha}}\longrightarrow 0
+    .\] Then there is a weakly convergent subsequence since \(\|u_k\|_{W^{1,2\alpha}}\)
+    is uniformly bounded. Still denote the subsequence by \(u_k\), we have \[
+        u_k\xrr{W^{1,2\alpha},w}u
+    .\] By Morrey's lemma, this gives \[
+        u_k\xrr{C^{0,1-\frac{1}{\alpha}}}u
+    .\] In particular, the convergence is uniform. Hence  \[
+        \|u_k\|_{L^{2\alpha}}\longrightarrow \|u\|_{L^{2\alpha}}
+    .\] Note we have \[
+        \liminf_{k\to \infty}\|u_k\|_{W^{1,2\alpha}}\ge \|u\|_{W^{1,2\alpha}}
+    .\] Hence \(\|\nabla u\|_{L^{2\alpha}}=0\), and \(u\) is constant.
+    This contradicts to assumptions on \(u_k\). 
+\end{proof}
+\begin{theorem}\label{thm:low-energy-retraction}
+    Given \(\alpha>1\) there exists a \(\delta>0\) depending on \(\alpha\) and a
+    deformation retraction \[
+        \sigma\colon E_\alpha^{-1}([1,1+\delta])\longrightarrow E_\alpha^{-1}(1)
+        \cong N_0
+    .\] 
+\end{theorem}
+\begin{proof}
+    For \(u\in E_\alpha^{-1}([1,1+\delta])\), we have \(\int_{M}|\dd{u}|^{2\alpha}
+    \dd{\mu}<\delta\), then by above lemma, \[
+        \sup \left|u-\int_{M}u\dd{\mu}\right|\le C(\alpha)\delta^{\frac{1}{2\alpha}}
+    .\] Hence for sufficiently small \(\delta\), image of \(u\) lie in a normal
+    neighbourhood on \(N\). There is unique \(\xi\in N_0\) and \(v\colon M\to
+    \mathcal{N}_{\xi}\) \st\ \(u=\Exp(\xi,v)\). We also have that \(\|v\|_{L^\infty}\)
+    and \(\|\nabla v\|_{L^{2\alpha}}\) can be made arbitrarily small for small
+    \(\delta\).
+
+    Consider the natural choice of the retraction \(\sigma\): \[
+        \sigma_t(u)=\Exp(\xi,tv)
+    .\] \(\sigma\) is continuous as long as \(\delta\) is sufficiently small.
+
+    Now we prove that \(\dv{}{t}E_\alpha(\sigma_t(u))\ge 0\), and hence \(\sigma\) is a
+    deformation retraction. Let \(u_t=\sigma_t(u)\), then
+    \begin{gather*}
+        \dv{}{t}(u_t)=\dv{}{t}(\Exp(\xi,tv))=\eval{\dd\Exp}_{(\xi,tv)}(\xi,v) \\
+        \nabla u_t=t\eval{\dd{\Exp_\xi}}_{tv}(\nabla v)
+        \implies \nabla v=\frac{1}{t}\eval{\dd{\Exp_\xi}}_{tv}^{-1}(\nabla u_t)
+        =\frac{1}{t}\nabla u_t+O(\|v\|_{L^\infty})\nabla u_t
+    \end{gather*}
+    Since \(\eval{\dd\Exp}_{(\xi,0)}\) is identity, we calculate
+    \begin{align*}
+        \dv{}{t}E_\alpha(u_t)&=2\alpha\int_{M}(1+|\nabla u_t|^2)^{\alpha-1}
+        \left<\nabla u_t,{\color{orange}\nabla v}\right> \dd{\mu_g} \\
+        &\ge \frac{2\alpha}{t}\int_{M}(1+|\nabla u_t|^2)^{\alpha-1}|\nabla u_t|^2
+        (1-C't\|v\|_{L^\infty})\dd{\mu_g} \\
+        &\ge 0\text{ for small }\delta
+    .\end{align*}
+\end{proof}
+
+Let \(\Omega(M,N)\) be base preserving mapping space from \(M\) to \(N\). We have
+natural fibration \[
+    \Omega(M,N)\longrightarrow C^0(M,N)\longrightarrow N
+.\] 
+\begin{theorem}
+    If \(\Omega(M,N)\) is not contractible, then there exists a \(B>0\), such that
+    for all \(\alpha>1\), \(E_\alpha\) has a critical value in interval 
+    \((1,(1+B^2)^\alpha]\).
+\end{theorem}
+\begin{proof}
+    The fibration above have a section \(N\to N_0\subset C^0(M,N)\), hence the exact
+    sequence of homotopy groups split, \[
+        \pi_k(C^0(M,N))=\pi_k(N)\oplus \pi_k(\Omega(M,N))
+    .\] If \(C^0(M,N)\) is not connected, by \cref{thm:ps-critical} we can choose a
+    connect component not contain \(N_0\), which contains a critical \(u_\alpha\).
+    Otherwise choose a non-zero homotopy class \(\gamma\in \pi_k(\Omega(M,N))\).
+    Note that \[
+        \gamma \colon \mathbb{S}^k\to \Omega(M,N)\subset C^0(M,N)
+    \] is not homotopic to any map \(\mathbb{S}^k\to N_0\). Let \[
+        B=\sup_{p\in \mathbb{S}^k,x\in M}|\dd{\gamma(p)}(x)|
+    .\] Then \(E_\alpha(\gamma(p))\le (1+B^2)^{\alpha}\) for any \(p\in\mathbb{S}^k\).
+
+    Suppose that \(E_\alpha\) has no critical value in \((1,(1+B^2)^\alpha]\).
+    \Cref{thm:ps-critical} shows that there is deformation retraction \[
+        \rho\colon E_\alpha^{-1}([1,(1+B^2)^\alpha])
+        \longrightarrow E_\alpha^{-1}([1,1+\delta])
+    \] for any \(\delta>0\). Choose \(\delta\) as in \cref{thm:low-energy-retraction},
+    we have deformation retraction \[
+        \sigma\circ \rho\colon E_\alpha^{-1}([1,(1+B^2)^\alpha])
+        \longrightarrow E_\alpha^{-1}(1)=N_0
+    .\] But \(\sigma\circ \rho\circ \gamma\colon \mathbb{S}^k\to N_0\) is homotopic
+    to \(\alpha\). This gives a contradiction.
+\end{proof}
+
+\begin{theorem}\label{thm:alpha-existence}
+    If \(M=\mathbb{S}^2\) and the universal covering of \(N\) is not contractible,
+    then there exists a \(B>0\) and a critical map of \(E_\alpha\) with value in
+    \((1,(1+B^2)^\alpha)\) for \(\alpha>1\).
+\end{theorem}
+\begin{proof}
+    If \(\tilde{N}\) is not contractible, then \[
+        \pi_{k+2}(N)=\pi_k(\Omega(\mathbb{S}^2,N))\neq 0
+    \] for some \(k\). Apply last theorem.
+\end{proof}
+
+\section{Main Estimate and Regularity}
+In this section, we will obtain several local estimates and regularity theorems.
+We shall consider \(\alpha\ge 1\) for the estimates below.
+
+Cover \(M\) with small disks with radius \(R\), such that on each disk the metric
+differs from euclidean one by \(\eps\) order. Locally we can conformally expand
+the disk to be a unit disk. We have \[
+    E_\alpha(u)=\int_D(1+|\nabla u|_{g}^2)^{\alpha}\dd{\mu_g}
+    =R^{2(1-\alpha)}\int_D(R^2+|\nabla u|_{\tilde{g}}^2)^{\alpha}\dd{\mu_{\tilde{g}}}
+.\] The Euler-Lagrange equation is now
+\begin{equation}\label{eq:e-l-disk}
+    -\lap u-2(\alpha-1)\frac{(\nabla^2 u,\nabla u)\cdot\nabla u}{R^2+|\nabla u|^2}
+    +A(\nabla u,\nabla u)=0
+.\end{equation}
+\begin{theorem}
+    Let \(u\colon D\to N\) be critical map of \(E_\alpha\), suppose \(\alpha-1\) is
+    small (may depending on \(p\)), then for all smaller disks \(D'\subset D\),
+    we have estimate \[
+        \|\nabla u\|_{W^{1,p}}'\le C(p,D',{\color{orange}\|\nabla u\|_{L^4}})
+        \cdot \|\nabla u\|_{L^4}
+    .\] Where the primed norm means norm on \(D'\) and others are norm on \(D\).
+\end{theorem}
+\begin{proof}
+    Without loss of generality, we choose the origin of \(\mathbb{R}^k\) such that
+    \(\int u=0\). Then \(\|\nabla u\|_{L^p}\) can bound the norm \(\|u\|_{W^{1,p}}\)
+    by Poincaré inequality. Let \(\vphi\) be smooth function supported on \(D^\circ\)
+    and be identical 1 on \(D'\). Replace \(u\) by \(\vphi u\), we have estimate
+    \begin{align*}
+        &\left|\lap (\vphi u)+2(\alpha-1) \frac{(\nabla^2(\vphi u),\nabla u)\cdot
+        \nabla u}{R^2+|\nabla u|^2}-A(\nabla(\vphi u),\nabla u)\right| \\
+        \le & \left|\left<\nabla\vphi,\nabla u\right>+u\lap\vphi\right|
+        +2(\alpha-1)\left|u\nabla^2\vphi+\nabla u\otimes \nabla\vphi\right|
+        +\left|A(u\nabla\vphi,\nabla u)\right|\\
+        \le &\ C_1(\vphi,\|A\|_{\infty},\|u\|_{L^\infty})(|\nabla u|+|u|)
+    .\end{align*}
+    Take \(L^p\) norm on both side, \[
+        \|\lap(\vphi u)\|_{L^p}
+        \le 2(\alpha-1)\|\vphi u\|_{W^{2,p}}
+        +\|A\|_{\infty}\||\nabla(\vphi u)||\nabla u|\|_{L^p}
+        +C_1 \|u\|_{W^{1,p}}
+    .\] 
+    Let \(c_p\) be the norm of \(\lap^{-1}\colon L^p\to W^{2,p}\cap H_0^1\) on
+    \(D\), then we get
+    \begin{equation}\label{eq:est-7}
+        (c_p^{-1}-2(\alpha-1))\|\vphi u\|_{W^{2,p}}
+        \le \|A\|_{\infty}\||\nabla(\vphi u)||\nabla u|\|_{L^p}
+        +C_1 \|u\|_{W^{1,p}}
+    .\end{equation}
+    Take \(p=2\), we have
+    \begin{align*}
+        (c_2^{-1}-2(\alpha-1))\|\vphi u\|_{W^{2,2}}
+        &\le \|A\|_{\infty}\|\nabla(\vphi u)\|_{L^4}\|\nabla u\|_{L^4}
+        +C_1\|u\|_{W^{1,2}} \\
+        &\le C_2(\vphi,\|A\|_{\infty},\|\nabla u\|_{L^4})\cdot\|\nabla u\|_{L^4}
+    .\end{align*}
+    Note we use implicitly the fact \(N\) is compact. This provides the bound for
+    \(\|u\|_{W^{2,2}}''\) on any further smaller disk \(D''\), hence for any 
+    \(\|u\|_{W^{1,p}}''\). For sufficiently small \(\alpha-1\), \(c_p-2(\alpha-1)>0\).
+    Apply in\cref{eq:est-7} again we get desired estimate for
+    \(\|\nabla u\|_{W^{1,p}}''\).
+\end{proof}
+
+\begin{theorem}[Main Estimate]\label{thm:main-est}
+    There exists \(\eps>0\) and \(\alpha_0>1\) such that if \(u\colon D\to N\)
+    is a critical map of \(E_\alpha\), \(\alpha\le\alpha_0\) and \(E(u)<\eps\), then \[
+        \|\nabla u\|_{W^{1,p}}'\le C(p,D')\|\nabla u\|_{L^2}
+    \] for any smaller disk \(D'\subset D\), uniform in \(1\le \alpha\le\alpha_0\).
+\end{theorem}
+\begin{proof}
+    Note \(E(u)\) is just \(\|\nabla u\|_{L^2}^2\), so we only need to prove that \[
+        \|\nabla u\|_{L^4}''\le C(D'')\|\nabla u\|_{L^2}
+    .\] Again we assume \(\int u=0\), apply in\cref{eq:est-7} with \(p=\frac{4}{3}\),
+    the bad quadratic term can be estimated by H\"older inequality: \[
+        \||\nabla(\vphi u)||\nabla u|\|_{L^{4/3}}
+        \le \|\nabla(\vphi u)\|_{L^4}\|\nabla u\|_{L^2}
+    .\] Note that we have Sobolev embedding \(W^{2,4/3}(D,\mathbb{R}^k)
+    \subset W^{1,4}(D,\mathbb{R}^k)\), \ie\ \[
+        \|\nabla(\vphi u)\|_{L^4}\le C_3\|\vphi u\|_{W^{2,4/3}}
+    .\] Then in\cref{eq:est-7} gives
+    \begin{equation}\label{eq:est-7'}
+    (c_{4/3}^{-1}-2(\alpha-1))\|\vphi u\|_{W^{2,4/3}}
+    \le C_3\|A\|_{\infty}\|\nabla u\|_{L^2}\|\vphi u\|_{W^{2,4/3}}
+    +C_1\|u\|_{W^{1,4/3}}
+    .\end{equation}
+    \(\|\nabla u\|_{L^{4/3}}\le C\|\nabla u\|_{L^2}\) since \(N\) is
+    compact. If in addition \[
+        c_{4/3}^{-1}-2(\alpha-1)-C_3\|A\|_{\infty}\sqrt{E(u)}>0
+    ,\] we get the desired estimate on \(\|\nabla u\|_{L^4}''\le C_3\|\vphi u\|
+    _{W^{2,4/3}}\).
+\end{proof}
+We can do similar estimate globally, without the boundary term containing \(\vphi\).
+Global version of in\cref{eq:est-7'} takes form \[
+    (c_{4/3}^{-1}-2(\alpha-1))\|u\|_{W^{2,4/3}}
+    \le C\|A\|_{\infty}\sqrt{E(u)}\|u\|_{W^{2,4/3}}
+,\] where the constants and norm are global version.
+
+Clearly if \(\sqrt{E(u)}\) is too small, \(u\) must be a constant
+\(u\equiv\int u\).
+\begin{theorem}\label{thm:energy-gap}
+    There exists \(\eps>0\) and \(\alpha_0>1\) such that if \(1\le\alpha\le\alpha_0\),
+    \(E(u)<\eps\) and \(u\) is critical map of \(E_\alpha\), then \(u\) is constant.
+\end{theorem}
+
+Now we turn to consider the original energy \(E(u)\), we'd like to prove a slightly
+stronger regularity theorem for harmonic maps. Let \(D\) be a small geodesic disk
+on \(M\), with normal coordinate. Notation \(D(R)\) will mean a disk of radius \(R\).
+\begin{theorem}\label{thm:removable-singularity}
+    If \(u\colon D\setminus\{0\}\to N\) is harmonic and has finite energy, then
+    \(u\) extends to a smooth harmonic map \(u\colon D\to N\).
+\end{theorem}
+
+Note that \(E\) is conformal invariant, so we can always do a conformal expansion
+to make \(D\) a unit disk. By shrinking \(D\) to neighbourhood of 0, we can assume
+\(E(\eval{u}_{D})<\eps\). We choose \(\eps\) later. Moreover, we can assume the
+metric is flat in the coordinate.
+
+We need several estimation lemmas to prove the theorem.
+\begin{lemma}\label{lem:sup-est}
+    There is \(\eps>0\) such that if \(\int_{D(2)}|\nabla u|^2\dd{\mu}<\eps\), then \[
+        |\nabla u(x)||x|
+        \le C\left(\int_{D(2|x|)}|\nabla u|^2\dd{\mu}\right)^{\frac{1}{2}}
+        =C\|\nabla u\|_{L^2(D(2|x|))}
+    \] for any \(x\in D=D(1)\).
+\end{lemma}
+\begin{proof}
+    Choose \(\eps\) from the main estimate, with \(p=4\) and \(\alpha=1\). Fix
+    \(y\in D\), let \(\tilde{u}(x)=u(y+|y|x)\). Then \[
+        \int_{D}|\nabla\tilde{u}|^2\dd{\mu}
+        =\int_{D(y,|y|)}|\nabla u|^2\dd{\mu}
+        \le E(u\big|_{D(2)})<\eps
+    .\] Apply \cref{thm:main-est} to \(\tilde{u}\colon D\to N\), and use Sobolev
+    embedding \(W^{1,4}\hookrightarrow L^\infty\), we have \[
+        \sup_{x\in D(1/2)}|\nabla \tilde{u}(x)|
+        \le C\|\nabla \tilde{u}\|_{W^{1,4}(D(1/2))}
+        \le C'\|\nabla \tilde{u}\|_{L^2(D)}
+    .\] Translate this to \(u\), we get \[
+        |\nabla u(y)||y|=|\nabla\tilde{u}(0)|
+        \le C'E\left(\tilde{u}\big|_{D}\right)^{\frac{1}{2}}
+        \le C'E\left(u\big|_{D(2|y|)}\right)^{\frac{1}{2}}
+    .\] Which is what we wanted to show.
+\end{proof}
+\begin{lemma}\label{lem:circle-integral}
+    Let \(u\colon D\setminus\{0\}\to N\subset \mathbb{R}^k\) be a smooth harmonic
+    map with finite energy, then \[
+        \int_{0}^{2\pi}|u_\theta|^2\dd{\theta}
+        =r^2 \int_{0}^{2\pi}|u_r|^2\dd{\theta}
+    .\] Where \(z=re^{i\theta}\) is local complex coordinate on \(M\).
+\end{lemma}
+\begin{proof}
+    Consider the quadratic differential \(\phi=w(z)\dd{z}^2\). By
+    \cref{lem:sup-est}, \[
+        |w(z)|=|u_x|^2-|u_y|^2-2i\left<u_x,u_y\right>\le 2|\nabla u(z)|^2
+        \le \frac{C}{|z|^2}
+    .\] Therefore \(w(z)\) has a pole of order at most 2 at \(z=0\).
+    On the other hand, \[
+        \int_{D}|w(z)|\dd{\mu}\le 2\int_{D}|\nabla u|^2\dd{\mu}<\infty
+    .\] The order of the pole is at most 1. Notice \[
+        \Re(z^2 w(z))=|z|^2|u_r(z)|^2-|u_\theta(z)|^2
+    .\] Then \[
+        0=\Im\int_{|z|=r_0}zw(z)\dd{z}
+        =\Re \int_{r=r_0}z^2w(z)\dd{\theta}
+        =\int_{0}^{2\pi}r_0^2|u_r(r_0,\theta)|^2-|u_\theta(r_0,\theta)|^2\dd{\theta}
+    .\] This proves the lemma.
+\end{proof}
+\begin{proof}[Proof of \cref{thm:removable-singularity}]
+    First assume \(\int_{D(2)}|\nabla u|^2\dd{\mu}<\eps\) be a comformal expansion.
+    Our goal is to prove \(u\) satisfy slightly higher integrability.
+
+    We construct an approximation of \(u\): Let \[
+        q(2^{-m})=\frac{1}{2\pi}\int_{0}^{2\pi}u(2^{-m},\theta)\dd{\theta}
+    \] be the average of \(u\) on circle of radius \(2^{-m}\). Define \(q\) to depend
+    only on \(r\) and be piecewise linear in \(\log r\). Then \(q\) is harmonic
+    for \(r\in (2^{-m-1},2^{-m})\) and absolutely continuous in \(D\).
+    Now for \(r\in [2^{-m-1},2^{-m}]\), \[
+        |q(r)-u(r,\theta)|\le |q(2^{-m-1}-q(2^{-m}))|+|u(r,\theta)-q(2^{-m})|
+    .\] Apply again \cref{lem:sup-est}, \[
+        \sup_{2^{-m-1}\le |x|,|y|\le 2^{-m}}|u(x)-u(y)|
+        \le C 2^{-m}\cdot\sup_{2^{-m-1}\le |x|\le 2^{-m}}|\nabla u(x)|
+        \le C'\left(\int_{|x|\le 2^{-m}}|\nabla u|^2\right)^{\frac{1}{2}}
+    .\] Then we can assume \[
+        |q(r)-u(r,\theta)|
+        \le C''\left(\int_{|x|\le 2^{-m}}|\nabla u|^2\dd{\mu}\right)^{\frac{1}{2}}
+        \le C''\sqrt{\eps}
+    .\] Next we estimate \(H^1\) norm of \(q-u\). By divergence theorem,
+    \begin{align*}
+        \int_{D}|\nabla q-\nabla u|^2\dd{\mu}
+        =\sum_{m=0}^\infty & r \int_{0}^{2\pi}(q(r)-u(r,\theta))\cdot
+        ({\color{green}q'(r)\color{orange}-u_r(r,\theta)})
+        \dd{\theta}\Big|_{2^{-m-1}}^{2^{-m}} \\
+        -& \int_{D\setminus\{r=2^{-m}:m\ge 0\}} (q-u)\lap (q-u)\dd{\mu}
+    .\end{align*} The green term disappears since \(q\) is the average of \(u\). The
+    orange term cancel with succeeding and preceding terms since \(u_r\) is continuous.
+    Note that the green term cannot cancel in this way since \(q(r)\) is not
+    continuous. Easy to see the limit term tends to 0 as \(m\to \infty\).
+    For the Laplacian term, notice \(\lap (q-u)=A(\nabla u,\nabla u)\) on the
+    integration domain. Hence we can estimate the term by \[
+        \|A\|_{\infty}\|q-u\|_{L^\infty}\|\nabla u\|_{L^2}^2
+        \le C\|A\|_{\infty}\sqrt{\eps}\|\nabla u\|_{L^2}^2
+    .\] Choose a small \(\eps\) \st\ \(C\|A\|_{\infty}\sqrt{\eps}<\delta\). Then
+    we have
+    \begin{equation}\label{eq:q-u-H1}
+        \int_{D}|\nabla (q-u)|^2\dd{\mu}
+        \le \left(\int_{r=1}|q-u|^2\dd{\theta}\right)^{\frac{1}{2}}
+        \left(\int_{r=1}|u_r|^2\dd{\theta}\right)^{\frac{1}{2}}
+        +\delta \int_{D}|\nabla u|^2\dd{\mu}
+    .\end{equation}
+    By \cref{lem:circle-integral}, \[
+        \int_{0}^{2\pi}|u_r|^2\dd{\theta}
+        =\frac{1}{r^2}\int_{0}^{2\pi}|u_\theta|^2\dd{\theta}
+        =\frac{1}{2}\int_{0}^{2\pi}|\nabla u|^2\dd{\theta}
+    .\] So the left hand side of (\ref{eq:q-u-H1}) is \[
+        \int_{D}|\nabla (q-u)|^2\dd{\mu}
+        =\int_{D}|q_r-u_r|^2+r^{-2}|u_\theta|^2\dd{\mu}
+        \ge \frac{1}{2}\int_{D}|\nabla u|^2\dd{\mu}
+    .\] By 1-dimensional Poincaré inequality, \[
+        \int_{r=1}|q-u|^2\dd{\theta}\le \int_{r=1}|u_\theta|^2\dd{\theta}
+        =\int_{r=1}|u_r|^2\dd{\theta}=\frac{1}{2}\int_{r=1}|\nabla u|^2\dd{\theta}
+    .\] Put these together, we obtain \[
+        (1-2\delta)\int_{D}|\nabla u|^2\dd{\mu}\le \int_{r=1}|\nabla u|^2\dd{\theta}
+    .\] This can be easily to translate to disks of any radius, precisely, \[
+        (1-2\delta)\int_{D(R)}|\nabla u|^2\dd{\mu}
+        \le R\int_{r=R}|\nabla u|^2\dd{\theta}
+    .\] This yields \[
+        \dv{}{R}\left(\frac{1}{R^{1-2\delta}}\int_{D(R)}|\nabla u|^2\dd{\mu}\right)\ge 0
+    .\] Integrate we have \[
+        \int_{D(r)}|\nabla u|^2+\dd{\mu}\le r^{1-2\delta}\int_{D}|\nabla u|^2\dd{\mu}
+    .\] Apply \cref{lem:sup-est} again we get, for \(0<|y|<\frac{1}{2}\), \[
+        |\nabla u(y)||y|
+        \le C\left(\int_{D(2|y|)}|\nabla u|^2\dd{\mu}\right)^{\frac{1}{2}}
+        \le C(2|y|)^{\frac{1-2\delta}{2}}\|u\|_{L^2(D)}
+    .\] This implies \(u\in W^{1,2\beta}\) for some \(\beta>1\).
+    We claim that \(u\) satisfy the Euler-Lagrange equation weakly on entire \(D\),
+    then following similar argument as for \(E_\alpha\) critical maps gives
+    regularity of \(u\).
+\end{proof}
+
+The last claim essentially used the following lemma:
+\begin{lemma}
+    Let \(D\) be the unit disk in \(\mathbb{R}^n\) for \(n\ge 2\), suppose \(u\)
+    is a harmonic map on \(D\setminus\{0\}\), and has finite energy, then \(u\) is
+    weakly harmonic on \(D\).
+\end{lemma}
+\begin{proof}
+    We claim that \(H_0^1(D\setminus\{0\},\mathbb{R}^k)=H_0^1(D,\mathbb{R}^k)\), then
+    for any \(\vphi\in H^1(D,\mathbb{R}^k)\), choose \(\vphi_m\in H_0^1(D\setminus
+    \{0\},\mathbb{R}^k)\) such that \(\vphi_m\xrightarrow{H^1}\vphi\), we have \[
+        \left<-\lap' u,\vphi\right> =\left<-\lap u+A(\nabla u,\nabla u),
+        \vphi\right> =\lim_{m\to\infty}\left<-\lap u-A(\nabla u, \nabla u),
+        \vphi_m\right> =0
+    .\] For the claim, we split the case into \(n=2\) and \(n\ge 3\).
+
+    Case \(n\ge 3\): Let \(\chi(r)\) increasing, smooth, be 0 around \(r=0\) and
+    \(1\) for \(r\ge 1\), \(\chi_\eps(r)=\chi(\frac{r}{\eps})\). Then let
+    \(\vphi_\eps=\chi_\eps\vphi\).
+
+    Case \(n=2\): Let \[
+        \chi_\eps(r)=\begin{cases}
+            0, & r\le \eps^2 \\
+            1-\frac{\log \frac{r}{\eps}}{\log\eps} & \eps^2\le r\le \eps \\
+            1, & r\ge \eps
+        \end{cases}
+    .\] Then let \(\vphi_\eps=\chi_\eps\vphi\).
+\end{proof}
+
+\section{More Regularity}
+In this section, we relax the dimension condition of \(M\) to be greater or equal to 2,
+and we'd like to sketch the proof of a more general regularity theorem.
+
+\noindent\textbf{Reference}:
+\begin{itemize}\itshape{}
+\item Richard Schoen, Karen Uhlenbeck. A Regularity Thoery For Harmonic Maps (1982)
+\item Lin Fanghua. Revisit the Regularity Theory of Schoen-Uhlenbeck (in Chinese) (2017)
+\end{itemize}
+
+\begin{theorem}[Monotonicity Formula]\hfill\\
+    Let \(u\) be a \(W^{1,2}\) map from \(M\) to \(N\subset \mathbb{R}^k\),
+    \(E(R)\) be the energy of \(u\) restricted on geodesic ball \(B(0,R)\),
+    centered at some \(x_0\in M\). Then 
+    \begin{equation}\label{eq:monotonicity}
+    \begin{split}
+        \dv{}{R}E(R)&=\frac{n-2}{R}E(R)+\int_{\partial B(0,R)}|u_r|^2\dd{\mu_g}
+        -\frac{1}{R}\int_{B(0,R)}ru_r\cdot \lap u\dd{\mu_g} \\
+        &+\frac{1}{2R}\int_{B(0,R)}r(\lap r-\frac{n-1}{r})|\nabla u|^2\dd{\mu_g}\\
+        &+\frac{1}{R}\int_{B(0,R)}|u_\theta|^2
+        -\frac{1}{R}\int_{B(0,R)}r\Hess r(u_\theta,u_\theta)\dd{\mu_g}.
+    \end{split}\end{equation}
+    Where \((r,\theta)\) is the normal spherical coordinate of the geodesic ball,
+    \(\nabla u=u_r\dd{r}+u_{\theta^i}\dd{\theta^i}\), and \(u_\theta\) be the
+    angular part \(u_{\theta^i}\dd{\theta^i}\).
+    Note that \(\pd{r}\log\sqrt{\det g}=\lap r-\frac{n-1}{r}\), and
+    \(\II^{\partial B(0,r)\hookrightarrow M}=-\Hess r\big|_{\partial B(0,r)}\).
+\end{theorem}
+\begin{corollary}
+    If we further assume \(u\) is weakly harmonic, \ie\ \(\lap u=A(\nabla u,
+    \nabla u)\), then there exists a small \(R_0>0\), and bounded function \(h(r)\),
+    such that \[
+        \dv{}{r}(\frac{e^{h(r)}}{r^{n-2}}E(r))\ge 0
+    \] for \(r<R_0\). If \(M\) is compact, the constants can be chosen uniform for any
+    \(x_0\in M\).
+\end{corollary}
+
+Let \(F(x,\eps)\) be \(\displaystyle\frac{e^{h(r)}}{r^{n-2}}E(u\big|_{B(x,\eps)})\).
+Consider the set \[
+    \mathfrak{S}=\{x\in M:\lim_{\eps\to 0}F(x,\eps)\ge c\}
+.\] The limit exists by monotonicity. Let \(\Theta(x)=\lim_{\eps\to 0}F(x,\eps)\)
+be the density function.
+\begin{theorem}
+    \(\Theta\) is upper semi-continuous, and hence \(\mathfrak{S}\) is a closed set.
+\end{theorem}
+Cover \(\mathfrak{S}\) by small balls \(B(x_i,2\eps)\), where \(x_i\in\mathfrak{S}
+\), \(2\eps<R_0\) in monotonicity formula. We have estimate \[
+    \sum_i \eps^{n-2}F(x_i,\eps)\le Ce^{h(\eps)}E(u\big|_{\bigcup B(x_i,2\eps)})
+.\] The constant \(C\) comes from a covering lemma argument. Then \[
+    \sum_i \mu(B(x_i,\eps))\le c^{-1}C' E(u\big|_{\bigcup B(x_i,2\eps)})
+.\] The right hand side tends to zero as \(\eps\to 0\), by dominated convergence
+theorem. We conclude that \(\mathcal{H}^{n-2}(\mathfrak{S})=0\). Hence, with a
+possible \((n-2)\)-dimensional exception set, we have \(\Theta(x)=0\). This translate
+to \[
+    \int_{B(x_0,\eps)}|\nabla u|^2\dd{\mu_g}\le C\eps^{n-2}
+    \quad\text{for small }\eps
+.\] Next, let me just sketch the idea of proof for now.
+
+First we need a alternative version of Morrey's lemma:
+\begin{lemma}[Morrey]
+    Suppose \(\Omega\subset \mathbb{R}^n\) open, \(u\in W^{1,p}(\Omega)\), and for any
+    sphere \(B(x_0,r)\subset \Omega\), \[
+        \int_{B(x_0,r)}|\nabla u|^p \dd{x}\le C_0r^{n-p+p\alpha},
+        \quad p\le n,\alpha>0
+    .\] Then we have interior estimate \[
+        \|u\|_{C^{0,\alpha}}'\le C_1(C_0,n)
+    .\] To be more precise, we have \[
+        |u(x)-u(y)|\le C'R^{\alpha},\ \forall\,y\in \overline{B}(x,R)
+    .\] 
+\end{lemma}
+\begin{proof}
+    Following similar idea of the other Morrey's lemma, assume \(y\in \partial
+    B(x,R)\), then
+    \begin{align*}
+        |u(x)-u(y)|&\le |u(x)-u(z)|+|u(z)-u(y)| \\
+        &\le \frac{C}{R^n}\int_{B(x,R)\cap B(y,R)}
+        |u(x)-u(z)|+|u(z)-u(y)|\dd{z} \\
+        &\le\frac{C}{R^n}\left(\int_{B(x,R)}\dd{z}\int_x^z|\nabla u|\dd{\ell}
+        +\int_{B(y,R)}\dd{z}\int_{y}^{z}|\nabla u|\dd{\ell}\right) \\
+        &=\frac{C}{R^n}(I_1+I_2)
+    .\end{align*}
+    Use polar coordinate at \(x\),
+    \begin{align*}
+        I_1&=\int_{r\le R}\int_{\mathbb{S}^{n-1}}r^{n-1}\dd{r}\dd{\theta}
+        \int_{0}^{r}|\nabla u(x+\ell\theta)|\dd{\ell} \\
+        &=\int_{r\le R}r^{n-1}\dd{r}\int_{\ell\le r}
+        \int_{\mathbb{S}^{n-1}}|\nabla u(x+\ell\theta)|\dd{\theta}\dd{\ell} \\
+        &=\int_{r\le R}r^{n-1}\dd{r}\int_{B(x,r)}\frac{|\nabla u|}{|z|^n}\dd{z}
+    .\end{align*}
+    Let \(\vphi(r)=\int_{B(x,r)}|\nabla u|\dd{z}\), then \(\vphi'(r)=r^{n-1}
+    \int_{\mathbb{S}^{n-1}}|\nabla u (x+r\theta)|\dd{\theta}\), and \[
+        \vphi(r)\le C\left(\int_{B(x,r)}|\nabla u|^{p}\right)^{\frac{1}{p}}
+        (r^n)^{1-\frac{1}{p}}\le Cr^{n-1+\alpha}
+    .\] Then \[
+        \int_{\ell\le r}\int_{\mathbb{S}^{n-1}}|\nabla u(x+\ell\theta)|\dd{\ell}
+        \dd{\theta}=\int_{0}^{r}\frac{\vphi'(\ell)}{\ell^{n-1}}\dd{\ell}
+        =\eval{\frac{\vphi(\ell)}{\ell^{n-1}}}_{\ell=0}^r
+        +(n-1)\int_{0}^{r}\frac{\vphi(\ell)}{\ell^n}\dd{\ell}\le Cr^\alpha
+    .\] Hence \(I_1\le CR^{n+\alpha}\). We can do similar estimate for \(I_2\).
+    In the end we have \[
+        |u(x)-u(y)|\le CR^{\alpha},\ \forall\,y\in \partial B(x,R)
+    .\] This gives the H\"older continuity.
+\end{proof}
+Then, we need to squeeze a little more decay from what we get above, to be precise,
+we'd like to prove for any \(x_0\notin \mathfrak{S}\), \[
+    \frac{1}{\eps^{n-2}}\int_{B(x_0,\eps)}|\nabla u|^2\dd{\mu_g}\le C\eps^{\alpha}
+    \quad\text{for some }\alpha>0
+.\] The key to the theorem is a uniform decay estimate for small energy:
+\begin{lemma}
+    There exists \(\eps_0>0\) such that if \(u\) is energy minimizing and 
+    \(E(u\big|_{D(1)})\le \eps_0\), we have \[
+        \frac{E(r)}{r^{n-2}}\le \frac{1}{2}E(1)+C
+    .\] For some \(r_0<1\) and any \(r\le r_0\).
+\end{lemma}
+Using this lemma, we can iterate and get desired estimate. The condition can be
+weaken that without small energy assumption. However I have not figure out yet how
+Schoen and Uhlenbeck did that.
+
+
+Now let's fix the gap we left to Morrey 1.11.1 before. Instead prove the original one,
+here we prove for a somehow simper case that easier to deal with.
+
+\noindent\textbf{Reference:}
+\begin{itemize}
+    \item Chapter 9 of \itshape{}
+    J\"urgen Jost. Riemannian Geometry (7th edition)-Springer (2017)
+\end{itemize}
+
+Suppose from now on \(\Omega\subset\mathbb{R}^n\) open region with ``good'' boundary,
+\(u\in H^1(\Omega,\mathbb{R}^k)\) is a continuous weak solution of system \[
+    \int_{\Omega}a^{ij}\pdv{u^{\alpha}}{x^i}\pdv{\vphi^{\alpha}}{x^j}
+    =\int_{\Omega}G^{\alpha}(x,u,\nabla u)\vphi^\alpha(x)
+\] for any \(\vphi\in H_0^1\cap L^\infty(\Omega,\mathbb{R}^k)\).
+
+\begin{theorem}[A priori Estimate]\hfill\\
+    Suppose \(u\in C^0\cap W^{1,4},\cap H^3(B(0,R),\mathbb{R}^k)\), then we have
+    interior estimate \[
+        \|\nabla^2 u\|_{L^2}'+\|\nabla u\|_{L^4}'^2
+        \le C_0R^{\frac{n}{2}}+C_1\|\nabla u\|_{L^2}
+    .\] Where primed norm is on \(B(0,\frac{R}{2})\).
+\end{theorem}
+
+\section{Convergence Theorems and Bubbling}
+Throughout this section, \(u_\alpha\) means a sequence \(u_{\alpha_j},j\ge 0\) with
+\(\alpha_j\to 1\).
+
+\begin{prop}
+    Let \(u_\alpha\) be a sequence of critical maps of \(E_\alpha\) as \(\alpha\to 1\),
+    with \(E_\alpha(u_\alpha)\le B\). Then there exists a subsequence, still denoted
+    by \(u_\alpha\), converges to \(s\) weakly in \(W^{1,2}(M,\mathbb{R}^k)\),
+    and \(E(u)\le \liminf_{\alpha\to 1}E(u_\alpha)\)
+\end{prop}
+\begin{remark}\hfill
+\begin{itemize}
+\item The weak convergence guarantees \(u(x)\in N\) for a.e.\ \(x\) since 
+    \(W^{1,2}\hookrightarrow L^p\) compactly.
+\item This does not guarantee that \(u\) is continuous nor \(E(u)>0\).
+\end{itemize}
+\end{remark}
+
+Now, as we mentioned before, we can choose a small \(R\) and a cover of \(M\) by disks
+of radius \(R\), such that the metric on each disk is uniformly close to the flat one.
+Further, we can assume each point lie in at most \(h\) disks, where \(h\) only depend
+on dimension.
+
+Expand the disks to unit size, the \(\alpha\)-energy writes as \[
+    E_\alpha(u)=\int_{D}(R^2+|\nabla u|^2)^\alpha\dd{\tilde{\mu}}
+.\] Define \(\tilde{E}_\alpha=E_\alpha-R^{2\alpha}\tilde{\mu}(D)\).
+
+\begin{lemma}\label{lem:small-energy-converge}
+    Let \(u_\alpha\colon D(R)\to N\) be sequence of critical maps of \(E_\alpha\),
+    weakly convergent in \(W^{1,2}\) to \(u\). Then there exists \(\eps>0\) such that
+    if \(E(u_\alpha)<\eps\) uniformly, then the convergence is in
+    \(C^1(D(\frac{R}{2}),N)\), and \(u\colon D(\frac{R}{2})\to N\) is smooth harmonic
+    map.
+\end{lemma}
+\begin{proof}
+    We may wlog assume \(R=1\) by conformally expanding \(D(R)\). Apply main estimate
+    with \(p=4\) and \(D'=D(\frac{1}{2})\), we have \[
+        \|\nabla u_\alpha\|_{W^{1,4}}'\le C\sqrt{\eps}
+    .\] By compact Sobolev embedding \(W^{2,p}\hookrightarrow C^1\), every subsequence
+    of \(u_\alpha\) has a further subsequence converges weakly in \(W^{2,4}\), and then
+    strongly in \(C^1\). But \(u_\alpha\to u\) weakly in \(W^{1,2}\), the limit must
+    be \(u\) uniquely. Hence \(u_\alpha\to u\) in \(C^1(D')\). Take limit in the
+    Euler-Lagrange equation we see \(u\) is harmonic.
+\end{proof}
+
+\begin{prop}
+    Let \(U\subset M\) open, \(u_\alpha\) be sequence critical maps of \(E_\alpha\)
+    and \(u_\alpha\to u\) weakly in \(W^{1,2}\). \(E_\alpha(u_\alpha)\le B\) uniformly
+    in \(\alpha\). Let \(U_m=\{x\in U:D(x,2^{-m+1})\subset U\}\), then there exists
+    a subsequence and a finite number of points \(x_{1,m},\ldots,x_{l,m}\), where
+    \(l\) depends on \(B,N\) but not on \(m\), such that \[
+        u_\alpha\longrightarrow u\quad\text{ in }
+        C^1(U_m\setminus\bigcup_{i}D(x_i,2^{-m}),N)
+    .\] 
+\end{prop}
+\begin{proof}
+    Cover \(U_m\) by disks \(D(x_i,2^{-m+1})\subset U\), such that each point is
+    covered at most \(h\) times. Then \[
+        \sum_i \int_{D(x_i,2^{-m+1})}|\nabla u_\alpha|^2\dd{\mu}\le Bh
+    .\] Hence for each \(\alpha\), there are at most \(\frac{Bh}{\eps}\) disks \st\ 
+    \(E\left(u_\alpha\big|_{D(x_i,2^{-m})}\right)>\eps\).
+    We can choose a subsequence such that there is eventually \(l<\frac{Bh}{\eps}+1\)
+    bad disks. Then apply \cref{lem:small-energy-converge} on each good disk, we see
+    there is a subsequence that converges to \(u\) in \(C^1\) except on
+    \(\bigcup_{i}D(x_i,2^{-m})\).
+\end{proof}
+
+\begin{theorem}\label{thm:alpha-convergence}
+    Under the same assumption on \(u_\alpha\), there exists a subsequence and finitely
+    many points \(\{x_1,\ldots,x_l\}\) where \(l\) does not depend on \(U\), such that
+    \(u_\alpha\to u\) in \(C^1(U\setminus\{x_1,\ldots,x_l\},N)\).
+    Moreover, this \(u\) is harmonic and smooth.
+\end{theorem}
+\begin{proof}
+    Consider a sequence for \(U_m\) in last proposition, we can do a diagonal argument
+    to obtain a subsequence that converges to \(u\) in \(C^1\) on \[
+        \bigcup_{m\ge 0}\left(U_m\setminus \bigcup_{i=1}^l D(x_{i,m},2^{-m})\right)
+        =U\setminus\bigcap_{m\ge 0}\bigcup_{i=1}^l D(x_{i,m},2^{-m})
+        =U\setminus\{\text{At most }l\text{ points}\}
+    .\] By \cref{thm:removable-singularity}, we see \(u\) is harmonic and smooth.
+\end{proof}
+\begin{remark}
+    For now, there is no guarantee that \(u\) is not trivial nor we can extend the
+    convergence to exception points.
+\end{remark}
+
+\begin{lemma}\label{lem:bounded-du-converge}
+    Under same assumption on \(u_\alpha\) as in \cref{thm:alpha-convergence}, suppose
+    there exists \(\delta>0\) such that  \[
+        \sup_{D(x_i,\delta)}|\nabla u_\alpha|\le B<\infty
+    .\] Then \(u_\alpha\to u\) in \(C^1(D(x_i,\delta),N)\).
+\end{lemma}
+\begin{proof}
+    In a sufficiently small disk \(D(x_i,R)\subset D(x_i,\delta)\), we have \[
+        \int_{D(x_i,R)}|\nabla u_\alpha|^2\dd{\mu}\le \pi R^2B^2<\eps
+    .\] Then apply \cref{lem:small-energy-converge}.
+\end{proof}
+
+\begin{theorem}\label{thm:energy-loss}
+    Let \(u_\alpha\) be a sequence of critical maps of \(E_\alpha\) with \(E_\alpha(
+    u_\alpha)\le B\) uniformly in \(\alpha\to 1\) and \(u_\alpha\to u\) in \(C^1\) on
+    \(M\setminus\{x_1,\ldots,x_l\}\) but not on \(M\setminus\{x_2,\ldots,x_l\}\).
+    Then there exists a nontrivial harmonic map \(\tilde{u}\colon \mathbb{S}^2\to N\)
+    such that \[
+        \tilde{u}(\mathbb{S}^2)\subset \bigcap_{m\ge 0}\bigcap_{\alpha\to 1}
+        \bigcup_{\beta\le \alpha}u_\beta(D(x_1,2^{-m}))
+    .\] Moreover, \[
+        E(u)+E(\tilde{u})\le \liminf_{\alpha\to 1}E(u_\alpha)
+    .\] 
+\end{theorem}
+\begin{proof}
+    Let \(b_\alpha=\sup_{D(x_1,2^{-m})}|\nabla u_\alpha|\) and let \(x_\alpha\) be
+    the point where the maximum is taken. By choosing a subsequence we may assume
+    \(b_\alpha\to \infty\), otherwise we can apply \cref{lem:bounded-du-converge}
+    to remove the singularity.
+
+    Define \(\tilde{u}_\alpha(x)=u_\alpha(x_\alpha+\frac{x}{b_\alpha})\), then 
+    \(\tilde{u}_\alpha\colon D(0,2^{-m}b_\alpha)\to N\) is critical map of
+    \(E_\alpha\) and \(|\nabla\tilde{u}_\alpha|\le 1\) in \(D(x_i,2^{-m}b_\alpha)\).
+    Note that these disks have radius going to \(\infty\) as \(\alpha\to 1\), and
+    the metrics on the disks converges to the Euclidean metric.
+    Combine \cref{thm:alpha-convergence} and \cref{lem:bounded-du-converge}, we see 
+    by choosing a subsequence \(\tilde{u}_\alpha\to \tilde{u}\) in \(C^1\) on
+    \(D(R)\) for any \(R<\infty\). Where \(\tilde{u}\colon D(R)\to N\) is 
+    harmonic and smooth. Moreover, note that \(|\nabla \tilde{u}_\alpha(0)|=1\), so
+    \(|\nabla\tilde{u}(0)|=1\). Thus \(\tilde{u}\) cannot be constant. By a diagonal
+    argument, we got a subsequence \(\tilde{u}_\alpha\to \tilde{u}\) in \(C^1(
+    \mathbb{R}^2,N)\).
+    \begin{align*}
+        E(\tilde{u})&+E\left(u\big|_{M\setminus D(x_1,2^{-m})}\right) \\
+        &\le\liminf_{\alpha\to 1}
+        E\left(\tilde{u}_\alpha\big|_{D(x_1,2^{-m}b_\alpha)}\right)
+        +\liminf_{\alpha\to 1}E\left(u_\alpha\big|_{M\setminus D(x_1,2^{-m})}\right)\\
+        &\le \liminf_{\alpha\to 1}E(u_\alpha)
+    .\end{align*}
+    Note that choice of \(x_\alpha\) and \(b_\alpha\) is eventually not depend on
+    \(m\), so is \(\tilde{u}_\alpha\). Hence we can let \(m\to \infty\) and get \[
+        E(\tilde{u})+E(u)\le \liminf_{\alpha\to 1}E(u_\alpha)
+    .\] Note that we have been choosing subsequence multiple times during the proof,
+    but we can in the first place choose a subsequence such that \(\lim_{\alpha\to 1}
+    \) exits and equal to the \(\liminf\). Then the \(\liminf\) at last is valid.
+    Apply \cref{thm:removable-singularity}, we see \(\tilde{u}\) can be extend
+    to a harmonic map on \(\mathbb{S}^2\).
+\end{proof}
+
+\begin{theorem}\label{thm:main-converge}
+    Let \(u_\alpha\) be a sequence of critical maps of \(E_\alpha\) for
+    \(\alpha\to 1\), and \(u_\alpha\to u\) weakly in \(W^{1,2}(M,\mathbb{R}^k)\).
+    Then either \(u_\alpha\to u\) in \(C^1(M,N)\), or there exists a non-trivial
+    harmonic map \(\tilde{u}:\mathbb{S}^2\to N\) with \[
+        \tilde{u}(\mathbb{S}^2)\subset \bigcap_{\alpha\to 1}
+        \overline{\bigcup_{\beta<\alpha}u_\beta(M)}
+    .\]
+    Moreover, \[
+        E(u)+E(\tilde{u})\le \liminf_{\alpha\to 1}E(u_\alpha)
+    .\] 
+\end{theorem}
+
+In theorems above, we saw a phenomenon which is called ``bubbling'', \ie\ in limit
+process of critical maps, energy may concentrate to a point and get lost in limit
+map. But one can collect these energy by expanding neighbourhoods of the concentrate
+point to create a map on sphere carrying those energy, looks like one blow a bubble
+at the point. However, the argument above cannot regain all the energy. Some energy
+may still get lost on the ``neck''. To collect them, we need a more careful argument.
+
+\noindent\textbf{Reference:}
+\begin{itemize}\itshape{}
+\item Thomas H. Parker. Bubble tree convergence for harmonic maps (1996)
+\end{itemize}
+
+\section{The Final Results}
+In this section, we put all above together to prove the final results.
+
+\begin{lemma}
+    If \(\pi_2(N)=0\), \(u,\tilde{u}\colon M\to N\) which agree outside a disk \(D\),
+    then \(\tilde{u}\) is homotopic to \(u\).
+\end{lemma}
+\begin{proof}
+    Let \(f\colon \mathbb{S}^2\to N\) be \(u\) on north hemisphere, \(\tilde{u}\) on 
+    south hemisphere. By assumption \(f\) is homotopic to constant, \ie\ \(f\) extends
+    to \(F\colon D^3\to N\). This \(F\) gives homotopy from \(u\) to \(\tilde{u}\).
+\end{proof}
+
+\begin{theorem}\label{thm:no-pi2}
+    If \(N\) is compact and \(\pi_2(N)=0\), then there exists a minimizing harmonic
+    map in every homotopy class in \(C^0(M,N)\).
+\end{theorem}
+\begin{proof}
+    Let \(u_\alpha\colon M\to N\) be minimizing map for \(E_\alpha\) in a fixed
+    homotopy class with \(E_\alpha(u_\alpha)<(1+B^2)^\alpha\). 
+    By \cref{thm:alpha-convergence}, let \(U=M\), we can choose a subsequence such
+    that \(u_\alpha\to u\) in \(C^1(M\setminus\{x_1,\ldots,x_l\},N)\) with \(u\colon
+    M\to N\) harmonic. We claim this convergence is \(C^1\) on whole \(M\).
+
+    Fix a small \(R\), such that \(D(x_i,R)\) are disjoint. Fix \(i\), choose
+    coordinate such that \(x_i\) is origin. Let \(\chi\) be a smooth increasing
+    function which is \(1\) for \(r\ge 1\) and is \(0\) for \(r\le \frac{1}{2}\).
+    Define
+    \begin{equation}\label{eq:def-modify-u}
+        \hat{u}_\alpha(x)=\exp_{u(x)}\left(\chi\left(\frac{|x|}{R}\right)
+        \exp^{-1}_{u(x)}(u_\alpha(x))\right)
+    .\end{equation}
+    Then \(\hat{u}_\alpha\colon D(R)\to N\) agrees with \(u_\alpha\) on the
+    boundary of the disk and equals to \(u\) around the center. The definition is
+    valid since \(u_\alpha\) is \(C^1\) close to \(u\) for \(\frac{1}{2}\le r\le 1\).
+    Then \(\hat{u}_\alpha\to u\) in \(C^1(D(R),N)\), so \[
+        \lim_{\alpha\to 1}E_\alpha(\hat{u}_\alpha\big|_{D(R)})-1=E(u\big|_{D(R)})
+    .\] Since \(\pi_2(N)=0\), \(u_\alpha\) and \(\hat{u}_\alpha\) are homotopic.
+    But \(u_\alpha\) is minimizer, hence \(E_\alpha(u_\alpha\big|_{D(R)})\le 
+    E_\alpha(\hat{u}_\alpha\big|_{D(R)})\), \[
+        \limsup_{\alpha\to 1}E_\alpha(u_\alpha\big|_{D(R)})
+        \le E(u\big|_{D(R)})\le \pi R^2\|u\|_{W^{1,\infty}}^2
+    .\] Choose \(R\) small and apply \cref{lem:small-energy-converge}, we see
+    the original convergence is \(C^1\) with no exceptional point.
+    Since \(u_\alpha\) minimize \(E_\alpha\), \(u\) must minimize \(E\) in
+    the same homotopy class.
+\end{proof}
+
+\begin{theorem}\label{thm:conj-class}
+    Every conjugacy class of homomorphism from \(\pi_1(M)\) to \(\pi_1(N)\)
+    is induced by a minimizing harmonic map from \(M\) to \(N\).
+\end{theorem}
+\begin{proof}
+    Essentially same as last theorem. Note when we replace \(u_\alpha\) by \(\hat{u}_
+    \alpha\), we do not change their induced homomorphism on \(\pi_1\).
+\end{proof}
+\begin{remark}\hfill
+\begin{itemize}
+\item If \(\pi_2(N)=0\), then \cref{thm:no-pi2} implies \cref{thm:conj-class} since
+    in this case conjugacy classes of homomorphisms from \(\pi_1(M)\) to \(\pi_1(N)\)
+    are canonically identified with components of \(C^0(M,N)\).
+\item These two theorems had been obtained independently by Lemaire and Schoen-Yau
+    using other methods earlier.
+\end{itemize}
+\end{remark}
+
+\begin{theorem}
+    If the universal covering of \(N\) is not contractible, then there exists
+    a non-trivial harmonic map \(u\colon \mathbb{S}^2\to N\).
+\end{theorem}
+\begin{proof}
+    Apply \cref{thm:alpha-existence} to get nontrivial critical maps \(u_\alpha\) of
+    \(E_\alpha\) with \(1+\eps<E_\alpha(u_\alpha)<(1+B^2)^{\alpha}\). Then there is a
+    subsequence converges to \(u\) in \(C^1(\mathbb{S}^2\setminus\{x_1,\ldots,x_l\}
+    ,N)\) and \(u\) is harmonic. If \(u\) is nontrivial, we are done. If \(u\) is
+    constant, by \cref{thm:energy-loss} there exists another nontrivial harmonic map
+    \(\tilde{u}\).
+\end{proof}
+\begin{remark}
+    The condition on \(N\) cannot be dropped. If \(N\) has non-positive curvature,
+    there will be no nontrivial harmonic map from \(\mathbb{S}^2\) to \(N\) and
+    \(\tilde{N}\) is trivial.
+\end{remark}
+
+Combine this theorem with \cref{thm:harmonic-is-conformal} we get:
+\begin{theorem}
+    If the universal covering of \(N\) is not contractible, then there exists a
+    non-trivial smooth conformal branched minimal immersion \(u\colon \mathbb{S}^2
+    \to N\).
+\end{theorem}
+
+Next, we prove a refined theorem for case \(\pi_2(N)\neq 0\).
+\begin{lemma}\label{lem:no-trivial-bubble}
+    Let \(u_\alpha\colon \mathbb{S}^2\to N,\alpha\to 1\) be a sequence of non-trivial
+    \(E_\alpha\)-critical maps, which converges to \(u\) in \(C^1\) except at north
+    pole \(p\). Then \(u\) is non-constant.
+\end{lemma}
+\begin{remark}
+    This lemma claims that a trivial bubble must have multiple bubbles on it.
+\end{remark}
+\begin{proof}
+    Let \((r,\theta)\in [0,\pi]\times [0,2\pi]\) be the standard spherical
+    coordinate on \(\mathbb{S}^2\), \(S^+,S^-\) be northern and southern hemisphere
+    respectively. We omit \(\alpha\) in \(u_\alpha\) in calculation for simplicity.
+    Consider variation \[
+        v(r,\theta)=u_r(r,\theta)\sin r
+    .\] We have \[
+        0=E_\alpha'(u)=2\alpha\int_{\mathbb{S}^2}(1+|\nabla u|^2)^{\alpha-1}
+        \left<\nabla u,\nabla v\right> \dd{\mu_g}
+    .\] We calculate the inner product term
+    \begin{align*}
+        \left<\nabla u,\nabla v\right> 
+        &=u_r\cdot (u_r\sin r)_r+\frac{1}{\sin^2 r}
+        (u_\theta\cdot (u_r\sin r)_{\theta}) \\
+        &=\frac{1}{2}\left(\pd{r}|\nabla u|^2\right)\sin r
+        +|\nabla u|^2\cos r
+    .\end{align*}
+    Then
+    \begin{align*}
+        0&=2\alpha\int_{\mathbb{S}^2}(1+|\nabla u|^2)^{\alpha-1}\left(
+        \frac{1}{2}\left(\pd{r}|\nabla u|^2\right)\sin r+|\nabla u|^2\cos r\right)
+        \dd{\mu} \\
+        &=\int_{0}^{2\pi}\int_{0}^{\pi}\pd{r}((1+|\nabla u|^2)^\alpha-1)\sin^2 r
+        +2\alpha(1+|\nabla u|^2)^{\alpha-1}|\nabla u|^2\sin r\cos r\dd{r}\dd{\theta}\\
+        &=2\int_{\mathbb{S}^2}\left(1-(1+|\nabla u|^2)^\alpha+
+        \alpha(1+|\nabla u|^2)^\alpha|\nabla u|^2\right)\cos r\dd{\mu_g}
+    .\end{align*}
+    Note that by Taylor's expansion of \((1+r)^\alpha\), for \(\lambda>0\), \[
+        1-(1+\lambda)^\alpha+\alpha(1+\lambda)^{\alpha-1}\lambda\sim
+        \frac{1}{2}\alpha(\alpha-1)(1+\lambda)^{\alpha-2}\lambda^2
+    .\] More precisely, \[
+    \frac{1-(1+\lambda)^\alpha+\alpha(1+\lambda)^{\alpha-1}\lambda}
+    {(\alpha-1)(1+\lambda)^{\alpha-2}\lambda^2}
+    \text{ lie with in }1\text{ and }\frac{\alpha}{2}
+    .\] Divide the integral to northern and southern parts, we get for \(\alpha<2\),
+    \[
+        \frac{\alpha}{2}\int_{r\le \frac{\pi}{2}}(1+|\nabla u_\alpha|^2)^{\alpha-2}
+        |\nabla u_\alpha|^4 \cos r\dd{\mu}
+        \le \int_{r\ge \frac{\pi}{2}}(1+|\nabla u_\alpha|^2)^{\alpha-2}
+        |\nabla u_\alpha|^4(-\cos r)\dd{\mu}
+    .\] Assume \(u\) is constant, by \(C^1\) convergence away from \(p\),
+    \begin{equation}
+        \text{RHS }\to \int_{\mathbb{S}^-}(1+|\nabla u|^2)^{\alpha-2}|\nabla u|^4
+        (-\cos r)\dd{\mu}=0\quad\text{as }\alpha\to 0
+    .\end{equation}
+    However,
+    \begin{align*}
+        \text{LHS}&\ge \frac{\alpha}{2}\cos 1\int_{r\le 1}
+        (1+|\nabla u_\alpha|^2)^{\alpha-2}|\nabla u_\alpha|^4\dd{\mu} \\
+        &\ge c_1 \int_{r\le 1,|\nabla u_\alpha|\ge\delta}
+        (1+|\nabla u_\alpha|^2)^{\alpha-1}|\nabla u_\alpha|^2\cdot
+        \frac{\delta^2}{1+\delta^2}\dd{\mu} \\
+        &\ge \frac{c_1\delta^2}{1+\delta^2}\int_{r\le 1,|\nabla u_\alpha|\ge \delta}
+        |\nabla u_\alpha|^2\dd{\mu} \\
+        &\ge\frac{c_1\delta^2}{1+\delta^2}\left(E(u_\alpha\big|_{D(1)})
+        -\op{Vol}(D)\delta^2\right)
+    .\end{align*}
+    Note we have energy gap \(E(u_\alpha\big|_{D(1)})\ge \eps\) uniform in \(\alpha\).
+    Choose \(\delta\) sufficiently small, we conclude a contradiction.
+\end{proof}
+
+Now note that the components of \(C^0(\mathbb{S}^2,N)\) can be canonically identified
+with \(\pi_2(N)\) acted by \(\pi_1(N)\). For a homotopy class \(\Gamma\) we define \[
+    \mathcal{E}_\Gamma=\inf_{u\in \Gamma\cap W^{1,\infty}}\{E(u)\}
+    =\lim_{\alpha\to 1}\{\inf \tilde{E}_\alpha(u):u\in \Gamma\cap W^{1,\infty}\}
+.\] Note that \(\mathcal{E}_\Gamma=0\) iff \(\Gamma\) is trivial and otherwise
+\(\mathcal{E}_\Gamma\ge \eps>0\) (energy gap).
+
+\begin{lemma}
+    Let \(\Gamma\in \pi_0(C^0(\mathbb{S}^2,N))\). Then either \(\Gamma\) contains
+    a minimizing harmonic map or for any \(\delta>0\), there exists non-trivial
+    homotopy class \(\Gamma_1+\Gamma_2\supset \Gamma\) and  \[
+        \Eps_{\Gamma_1}+\Eps_{\Gamma_2}<\Eps_\Gamma+\delta
+    .\] 
+\end{lemma}
+\begin{proof}
+    Choose a sequence \(u_\alpha\in\Gamma\) minimizing \(E_\alpha\) such that
+    \(u_\alpha\) converge weakly in \(W^{1,2}(M,\mathbb{R}^k)\) to \(u\in W^{1,2}
+    (M,N)\), and the convergence is \(C^1\) except at \(\{x_1,\ldots,x_l\}\).
+    We can assume \[
+        \lim_{m\to \infty}\limsup_{\alpha\to 1}
+        \tilde{E}_\alpha(u_\alpha\big|_{D(x_i,2^{-m})})\ge \eps
+    ,\] for otherwise we can apply \cref{lem:small-energy-converge} to remove the
+    singularity. If now \(l=0\), we are done with \(u\). If not, choose small
+    disk \(D(R)\) around \(x_1\), use same construction as in \cref{eq:def-modify-u}
+    to get \(\hat{u}\). Define \[
+        v_\alpha(x)=\begin{cases}
+            \hat{u}_\alpha\circ f(x), & x\in \mathbb{S}^2\setminus D(R) \\
+            u_\alpha(x), & x\in D(R)
+        \end{cases}
+    .\] Where \(f\colon \mathbb{S}^2\setminus D(R)\to D(R)\) is the conformal
+    reflection. Let \(\Gamma_1\) and \(\Gamma_2\) be the homotopy class of \(\hat{u}
+    _\alpha\) and \(v_\alpha\) respectively. Note \(\hat{u}_\alpha\) agrees with
+    \(u_\alpha\) on \(\mathbb{S}^2\setminus D(R)\). We have \(\Gamma\subset 
+    \Gamma_1+\Gamma_2\). From conformality of \(f\),
+    \begin{align*}
+        \lim_{\alpha \to 1} \tilde{E}_\alpha(\hat{u}_\alpha)&=\lim_{\alpha\to 1}
+        \tilde{E}_\alpha(u_\alpha\big|_{\mathbb{S}^2\setminus D(R)})
+        +E(u\big|_{D(R)}) \\
+        \lim_{\alpha \to 1} \tilde{E}_\alpha(v_\alpha)&=\lim_{\alpha\to 1}
+        \tilde{E}_\alpha(u_\alpha\big|_{D(R)})+E(u\big|_{D(R)})
+    \end{align*}
+    If \(\pi R^2\|\nabla u\|_{L^\infty}\le\delta\), we can choose
+    \(\alpha\) close to 1 such that 
+    \begin{align*}
+        \tilde{E}_\alpha(\hat{u}_\alpha)&\le
+        \tilde{E}_\alpha(u_\alpha\big|_{\mathbb{S}^2\setminus D(R)})+2\delta \\ 
+        \tilde{E}_\alpha(v_\alpha)&\le \tilde{E}_\alpha(u_\alpha\big|_{D(R)})+2\delta
+    .\end{align*}
+    And then \[
+        \Eps_{\Gamma_1}+\Eps_{\Gamma_2}\le \tilde{E}_\alpha(\hat{u}_\alpha)
+        +\tilde{E}_\alpha(v_\alpha)\le \tilde{E}_\alpha(u_\alpha)+4\delta
+        <\Eps_\Gamma+5\delta
+    .\] Choose \(\delta<\frac{\eps}{10}\). Since \(\tilde{E}_\alpha(v_\alpha)\ge
+    \tilde{E}_\alpha(v_\alpha\big|_{D(R)})\ge\eps\), \[
+        \Eps_{\Gamma_1}\le \tilde{E}_\alpha(\hat{u}_\alpha)
+        \le \Eps_{\Gamma}+5\delta-\eps<\Eps_\Gamma
+    .\] Hence \(\Gamma_1\neq \Gamma\) and \(\Gamma_2\neq 0\). Now we need to prove
+    \(\Gamma_1\neq 0\). Choose \(\alpha\) close to 1, \[
+        \tilde{E}_\alpha(\hat{u}_\alpha)>\tilde{E}_\alpha(u_\alpha\big|_{\mathbb{S}^2
+        \setminus D(R)})\ge E(u\big|_{\mathbb{S}^2\setminus D(R)})-\delta
+        >E(u)-2\delta
+    .\] If \(u\) is non-trivial, \(E(u)>\eps\) and RHS \(>8\delta\). If \(u\) is
+    trivial, by \cref{lem:no-trivial-bubble} there must be \(x_2\neq x_1\) where
+    \(C^1\) convergence fails. Then \(\lim_{\alpha\to 1}\tilde{E}_\alpha(u_\alpha
+    \big|_{D(x_2,R)})>\eps\) and \(\tilde{E}_\alpha(\hat{u}_\alpha)>
+    \tilde{E}_\alpha(u_\alpha\big|_{D(x_2,R)})\) for small \(R\). In either case,
+    \(\tilde{E}_\alpha(\hat{u}_\alpha)>5\delta\) and \(\Gamma_2\neq \Gamma\), and
+    finally \(\Gamma_1\neq 0\).
+\end{proof}
+
+\begin{theorem}
+    There exists a set of free homotopy classes \(\Gamma_i\subset\pi_0(C^0(
+    \mathbb{S}^2,N))\), such that elements \(\gamma\in \Gamma_i\) form a generating 
+    set for \(\pi_1(N)\acts \pi_2(N)\), and each \(\Gamma_i\) contains a minimizing
+    harmonic map \(u_i\colon \mathbb{S}^2\to N\).
+\end{theorem}
+\begin{proof}
+    Let \(\Gamma_i\) be all homotopy class containing minimizing harmonic maps,
+    \(H\) be the subgroup generated by \(\bigcup_{i}\Gamma_i\). Suppose \(H\) is
+    proper subgroup, then there is \(\Gamma\notin H\) such that if \(\Eps_{\Gamma'}
+    \le \Eps_{\Gamma}-\frac{\eps}{2}\), then \(\Gamma'\in P\).
+
+    By assumption \(\Gamma\) does not contain a minimizing harmonic map, by previous
+    lemma there exists \(\Gamma_1,\Gamma_2\) \st\ \(\Gamma_1+\Gamma_2\supset \Gamma\)
+    and \(\Eps_{\Gamma_1}+\Eps_{\Gamma_2}<\Eps_\Gamma+\frac{\eps}{2}\).
+    But \(\Gamma_1,\Gamma_2\) are non-trivial so \(\Eps_{\Gamma_j}\ge \eps,j=1,2\).
+    Hence \(\Eps_{\Gamma_j}<\Eps_\Gamma-\frac{\eps}{2}\) for \(j=1,2\), \ie\ 
+    \(\Gamma_j\in H\). This leads to a contradiction.
+\end{proof}
+
+Combine this theorem with \cref{thm:harmonic-is-conformal} we get final result:
+\begin{theorem}
+    There exists a set of free homotopy classes in \(\pi_0(C^0(\mathbb{S}^2,N))\)
+    generating \(\pi_1(N)\acts \pi_2(N)\), each of which contains a conformal
+    branched immersion of \(\mathbb{S}^2\) with least area in the same class.
+\end{theorem}
+
+% \color{green} Further results to remove ``branched'' and ``immersion'' go here.
+
+\end{document}

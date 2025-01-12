@@ -1,0 +1,705 @@
+% !TeX program = xelatex
+\documentclass[UTF8,12pt]{article}
+\usepackage[xcharter]{phyxmeow}
+\geometry{a4paper,scale=0.8}
+\allowdisplaybreaks{}
+
+\numberwithin{theorem}{section}
+\numberwithin{equation}{section}
+
+\newcommand{\hooklongrightarrow}{\lhook\joinrel\longrightarrow}
+\newcommand{\gap}{\hspace{0pt}}
+
+\addbibresource{Yau-Seminar.bib}
+
+\title{Variational Method in Dirichlet's Problem}
+\author{XueHaotian}
+
+\usepackage{datetime}
+\newdate{date-1}{27}{10}{2022}
+\newdate{date-2}{03}{11}{2022}
+\date{\displaydate{date-1}}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Goal of this report is to solve the following so-called \emph{Dirichlet Problem} on
+bounded region \(\Omega\subset \mathbb{R}^n\):
+\begin{problem}\label{porb:boundary-value}
+    Suppose \(\Omega\subset \mathbb{R}^n\) is a open set, given some function 
+    \(f\) defined on \(\partial\Omega\), find a function \(u\) satisfying \[
+        \begin{cases}
+            -\triangle u=0 & \text{in }\Omega \\
+            \eval{u}_{\partial\Omega}=f &
+        \end{cases}
+    \]
+\end{problem}
+\begin{remark}
+    The problem stated above is not good enough, because when we talk solving an
+    equation, we need to clarify in what means, and under what conditions.
+\end{remark}
+We first assume \(n\ge 2\) since one dimensional problem is not interesting, only
+linear solutions exists. Now the problem is, what ``\(\eval{u}_{\partial\Omega}=f\)''
+means? More precisely, we need to clarify
+\begin{enumerate}[(1)]
+    \item What \(\partial\Omega\) should be?
+    \item What \(f\) should be?
+    \item What the restriction \(\eval{u}_{\partial\Omega}\) mean?
+\end{enumerate}
+
+Here in this report, we only deal with classic case, where \(\partial\Omega\) is
+\(C^1\) submanifold, \(f\) is continuous function on \(\partial\Omega\) and the
+restriction means \(u\) is continuous to the boundary and equal to \(f\) on it.
+For other case, e.g.1 Smooth boundary with \(f\in H^{\frac{1}{2}}(\partial\Omega)\),
+one can reference to Pin Yu's book for an existence and uniqueness theorem using 
+Riesz's representation theorem. E.g.2 \(n=2\), then the boundary condition can be
+weakened, this case may be covered in later report by Lin Yiran,
+reference:~\cite{courant_dirichlets_1977}.
+
+Now under above assumption, the problem is still not good, boundary condition is
+difficult to deal with. We consider to transform boundary condition to zero, at
+cost of harmonic condition breaking. Let \(\tilde{u}=u-u_0\), then \[
+    \begin{cases}
+        -\triangle \tilde{u}=\triangle u_0=\colon g \\
+        \eval{\tilde{u}}_{\partial\Omega}=f-\eval{u_0}_{\partial\Omega}
+    \end{cases}
+\] We'd like to choose \(u_0\) smooth \st\ \(\eval{u_0}_{\partial\Omega}=f\).
+Consider a partition of unity, subordinate to a slice chart cover on \(\partial
+\Omega\), we can construct \(u_0\) piecewise then add them together. On one of these
+chart, with a smooth parametrization, we can assume \(f\) is compactly supported
+function on \(\{x_n=0\}\), and to find \(u_0\) smooth in upper-halfspace with
+boundary value \(f\). Write \(\xi=(x_1,\ldots,x_{n-1}), y=x_n\), consider Poisson
+kernel \[
+    P(y,\xi)=\frac{\Gamma(\frac{n}{2})}{\pi^{\frac{n}{2}}}
+    \frac{y}{(|\xi|^2+y^2)^{\frac{n}{2}}}
+.\] Let \(u_0=P(y,\xi)*_{\xi}f(\xi)\), easily to see \(u_0\) is smooth in \(\{y>0\}\)
+and continuous to boundary.
+
+Now problem turns into:
+\begin{problem}\label{prob:boundary-zero}
+    Suppose \(\Omega\subset \mathbb{R}^n\) is an open set, given function \(f\)
+    defined in \(\Omega\), find a function \(u\) satisfying \[
+        \begin{cases}
+            -\triangle u=f & \text{in }\Omega \\
+            \eval{u}_{\partial\Omega}=0
+        \end{cases}
+    \] 
+\end{problem}
+Still we need assumptions to \(f\) and \(u\). Though \(f\) here should be smooth
+if we come from last problem, we only assume \(f\in L^2(\Omega)\) for proving
+existence and uniqueness, then consider smooth \(f\) for regularity. \(u\) here is
+assumed to lie in so-called \emph{Sobolev-Hilbert space} \(H_0^1(\Omega)\), which is
+intuitively a generalization of boundary zero functions to \(L^2\) functions with
+a \(L^2\) derivative, in next section we'll see what this means in detail.
+No condition is assumed on \(\Omega\) here.
+
+\section{Basics of Sobolev Spaces}
+All functions in this section is considered as locally integrable functions, and
+equal should be understood as equal almost everywhere. Measure is always assumed to
+be standard Lebesgue measure on \(\mathbb{R}^n\). And all capital \(C\) as a number
+in equations means a constant which is not important for inequalities, they may not
+equal to each other.
+% Maybe a brief intro for distributions here?
+\begin{definition}[Sobolev-Hilbert space on \(\mathbb{R}^n\)]
+    Given an non-negative real number \(s\), consider all tempered distribution
+    (Here may just consider \(L^2\) functions) \(u\) satisfying:
+    \begin{enumerate}[(a)]
+        \item \(\hat{u}\in L_{\text{loc}}^1\) is locally integrable;
+        \item \((1+|\xi|^2)^{\frac{s}{2}}\hat{u}(\xi)\) is \(L^2\) function.
+    \end{enumerate}
+    Where \(\hat{u}\) is Fourier transformation of \(u\).
+    For such \(u\), define its Sobolev norm \[
+        \|u\|_{H^s}:=\left(\int_{\mathbb{R}^n} (1+|\xi|^2)^s|\hat{u}(\xi)|^2
+        \dd{\xi}\right)^{\frac{1}{2}}
+    .\] The set of all such \(u\) is called Sobolev-Hilbert space of index \(s\),
+    denoted by \(H^s(\mathbb{R}^n)\). Obviously it's a complex linear space,
+    with norm induced by inner product \[
+        \left<u,v\right>_{H^s}=\int_{\mathbb{R}^n}(1+|\xi|^2)^s
+        \overline{\hat{u}(\xi)}\hat{v}(\xi)\dd{\xi}
+    .\]
+\end{definition}
+Notice \(H^0(\mathbb{R}^n)\) is just \(L^2(\mathbb{R}^n)\), which followed
+immediately by Plancherel's formula. If we consider measure \[
+    \mu_s=(1+|\xi|^2)^{s}\dd{\xi}
+.\] We see \(u\in H^s(\mathbb{R}^n)\iff \hat{u}\in L^2(\mathbb{R}^n,\dd{\mu_s})\).
+With this observation we can prove \(H^s(\mathbb{R}^n)\) is a Hilbert space. For
+detail one may refer to Analysis123, page 827.
+% Proof may be filled later.
+
+Also, here we only defined Sobolev spaces of non-negative index, we can also define
+\(H^{-s}\) in similar way, and a beautiful theorem states \(H^{-s}\) is naturally
+the dual space of \(H^s\). For detail, again, one may refer to Analysis123.
+
+\hfill
+
+We have following properties of \(H^s\):
+\begin{prop}[Sobolev space of integer index]\hfill\par
+    Assume \(k\ge 0\) is integer, then \[
+        H^k(\mathbb{R}^n)=\{u\in L^2(\mathbb{R}^n):\partial^\alpha
+        u\in L^2(\mathbb{R}^n), \forall\,\text{multiple index }|\alpha|\le k\}
+    .\] 
+\end{prop}
+
+\begin{prop}
+    For any \(s\ge 0\), compactly supported smooth functions \(C_0^\infty
+    (\mathbb{R}^n)\) is dense subspace of \(H^s(\mathbb{R}^n)\) under Sobolev norm.
+\end{prop}
+\begin{proof}
+    First use \((1-\triangle)^{\frac{s}{2}}\colon H^0\to H^s\) isomorphism,
+    and \(\mathcal{S}\) dense in \(L^2\) to reduce case to prove
+    \(C_0^\infty\subset \mathcal{S}\) dense under \(H^s\) norm. Then do it the hard
+    way. Detail fill later.
+\end{proof}
+
+\begin{theorem}[Sobolev embedding into \(L^\infty\)]\hfill\par
+    Suppose \(s>\frac{n}{2}\), then we have continuous inclusion \[
+        H^s(\mathbb{R}^n)\hooklongrightarrow L^\infty(\mathbb{R}^n)
+    .\] \ie\ \(\exists\,C\) depends only on \(s\) \st\ \[
+        \|u\|_{L^\infty}\le C\|u\|_{H^s}
+    .\] Further, \(u\) is continuous (in the sense it equals a continuous function
+    a.e.) and tends to 0 as \(|x|\to \infty\).
+\end{theorem}
+\begin{proof}
+    To prove \(u\) is \(L^\infty\), we turn to prove \(\hat{u}\) is a \(L^1\)
+    function, then \(u\) is bounded by \(\|\hat{u}\|_{L^1}\) and is actually
+    a \(C_{\circ}\) function.
+    \begin{align*}
+        \int_{\mathbb{R}^n}|\hat{u}|\dd{\xi}
+        &=\int_{\mathbb{R}^n}\frac{1}{(1+|\xi|^2)^{\frac{s}{2}}}\cdot 
+        (1+|\xi|^2)^{\frac{s}{2}}|\hat{u}|\dd{\xi} \\
+        &\le \left(\int_{\mathbb{R}^n}\frac{1}{(1+|\xi|^2)^s}\dd{\xi}\right)
+        ^{\frac{1}{2}}\left(\int_{\mathbb{R}^n}(1+|\xi|^2)^s |\hat{u}|^2\dd{\xi}
+        \right)^{\frac{1}{2}} \\
+        &=C\|u\|_{H^s}
+    .\end{align*}
+    Notice \((1+|\xi|^2)^{-s}\) is integrable since \(s>\frac{n}{2}\).
+\end{proof}
+
+\begin{corollary}
+    Suppose \(s>\frac{n}{2}+k\), for \(k\) non-negative integer, then \[
+        H^s(\mathbb{R}^n)\hooklongrightarrow C^k(\mathbb{R}^n)
+    .\] Moreover the inclusion is continuous if we choose norm on
+    \(C^k(\mathbb{R}^n)\) be sum of \(L^\infty\) norm of \(\le k\) order derivatives.
+\end{corollary}
+
+\begin{prop}[Sobolev space of infinite index]\hfill\par
+    Notice by definition we have \(H^{s'}\hookrightarrow H^{s}\) for \(s<s'\).
+    Let \(H^\infty(\mathbb{R}^n)=\bigcap_{s\ge 0}H^s(\mathbb{R}^n)\), then we have \[
+        \mathcal{S}(\mathbb{R}^n)\subset H^{\infty}(\mathbb{R}^n)\subset 
+        C^\infty(\mathbb{R}^n)
+    .\] Where left hand side is the Schwarz function space.
+\end{prop}
+
+\begin{theorem}
+    If \(s>\frac{n}{2}\), then \(H^s(\mathbb{R}^n)\) is an algebra, \ie\ for any
+    \(u,v\in H^s(\mathbb{R}^n)\), we have \(uv\in H^s(\mathbb{R}^n)\), and
+    there is constant depending only on \(s\) such that \[
+        \|uv\|_{H^s}\le C\|u\|_{H^s}\|v\|_{H^s}
+    .\] 
+\end{theorem}
+\begin{remark}
+    (Will not report in seminar) For proof please refer to Analysis123, Page 834.
+\end{remark}
+
+\begin{lemma}[Sobolev inequality for homogeneous norm]\hfill\par
+    For \(u\in H^s(\mathbb{R}^n)\), define homogeneous Sobolev norm \[
+        \|u\|_{\dot{H}^s}=\left(
+        \int_{\mathbb{R}^n}|\xi|^{2s}|\hat{u}(\xi)|^2\dd{\xi}
+        \right)^{\frac{1}{2}}
+    .\] Suppose \(s<\frac{n}{2}\), \(\frac{1}{p^*}=\frac{1}{2}-\frac{s}{n}\),
+    then \[
+        \|u\|_{L^{p^*}}\le C\|u\|_{\dot{H}^s}
+    .\] 
+\end{lemma}
+\begin{proof}
+    We split \(u\) into lower and higher frequencies. Let \[
+        \hat{u}_l=\hat{u}\cdot \Id_{|\xi|<R},
+        \quad \hat{u}_h=\hat{u}\cdot \Id_{|\xi|\ge R}
+    .\] Then by definition \(u_l=\mathcal{F}^{-1}\hat{u}_l\), we have
+    \begin{align*}
+        |u_l|
+        &\le \int_{\mathbb{R}^n}|\hat{u}_l|\dd{\xi}
+        \le \left(\int_{|\xi|<R}|\xi|^{-2s}\right)^{\frac{1}{2}}
+        \left(\int_{\mathbb{R}^n}|\xi|^{2s}|\hat{u}_l|^2\right)^{\frac{1}{2}}\\ 
+        &= C_1R^{\frac{n}{2}-s}\|u_l\|_{\dot{H}^s} \\
+        &\le C_1R^{\frac{n}{2}-s}\|u\|_{\dot{H}^s}
+    .\end{align*}
+    Use the fact that \[
+        (\|u\|_{L^{p^*}})^{p^*}=\int_{\mathbb{R}^n}|u|^{p^*}\dd{x}
+        =p^*\int_{0}^{\infty}\lambda^{p^*-1}m(\{|u|>\lambda\})\dd{\lambda}
+    .\] Notice \[
+        m(\left\{|u|>\lambda\right\})\le m(\left\{|u_l|>\frac{\lambda}{2}\right\})
+        +m(\left\{|u_h|>\frac{\lambda}{2}\right\})
+    .\] Fix \(\lambda\), choose \(R\) \st\ \[
+        C_1R^{\frac{n}{2}-s}\|u\|_{\dot{H}^s}=\frac{\lambda}{2}
+    .\] Now \(\{|u_l|>\frac{\lambda}{2}\}=\emptyset\), we conclude \[
+        m(\left\{|u|>\lambda\right\}) \le m(\left\{|u_h|>\frac{\lambda}{2}\right\})
+    .\] By Markov's inequality, \[
+        m(\{|u|>\lambda\})\le \frac{1}{\lambda^p}\|u\|_{L^p}^p
+    .\] Then \begin{align*}
+        \int_{\mathbb{R}^n}|u|^{p^*}\dd{x}
+        &\le p^*\int_{0}^{\infty}\lambda^{p^*-1}\frac{1}{(\lambda/2)^2}
+        \|u_h\|_{L^2}^2\dd{\lambda} \\
+        &=4p^*\int_{0}^{\infty}\lambda^{p^*-3}\int_{|\xi|\ge R(\lambda)}
+        |\hat{u}|^2\dd{\xi}\dd{\lambda} \\
+        &=4p^*\int_{\mathbb{R}^n}|\hat{u}|^2\dd{\xi}\int_{0}^{2C_1|\xi|^{\frac{n}
+        {2}-s}\|u\|_{\dot{H}^s}}\lambda^{p^*-3}\dd{\lambda} \\
+        &=\cdots =C_2\|u\|_{\dot{H}^s}^{p^*}
+    .\end{align*}
+\end{proof}
+
+\begin{theorem}[Sobolev embedding into \(L^p\)]\hfill\par
+    Suppose \(s<\frac{n}{2},\forall\,p\in [2,p^*]\), we have \[
+        \|u\|_{L^p}\le C\|u\|_{H^s}
+    .\] \ie\ inclusion \(H^s\hookrightarrow L^p\) is continuous.
+\end{theorem}
+\begin{proof}
+    By interpolation H\"older inequality, we have
+    \begin{align*}
+        \|u\|_{L^p}
+        &\le \|u\|_{L^2}^{1-\theta}\|u\|_{L^{p^*}}^{\theta}
+        \quad \text{where }\frac{1}{p}=\frac{1-\theta}{2}+\frac{\theta}{p^*} \\
+        &\le C\color{cyan}{\|u\|_{L^2}^{1-\theta}\|u\|_{\dot{H}^s}^\theta} \\
+        &\le C(\|u\|_{L^2}+\|u\|_{\dot{H}^s}) \\
+        &= C\int_{\mathbb{R}^n}(1+|\xi|^{2s})|\hat{u}|^2\dd{\xi} \\
+        &\le C\int_{\mathbb{R}^n}(1+|\xi|^2)^s\|\hat{u}\|^2\dd{\xi} \\
+        &= C\|u\|_{H^s}
+    .\end{align*}
+\end{proof}
+
+\begin{theorem}[Gagliardo-Nirenberg inequality]\label{thm:G-N}
+    \hfill\par
+    Let \(p^*=\frac{2n}{n-2},n\ge 2\), suppose \(2\le p<p^*=\infty\) for \(n=2\),
+    \(2\le p\le p^*\) for \(n\ge 3\), then \[
+        \|u\|_{L^p}\le C\|u\|_{L^2}^{1-\theta}\|\nabla u\|_{L^2}^\theta,
+        \quad\text{ where }\theta=\frac{n(p-2)}{2p}.
+    \]
+\end{theorem}
+\begin{proof}
+    By looking carefully at proof of last theorem. Notice \(\|u\|_{\dot{H}^1}
+    =\|\nabla u\|_{L^2}\)
+\end{proof}
+
+\begin{theorem}[Generalized Gagliardo-Nirenberg inequality]\label{thm:general-G-N}
+    \hfill\par
+    Let \(1\le p,q,r\le \infty\), \(l>k\ge 0\), \(\frac{k}{l}\le \theta\le 1\),
+    satisfying \[
+        \frac{1}{p}-\frac{k}{n}=\frac{1-\theta}{q}+\theta(\frac{1}{r}-\frac{l}{n})
+    .\] Then \[
+        \|\nabla^k u\|_{L^p}\le C\|u\|_{L^q}^{1-\theta}\|\nabla^l u\|_{L^r}^{\theta}
+    ,\] where \(C\) only depends on \(p,q,r,k,l\), not on \(u\), with one exception:
+    If \(r>1\) and \(l-k-\frac{n}{r}\) is a non-negative integer, then \(\theta<1\)
+    is needed.
+\end{theorem}
+\begin{remark}
+    Let \(k=0,l=1,q=2,r=2\) in~\cref{thm:general-G-N}, we get exactly former
+    Gagliardo-Nirenberg inequality~\cref{thm:G-N}.
+\end{remark}
+We will NOT prove the generalized version here, please refer
+to~\cite{nirenberg_elliptic_2011} and~\cite{fiorenza_detailed_2021} for detailed
+proof and explanation.
+
+\hfill
+
+Now we turn to Sobolev spaces defined on a bounded region.
+\begin{definition}[Sobolev space on bounded region]\hfill\par
+    Suppose \(\Omega\subset \mathbb{R}^n\) is open (may not be bounded),
+    we can consider all \(L^2\) function on \(\Omega\), this is a subspace of
+    \(L^2(\mathbb{R}^n)\), we define \(H^s(\Omega)\) be \(L^2(\Omega)\cap 
+    H^s(\mathbb{R}^n)\). Then define ``Sobolev space with zero boundary value''
+    \(H_0^s(\Omega)\) be the closure of \(C_0^\infty(\Omega)\subset H^s(\Omega)\)
+    under \(H^s\) norm.
+\end{definition}
+\begin{theorem}
+    \(H^s(\Omega)\) and \(H_0^s(\Omega)\) are Hilbert spaces under above definition.
+\end{theorem}
+
+The mainly difference of \(H_0^1\) versus \(H^1\) is we can control \(L^2\) norm
+of a function with information of its derivative.
+\begin{theorem}[Poincaré inequality]\label{thm:poincare} \hfill\par
+    Suppose \(\Omega\subset \mathbb{R}^n\) is bounded region, then there exists a
+    constant \(C\) only depend on \(\Omega\) \st\ \(\forall\,u\in H_0^1(\Omega)\),
+    we have \[
+        \|u\|_{L^2}\le C\|\nabla u\|_{L^2}
+    .\] 
+\end{theorem}
+\begin{proof}
+    Fix a \(R>0\) \st\ \(\Omega\subset\{|x_n|\le R\}\). Since \(C_0^\infty(\Omega)\)
+    is dense in \(H_0^1(\Omega)\), only need to prove for \(u\in C_0^\infty(\Omega)
+    \). Denote \(x'=(x_1,\ldots,x_{n-1})\), we have
+    \begin{align*}
+        |u(x)|^2
+        &=|u(x',x_n)|^2=\left|\int_{-R}^{x_n}\pdv{u}{x_n}\gap(x',t)
+        \dd{t}\right|^2 \\
+        &\le \left(\int_{-R}^{R}|\partial_n u(x',t)|\cdot 1\dd{t}\right)^2 \\
+        &\le 2R\int_{-\infty}^{\infty}|\partial_n u(x',t)|^2\dd{t}
+    .\end{align*}
+    Notice RHS is not depend on \(x_n\), integrate w.r.t \(x_n\) from \(-R\) to
+    \(R\), we get \[
+        \int_{\mathbb{R}}|u(x',x_n)|^2\dd{x_n}\le 
+        4\mathbb{R}^2 \int_{-\infty}^{\infty}|\partial_n u(x',t)|\dd{t}
+    .\] Now integrate w.r.t \(x'\), we have \[
+        \int_{\mathbb{R}}|u|^2\dd{x}\le 4R^2\int_{\mathbb{R}^{n-1}}
+        \int_{-\infty}^{\infty}|\partial_n u(x',t)|^2\dd{t}\dd{x'}
+        \le 4R^2 \int_{\mathbb{R}^n}|\nabla u|^2\dd{x}
+    .\] 
+\end{proof}
+
+\begin{remark}
+    From the proof we see inequality still holds if only assumed \(\Omega\) can be
+    contained inside a pair of parallel hyperplanes.
+\end{remark}
+
+\begin{corollary}
+    We can define a new inner product on \(H_0^1(\Omega)\): \[
+        \left<u,v\right>_{H_0^1}=\left<\nabla u,\nabla v\right>_{L^2}
+    .\] Then the norm induced is equivalent to original one, making \(H_0^1(\Omega)\)
+    a Hilbert space.
+\end{corollary}
+
+Now we state an important theorem on Compactness of Sobolev embedding into 
+\(L^p\) spaces.
+\begin{theorem}[Rellich]\label{thm:cpt-Lp}\hfill\par
+    Suppose \(\Omega\subset \mathbb{R}^n\) is a bounded region, \(n\ge 2\),
+    then for any \(1\le p<p^*=\frac{2n}{n-2}\), the inclusion \[
+        H_0^1(\Omega)\hooklongrightarrow L^p(\Omega)
+        \quad\text{is compact.}
+    \] 
+\end{theorem}
+\begin{proof}
+    We first prove for case \(p=2\). Assume \(\overline{\Omega}\subset (0,2\pi)^n\),
+    for general \(\Omega\) only need to do a linear transformation.
+
+    Choose a compact
+    \(K\) \st\ \[
+        \Omega\subset \overline{\Omega}\subset K^\circ \subset K\subset (0,2\pi)^n
+    .\] Let \(\chi,\eta\in C_0^\infty((0,2\pi)^n)\) such that \(\eval{\chi}_\Omega
+    =1\) and \(\eval{\eta}_{\mathrm{supp(\chi)}}=1\). Now we prove \[
+        T_{\chi}\colon H^1(\mathbb{R}^n)\longrightarrow L^2(\mathbb{R}^n),
+        \ u\longmapsto \chi u
+    \] is compact operator. Let \(u_\eta=\eta\cdot u\), then \(T_\chi(u)=T_\chi
+    (u_{\eta})\). Consider Fourier series of \(u_{\eta}\), we have
+    \begin{align*}
+        T_{\chi}(u)(x)
+        &=\chi(x)\sum_{k\in \mathbb{Z}^n}c_k e^{ik\cdot x}
+        =\chi(x)\sum_{k\in \mathbb{Z}^n}\left(\frac{1}{(2\pi)^n}
+        \int_{(0,2\pi)^n}u_\eta(y)e^{-ik\cdot y}\dd{y}\right)e^{ik\cdot x} \\
+        &=\sum_{|k|\le N} c_k\chi(x)e^{ik\cdot x}
+        +\chi(x)\sum_{|k|>N}c_k e^{ik\cdot x} \\
+        &=:S_N(u)+R_N(u)
+    .\end{align*}
+    Obviously \(S_N\) has finite rank, hence is compact. We claim \(R_N\to 0\)
+    as linear operators, then \(T_\chi\) is compact as limit of compact operators.
+
+    Since \(\nabla u_\eta=\eta \nabla u+u \nabla\eta\), so \(\|\nabla u_\eta\|_{L^2}
+    \le C\|u\|_{H^1}\). We then estimate \(R_N(u)\): 
+    \begin{align*}
+        \|R_N(u)\|_{L^2}^2
+        &=\sum_{|k|>N}|c_k|^2\le \frac{1}{N^2}\sum_{|k|>N} |k|^2|c_k|^2 \\
+        &\le \frac{1}{N^2}\|\nabla u_\eta\|_{L^2}^2
+        \le \frac{C}{N^2}\|u\|_{H^1}^2
+    .\end{align*}
+    So \(\|R_N\|\le \frac{C}{N}\to 0\) as \(N\to \infty\).
+
+    Then consider composition \[
+        H_0^1(\Omega)\hooklongrightarrow H^1(\mathbb{R}^n)
+        \xlongrightarrow{T_\chi}L^2(\Omega)\subset L^2(\mathbb{R}^n),
+    \] it gives exactly inclusion \(H_0^1(\Omega)\hookrightarrow L^2(\Omega)\).
+    Hence the inclusion is compact.
+
+    Now for general \(p\), if \(1\le p<2\), the inclusion is compact since we can
+    split it into \[
+        H_0^1(\Omega)\hooklongrightarrow L^2(\Omega) \hooklongrightarrow L^p(\Omega)
+    .\] If \(2<p<p^*\), for any bounded sequence \(\{u_k\}\subset H_0^1(\Omega)\),
+    choose a \(L^2\) convergent subsequence, also denoted by \(\{u_k\}\), by
+    Gagliardo-Nirenberg inequality we have \[
+        \|u_k-u_l\|_{L^p}\le C\|u_k-u_l\|_{L^2}^{1-\theta}\|\nabla u_k
+        -\nabla u_l\|_{L^2}^\theta
+    .\] The first term is Cauchy and second is bounded, so \(\{u_k\}\) is Cauchy
+    sequence in \(L_p(\Omega)\), and hence convergent.
+\end{proof}
+
+\begin{remark}
+    Compactness of Sobolev embedding is very useful in finding solution of a PDE.
+    We'll see how it works in next section. There are other embedding theorems
+    of Sobolev spaces, one for general Sobolev spaces will be posted after this
+    remark, and the other one for inclusion into \(L^\infty\) will be proved
+    in~\cref{sec:morrey}.
+\end{remark}
+
+\begin{theorem}[Kondrachov]\hfill\par
+    Suppose \(\Omega\subset \mathbb{R}^n\) is a bounded region,
+    if \(k>l,\ k-\frac{n}{p}>l-\frac{n}{q}\), then embedding \[
+        W^{k,p}(\Omega)\hooklongrightarrow W^{l,q}(\Omega)
+        \quad\text{is compact.}
+    \]
+\end{theorem}
+
+\section{Existence and Uniqueness}
+Back to~\cref{prob:boundary-zero}, we reformulate it to
+\begin{problem}\label{prob:h01}
+    Suppose \(\Omega\subset \mathbb{R}^n\) is a bounded region, \(f\in L^2(\Omega)\),
+    solve equation \[
+        -\triangle u=f
+    \] for \(u\in H_0^1(\Omega)\). Notice the boundary condition is translated into
+    \(u\in H_0^1(\Omega)\).
+\end{problem}
+
+Define energy functional \[
+    E(u)=\frac{1}{2}\int_{\Omega}|\nabla u|^2\dd{x}-\int_{\Omega}fu\dd{x}
+.\] We claim that critical point of the energy functional must be solution
+of original equation. To see this, suppose \(u\) is critical point of \(E\),
+consider a variation \(u_t=u+t\vphi\), \(\vphi\in C_0^\infty(\Omega)\). Then
+\begin{align*}
+    \eval{\pd{t}}_{t=0}E(u+t\vphi)
+    &=\lim_{t\to 0}\int_{\Omega}\frac{1}{t}
+    \left(\frac{1}{2}(|\nabla u+t\nabla\vphi|^2-|\nabla u|^2)
+    -(f\cdot (u+t\vphi)-fu)\right)\dd{x} \\
+    &=\int_{\Omega}\left<\nabla u,\nabla\vphi\right>-f\vphi\dd{x} \\
+    &=\int_{\Omega}\vphi\triangle u-f\vphi\dd{x}
+.\end{align*}
+Hence we have \[
+    \left<-\triangle u-f,\vphi \right> =0,\quad
+    \forall\,\vphi\in C_0^\infty(\Omega)
+.\] \ie\ \(-\triangle u\xlongequal{\mathcal{D}'}f\).
+
+Then we'd like to find a concrete solution, we use the method of minimizing
+sequence. First notice \[
+    E(u)\ge \frac{1}{2}\|\nabla u\|_{L^2}^2-\|u\|_{L^2}\|f\|_{L^2}
+    \ge \frac{1}{2}\|\nabla u\|_{L^2}^2-C\|\nabla u\|_{L^2}\|f\|_{L^2},
+\] which is a quadratic function in \(\|\nabla u\|_{L^2}\), with principal
+term positive. Hence \(E\) has a lower bound, denote \(E_0=\inf_{u\in H_0^1
+(\Omega)} E(u)\). So we can choose a sequence \(\{u_k\}\subset H_0^1(\Omega)\)
+\st\ \[
+    E(u_k)\to E_0.
+\] \(\{u_k\}\) is bounded, otherwise \(\|\nabla u_k\|_{L^2}
+\) unbounded implies \(E(u_k)\to \infty\). Recall \(H_0^1(\Omega)\) is Hilbert
+space. So we can choose a weakly convergent subsequence, also denoted by
+\(\{u_k\}\), \st\ \[
+    u_k\xlongrightarrow{H_0^1\text{, w}}u\in H_0^1(\Omega)
+.\] Since \(H_0^1(\Omega)\hookrightarrow L^2(\Omega)\) compactly, we know \[
+    u_k\xlongrightarrow{L^2} u
+.\] Passing to subsequence we can assume the convergent is of fast \(L^2\).
+So we can also have \(u_k\to u\) a.e.
+
+By property of weak convergence, we have \[
+    \|u\|_{H_0^1}\le \liminf_{k\to \infty}\|u_k\|_{H_0^1}
+.\] And \[
+    \left<u_k,f\right> \to \left<u,f\right> 
+    \quad\text{by strong convergence in }L^2
+.\] Hence \[
+    E(u)\le \liminf_{k\to \infty}E(u_k)=E_0
+.\] This proves \(u\) is exactly a minimizer of energy, by variation argument
+above we conclude that \(u\) is a solution to~\cref{prob:h01}.
+
+For uniqueness, if there is two solutions \(u_1,u_2\in H_0^1(\Omega)\), then
+\(u_1-u_2\) solves equation \(-\triangle u\equiv 0\). Multiply by \(u\) and integrate
+by parts, we have \[
+    \int_{\Omega}\left<\nabla u,\nabla u\right>\dd{x}
+    =\int_{\Omega}|\nabla u|^2\dd{x} =0
+.\] So \(\nabla u=0\) a.e. Which shows \(u\) is constant on each connect component
+of \(\Omega\). But if constant \(c\in H_0^1(\Omega_1)\), apply Poincaré inequality,
+we get \[
+    c^2 m(\Omega_1)=\|c\|_{L^2}^2\le C\|\nabla c\|_{L^2}^2=0
+.\] So only constant function in \(H_0^1(\Omega)\) is 0. Thus we proved uniqueness.
+
+\section{Morrey's Lemma}\label{sec:morrey}
+To obtain regularity of solution to~\cref{prob:h01}, we need following important
+estimation by Morrey:
+\begin{lemma}[Morrey]
+    Let \(u\in C^\infty(B(x,R))\), then \[
+        |u(x)-u(y)|\le CR^{1-\frac{n}{p}}\left(\int_{B(x,R)}|\nabla u|^p
+        \right)^{\frac{1}{p}},
+    \] where \(n<p<\infty\) and \(y\in B(x,\frac{R}{2})\).
+\end{lemma}
+\begin{proof}
+    Let \(w\) be a unit vector, then \[
+        |u(x+rw)-u(x)|\le \int_{0}^{r}|\nabla u(x+sw)|\dd s
+    .\] Integrate w.r.t \(w\), 
+    \begin{align*}
+        \int_{|w|=1}|u(x+sw)-u(x)|\dd{\sigma}
+        &\le \int_{0}^{r}\int_{\mathbb{S}^{n-1}}|\nabla u(x+sw)|\dd{w}\dd{t} \\
+        &=\int_{0}^{r}\int_{\mathbb{S}^{n-1}}\frac{|\nabla u(x+sw)|}{s^{n-1}}
+        \cdot s^{n-1}\dd{w}\dd{s} \\
+        &=\int_{B(x,r)}\frac{|\nabla u|}{|x-y|^{n-1}}\dd{y}         
+    .\end{align*}
+    Multiply by \(r^{n-1}\) and integrate w.r.t \(r\) from 0 to \(R\), we get \[
+        \int_{B(x,R)}|u(x)-u(y)|\dd{y}\le \frac{R^n}{n}
+        \int_{B(x,R)}\frac{|\nabla u|}{|x-y|^{n-1}}\dd{y}
+    .\] Choose \(p>n\), use H\"older's inequality, we have
+    \begin{align*}
+        \int_{B(x,R)}|u(x)-u(y)|\dd{y}
+        &\le CR^n\|\nabla u\|_{L^p(B(x,R))}\left(
+        \int_{B(x,R)}\frac{\dd{y}}{|x-y|^{(n-1)\frac{p}{p-1}}}
+        \right)^{\frac{p-1}{p}} \\
+        &\le CR^n\cdot R^{1-\frac{n}{p}}\|\nabla u\|_{L^p(B(x,R))}
+    .\end{align*}
+    Now assume \(|x-y|=\frac{R}{2}\), then \[
+        |u(x)-u(y)|\le \frac{C}{R^n}\int_{B(x,\frac{R}{2})\cap B(y,\frac{R}{2})}
+        |u(x)-u(z)|+|u(u)-u(z)|\dd{z}
+    .\] Apply above estimate to two terms in RHS, we get
+    \begin{align*}
+        |u(x)-u(y)|&\le CR^{1-\frac{n}{p}}\|\nabla u\|_{L^p(B(x,R))} \\
+        &\le C|x-y|^{1-\frac{n}{p}}\|\nabla u\|_{L^p}
+    .\end{align*}
+\end{proof}
+\begin{remark}
+    By last inequality, we can rewrite Morrey's lemma as \[
+        \frac{|u(x)-u(y)|}{|x-y|^{1-\frac{n}{p}}}\le C\|\nabla u\|_{L^p},
+    \] provided by \(u\in C^\infty(\mathbb{R}^n)\).
+\end{remark}
+As an application, we prove \(H^s(\Omega)\hookrightarrow L^\infty(\Omega)\) is
+compact for \(s>\frac{n}{2}\) on bounded region \(\Omega\).
+
+\begin{definition}[H\"older space]
+    Let \(\Omega\) be a bounded region in \(\mathbb{R}^n\), recall for functions on
+    \(\Omega\) of class \(C^k\), we have its \(C^k\)-norm defined by \[
+        \|f\|_{C^k}=\sum_{0\le |\alpha|\le k}\|\partial^\alpha f\|_{L^\infty},
+    \] and \(C^k(\overline{\Omega})\) become a Banach space under this norm, where
+    the notation means all function of class \(C^k\) inside \(\Omega\) and all
+    \(\le k\) order derivatives are continuous on \(\overline{\Omega}\).
+
+    Now let \(0<\rho\le 1\), define \[
+        \|f\|_{C^{k,\rho}}=\|f\|_{C^k}+\sup_{|\beta|=k}
+        \frac{|\partial^\beta f(x)-\partial^\beta f(y)|}{|x-y|^{\rho}}
+    .\] One can verify all \(f\in C^k(\overline{\Omega})\) \st\ 
+    \(\|f\|_{C^{k,\rho}}<\infty\) form a Banach space under the norm, the space is
+    denoted by \(C^{k,\rho}(\overline{\Omega})\).
+\end{definition}
+\begin{remark}\hfill
+\begin{itemize}
+    \item 
+    Under this definition, the conclusion of Morrey's lemma can be translated as
+    \[
+        \|u\|_{C^{0,1-\frac{n}{p}}}\le C\|\nabla u\|_{L^p},
+    \] for any \(u\in C^\infty(\mathbb{R}^n)\) and \(p>n\).
+    \item 
+    Suppose \(k+\rho>l+\eta\), one can easily prove \(C^{k,\rho}\hookrightarrow
+    C^{l,\eta}\) is compact by Arzelà-Ascoli theorem.
+\end{itemize}
+\end{remark}
+
+\begin{theorem}[Compactness of Sobolev embedding into \(L^\infty\)]\label{thm:cpt-Linf}
+    \hfill\par
+    Let \(\Omega\subset \mathbb{R}^n\) be a bounded region, \(s>\frac{n}{2}\), and
+    \(s-\frac{n}{2}\) is not an integer, then inclusion \(H_0^s(\Omega)
+    \hookrightarrow L^\infty(\Omega)\) is compact.
+\end{theorem}
+\begin{proof}
+    For any \(u\in H_0^s(\Omega)\), extend \(u\) by 0 we get \(u\) defined on
+    \(\mathbb{R}^n\), and in \(H^s(\mathbb{R}^n)\). Choose a compactly supported
+    good integral kernel family \(\chi_\eps\), we have \(u_\eps=\chi_\eps*u\in 
+    C_0^\infty(\mathbb{R}^n)\), and converges to \(u\) in \(H^s(\mathbb{R}^n)\).
+    We have proved \(H^s(\mathbb{R}^n)\hookrightarrow C^0_\circ(\mathbb{R}^n)
+    \hookrightarrow L^\infty(\mathbb{R}^n)\) is continuous, so the convergent
+    is actually uniform.
+
+    Apply Morrey's lemma, we have \[
+        \|u_\eps\|_{C^{0,1-\frac{n}{p}}}\le C\|\nabla u_\eps\|_{L^p}
+    .\] Let \(\eps\to 0^+\), we may take \(\eps\) in last inequality away.
+
+    Now apply Gagliardo-Nirenberg inequality~\cref{thm:general-G-N}, let
+    \(k=1,r=2,\theta=1\), we get \[
+        \|\nabla u\|_{L^p}\le \|\nabla^{l+1}u\|_{L^2},
+    \] with condition \(\frac{1}{p}=\frac{1}{2}-\frac{l}{n}\). Let \(l=s-1\) and
+    rewrite the condition, we get \[
+        \begin{cases}
+            p=\frac{2n}{n-2l}\implies l<\frac{n}{2}; \\
+            l=\frac{n}{2}-\frac{n}{p}\implies l>\frac{n}{2}-1.
+        \end{cases}
+    \] Put them together, we get \[
+        \|u\|_{C^{0,1-\frac{n}{p}}}\le C\|\nabla^s u\|_{L^2}\le C\|u\|_{H^s},
+    \]
+    where \(\frac{n}{2}<s<\frac{n}{2}+1,\ p=\frac{2n}{n-2s+2}\).
+    This gives continuous inclusion \(H_0^s(\Omega)\hookrightarrow
+    C^{0,1-\frac{n}{p}}(\overline{\Omega})\).
+
+    Notice for any \(0<\rho\le 1\), \(C^{0,\rho}(\overline{\Omega})\hookrightarrow
+    L^{\infty}(\overline{\Omega})\) is compact, which
+    immediately followed from Arzelà–Ascoli theorem. So we have \(H_0^s
+    \hookrightarrow L^\infty(\overline{\Omega})\) is also compact. Since functions
+    in \(H_0^s(\Omega)\) are continuous and take 0 value on boundary, the image
+    of the inclusion is contained in \(L^\infty(\Omega)\), we get desired
+    compactness.
+
+    For case \(s>\frac{n}{2}+1\), write \(s=s_0+k\) for \(\frac{n}{2}<s_0<\frac{n}{2}
+    +1\), \(k\) is non-negative integer. Just use the fact that \(H_0^s(\Omega)
+    \hookrightarrow H_0^{s_0}(\Omega)\) continuously.
+\end{proof}
+\begin{remark}
+    Write \(s=s_0+k\) as above, the conclusion can be improved to \(H_0^s(\Omega)
+    \hookrightarrow C^k(\overline{\Omega})\) compactly. For an alternate proof, one
+    can refer to Theorem 1.50 in~\cite{bahouri_fourier_2011}.
+\end{remark}
+
+By similar method, we can generalize Morrey's lemma to complete Riemannian manifolds.
+\begin{theorem}
+    
+\end{theorem}
+
+\section{Regularity of Solution}
+In this section, we assume in~\cref{prob:h01}, \(f\in C^\infty(\overline{\Omega})\).
+Our goal is to prove the solution \(u\in C^\infty(\Omega)\). Note we only prove for
+regularity inside \(\Omega\), boundary regularity is further complicated and depends
+on regularity of the boundary itself. There is multiple ways to obtain regularity.
+First one is to apply Morrey's lemma:
+
+Choose a ``good'' integration kernel \(\chi_\eps\in C_0^\infty\), \st\ \(u_\eps=
+u*\chi_\eps\xrightarrow{H^1} u\). Note the convolution is in \(\mathbb{R}^n\),
+the support of \(u_\eps\) may no longer \(\subset\Omega\). We have \(u_\eps \in 
+C_0^\infty\), and \[
+    \|\nabla^l u_\eps\|_{L^2}=\|\nabla^{l-2}(\nabla^2 u)*\chi_\eps\|_{L^2}
+    =\|\nabla^{l-2}f_\eps\|_{L^2},\quad \text{where }f_\eps=f*\chi_\eps
+.\] Notice for any \(\psi\in C_0^\infty(\mathbb{R}^n)\), \[
+    \int_{\mathbb{R}^n}(\triangle \psi)^2=\sum_{i,j}\int_{\mathbb{R}^n}\psi_{ii}
+    \psi_{jj}=-\sum_{i,j}\int_{\mathbb{R}^n}\psi_i\psi_{ijj}
+    =\sum_{i,j}\int_{\mathbb{R}^n}\psi_{ij}\psi_{ij}
+    =\int_{\mathbb{R}^n}|\mathrm{Hess}\,\psi|^2
+.\] 
+
+First take \(p=\infty,k=0,q=r\) in Gagliardo-Nirenberg inequality, and assume
+\(mq>n\), then \[
+    \|u\|_{L^\infty}\le C\|\nabla^l u\|_{L^q}^\theta \|u\|_{L^q}^{1-\theta}
+.\] Where \(\theta=\frac{n}{mq}\). This proves \(u_\eps\) is uniformly bounded.
+
+Then take \(\theta=1,r=2,k=1\), we have \[
+    \|\nabla u\|_{L^p}\le \|\nabla^{l+1}u\|_{L^2},\quad \frac{1}{p}-\frac{1}{n}
+    =\frac{1}{2}-\frac{l+1}{n}
+.\] To make \(p>n\), let \(l>\frac{n}{2}-1\), and \(p>0\) gives
+\(l<\frac{n}{2}\). By Morrey's lemma \[
+    \frac{|u(x)-u(y)|}{|x-y|^{1-\frac{n}{p}}}\le CR^{1-\frac{n}{p}}\|\nabla u\|_{L^p}
+\] for smooth \(u\).
+
+Put these together, we have
+\begin{align*}
+    \frac{|u_\eps(x)-u_\eps(y)|}{|x-y|^{1-\frac{n}{p}}}
+    &\le C\|\nabla u\|_{L^{p_0}},\quad \text{where }p_0=\frac{2n}{n-2l} \\
+    &\le C\|\nabla^{l+1}u\|_{L_2} \\
+    &=C\|\nabla^{l-1}f_\eps\|_{L^2}<\infty
+.\end{align*}
+Further \[
+    \frac{|\nabla^k u_\eps(x)-\nabla^{k}u_\eps(y)|}{|x-y|^{1-\frac{n}{p}}}
+    \le C\|\nabla^{l+k-1}f_\eps\|_{L_2}<\infty
+.\] Hence \(\nabla^{k}u_\eps\) is equiv-continuous and uniformly bounded in \(\eps\).
+By A-A thm, we have \[
+    \nabla^k u_\eps\xlongrightarrow{\text{uni.}}\nabla^k u\in C^0
+.\] Hence \(u\in C^\infty\) inside \(\Omega\).
+
+\hfill
+
+Another approach is to ``bootstrap'', write \(\tilde{u}=\chi u\), where \(\chi\)
+is \(C_0^\infty\) on \(\Omega\) and is \(1\) around some point \(p\), a smooth
+bump function.
+We have equation for \(\tilde{u}\) become \[
+    -\triangle \tilde{u}=\chi f-u\triangle\chi-2\left<\nabla\chi,\nabla u\right> 
+.\] First \(u\in L^2, \nabla u\in L^2\implies \) RHS \(\in L^2\).
+So \(|\xi|^2\hat{\tilde{u}}\in L^2\), which shows \(\tilde{u}\in H^2\). Then
+RHS \(\in H^2\implies \tilde{u}\in H^3\), repeatedly apply the argument we have \[
+    \tilde{u}\in \bigcap_{k\ge 0}H^k\subset C^{\infty}(\mathbb{R}^n)
+.\] So \(u\) is smooth at \(p\), and hence at any \(p\in \Omega\).
+
+\newpage
+\printbibliography{}
+
+\end{document}

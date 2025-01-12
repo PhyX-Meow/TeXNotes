@@ -1,0 +1,37 @@
+% !TEX program = xelatex
+\documentclass[UTF8,12pt]{article}
+\usepackage[unicode]{phyxmeow}
+
+\geometry{a4paper,scale=0.8}
+\allowdisplaybreaks
+
+\begin{document}
+	Let $A_n = \sqrt{1+2\sqrt{1+3\sqrt{\cdots\sqrt{1+n}}}}$.\\
+	We will prove that $A_n$ has a limit and the limit is $3$.
+	First, we have estimation
+	\begin{equation}
+		\begin{aligned}
+			A_n&<\sqrt{3\sqrt{1+3\sqrt{\cdots\sqrt{1+n}}}}\\
+			&<\sqrt{3\sqrt{4\sqrt{\cdots\sqrt{1+n}}}}\\
+			&=(\prod_{k=3}^{n+1}k^{2^{-k}})^4.
+		\end{aligned}
+	\end{equation}
+	Therefore, \[
+		\log A_n < 4 \sum_{k=3}^{n+1}\frac{\log k}{2^k}
+	.\]
+	It's easy to show that when $n \to \infty$, the upper bound converges, so as $A_n$.\\
+	Let $A$ be the limit.\\
+	Define $\{a_n\}$ as \[
+		a_1=A,\quad a_{n}=\frac{a_{n-1}^2-1}{n}
+	.\]
+	Suppose $A > 3$, say $A > 3+\epsilon$, where $\epsilon$ is a small positive number.\\
+	If $a_{n-1} > n+1+\epsilon_{n-1}$, by the recursion formula, \[
+		a_n=\frac{a_{n-1}^2-1}{n}>\frac{(n+1+\epsilon_{n-1})^2-1}{n}>n+2+2\epsilon_{n-1}
+	.\]
+	We can estimate that $a_n > n+2+2^{n-1}\epsilon$.\\
+	However, exist $N$ s.t. when $n>N$, $A_n>A-\frac{\epsilon}{2}$ by the definition of limit.\\
+	So if we use $A_n,n>N$ as $a_1$, then $1 = a_n > n+2+2^{n-2}\epsilon$, which is a contradiction.\\
+	Suppose $A < 3$, we can similarly get $a_n < n+2-2^{n-1}\epsilon$.\\
+	Since $2^{n-1}\epsilon$ grows much faster than $n+2$, a sufficiently large $n$ will make $a_n$ negative, 
+	which, is again a contradiction.
+\end{document}
