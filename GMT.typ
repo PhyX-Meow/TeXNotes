@@ -1,6 +1,6 @@
 #import "@phyxmeow/preamble:0.1.0": *
 #show: preamble.with(
-  font: "xcharter",
+  font: "concrete",
   numbering: "1.1.",
 )
 
@@ -986,6 +986,7 @@ In particular, let $r->0$, since $Theta^n (mu,x_0)>=1$, we get $
   The inequality remains valid as long as $H$ is locally integrable.
 ]
 - #text(blue)[What if no $h>=0$?]
+- #text(red)[Split $h$ into $h_+$ and $h_-$ and everything works.]
 
 #theorem(name:"Convex hull property for minimal surfaces")[
   Suppose $K cc RR^(n+k)$ is compact, $U=RR^(n+k)\\K$, $V=(M,theta)$ is stationary in $U$ and $mu_V$ has
@@ -1047,3 +1048,41 @@ In particular, let $r->0$, since $Theta^n (mu,x_0)>=1$, we get $
     d_"H" lr((K sect spt mu_(V_i),K sect spt mu),size:#12pt)<eps
   , $ #ie $spt mu_(V_i)->spt mu$ locally in Hausdorff distance.
 ]
+
+= Allard Regularity Theorem
+Roughly, the theorem says that: Suppose $V=(M,theta)$ rectifiable $n$-varifold has locally $L^p (mu_V)$ mean
+curvature, $p>n$, $theta>=1$ $mu_V$-a.e. If $x in spt mu_V$ #st $
+  (mu_V (B(x,r)))/(omega_n r^n) "sufficiently close to" 1
+$ for some sufficiently small $r$ (depending on $norm(H)_(L^p)$), then $V$ $C^(1,1-n/p)$ near $x$.
+
+- A key idea is to approximate $V$ locally by a graph of harmonic function.
+
+== Harmonic approximation
+Suppose $M cc RR^(n+k)$ is an smooth embedded $n$-manifold (may be weaken to $C^2$) with $H=0$, #ie minimal.
+Wlog assume $0 in M$ and locally $M$ is a graph of $u:RR^n->RR^k$ with $nd u (0)=0$. Locally the area is $
+  cal(A)_R (u)=int_(B(0,R))sqrt(det\(delta_(i j)+nd_i u dot.c nd_j u\))dd(x)
+. $ For $abs(nd u)<eps_0$ small, Taylor expansion gives $
+  cal(A)_R (u)=int_(B(0,R))1+1/2 abs(nd u)^2+F(nd u)dd(x)
+, $ where $F$ is a real analytic map $RR^(n k)->RR$, and there is $C=C(n,k)$, such that $
+  abs(F(P))<=C abs(P)^4, abs((nd F)(P)) <=C abs(P)^3,quad P=(P_(i j))_(n times k),abs(P)<eps_0
+. $ $cal(A)_R$ is stationary under variation supported on $B(0,R)$, so we have $
+  int_(B(0,R))sum_i nd_i u dot.c  nd_i vphi dd(x)=int_(B(0,R))sum_(i,j)A_(i j)(nd u)nd_i vphi^j dd(x),
+  quad "where" A_(i j)=nd_(p_(i j))F
+, $ for any $vphi:RR^n->RR^k$ supported on $B(0,R)$. Integrating by parts we get $
+  lap u=sum_(i,j)a_(i j)(nd u)nd_i nd_j u,quad a_(i j)(P)=O(abs(P)^2)
+. $ Hence if $abs(nd u)$ is small, $u$ is almost a harmonic function: Suppose $abs(nd u)<eps_0$ and let $v$
+be the harmonic function that agrees with $u$ on $pt B(0,R)$, we have $
+  int_(B(0,R))sum_i nd_i v dot.c nd_i vphi dd(x)=0,quad forall vphi in C_0^oo (B(0,R))
+. $ Then $
+  int_(B(0,R))sum_i nd_i (u-v)dot.c nd_i vphi=int_(B(0,R))sum_(i,j)A_(i j)(nd u)nd_i vphi^j dd(x)
+. $ Let $vphi=u-v$ (#text(blue)[could do this since $u-v in H_0^1(B(0,R))$?]), we have $
+  norm(nd (u-v))_(L^2 (B(0,R)))^2&=int_(B(0,R))sum_(i,j)A_(i j)(nd u)nd_i (u^j-v^j) \
+  &<=sum_(i,j)norm(A_(i j)(nd u))_(L^2 (B(0,R))) norm(nd (u-v))_(L^2 (B(0,R)))
+. $ Hence $
+  norm(nd (u-v))_(L^2 (B(0,R)))^2<=sum_(i,j)norm(A_(i j)(nd u))_(L^2 (B(0,R)))^2
+  <=C int_(B(0,R))abs(nd u)^6 dd(x)
+. $ If $sup_(B(0,R))abs(nd u)=eps<eps_0$, we have $
+  norm(nd (u-v))_(L^2)<=C eps^2 norm(nd u)_(L^2) "on" B(0,R)
+. $ 
+
+== Lipschitz approximation
