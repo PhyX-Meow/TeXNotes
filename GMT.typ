@@ -1,6 +1,6 @@
 #import "@phyxmeow/preamble:0.1.0": *
 #show: preamble.with(
-  font: "concrete",
+  font: "xcharter",
   numbering: "1.1.",
 )
 
@@ -1086,3 +1086,99 @@ be the harmonic function that agrees with $u$ on $pt B(0,R)$, we have $
 . $ 
 
 == Lipschitz approximation
+Define the quantity _tilt excess_ $
+  E(x_0,r,T)=1/r^n int_(B(x_0,r))abs(pi_(T_x M)-pi_T)^2 dd(mu_V)
+, $ where $B(x_0,r)cc U$, $T cc RR^(n+k)$ an $n$-dim subspace and $pi_T$ is the orthogonal
+projection map onto $T$. To see what this is, WLOG assume $T=RR^n times {0}$. Note that orthogonal projections
+are symmetric matrices, write $pi_(T_x M)=(p_(i j))$ we have  $
+  abs(pi_(T_x M)-pi_T)^2=tr (pi_(T_x M)^2+pi_(T_x M)^2-2pi_(T_x M)dot.c pi_T)
+  =2n-2sum_(i=1)^n p_(i i)=2sum_(i=n+1)^(n+k)p_(i i)
+. $ Note that $nd^M x^i=pi_(T_x M)e_i$, so $
+  abs(nd^M x^i)^2=abs(pi_(T_x M)e_i)^2=sum_j p_(i j)^2=(p^t p)_(i i)=p_(i i)
+, $ Hence $
+  1/r^n int_(B(x_0,r))sum_(i=1)^k abs(nd^M x^(n+i))^2 dd(mu_V)=1/2 E(x_0,r,T)
+. $ When $M$ is locally a graph of function $u$, this equals to the energy of $u$.
+
+#lemma[
+  Suppose $B(x_0,R)cc U$, then for any $n$-dim $T cc RR^(n+k)$ and $beta in (0,1)$ we have $
+    1/R^n int_(B(x_0,beta r))abs(p_(T_x M)-p_T)dd(mu_V)
+    <=C/R^n int_(B(x_0,r))abs(d(x,x_0+T)/R)^2 dd(mu_V)+C/R^(n-2)int_(B(x_0,r))abs(H)^2 dd(mu_V)
+  , $ where $C=C(n,beta)$
+]
+#proof[
+  WLOG assume $x_0=0$ and $T=RR^n times {0}$, let $
+    X=eta(x)^2 x',quad x'=(0,...,0,x^(n+1),...,x^(n+k)),eta>=0 "chosen later"
+  . $ Note that $
+    div_M x'=sum_(i=n+1)^(n+k)p_(i i)=1/2 sum_(i j)abs(p_(i j)-eps_(i j))^2=1/2 abs(pi_(T_x M)-pi_T)^2=:F
+  , $ where $(eps_(i j))$ is the matrix of $pi_T$. So $
+    int_M F eta^2 dd(mu_V)=-int_M 2eta p_(i j) nd^i eta (x')^j+eta^2 x'dot.c H dd(mu_V)
+  . $ Note that $eps_(i j)=0$ for $j>n$ and $(x')^j=0$ for $j<n$, we have $
+    int_M F eta^2 dd(mu_V)&=-int_M 2eta (p_(i j)-eps_(i j)) nd^i eta (x')^j+eta^2 x'dot.c H dd(mu_V) \
+    &<=int_M 2eta sqrt(2F) abs(nd eta)abs(x')+eta^2 abs(x')abs(H)dd(mu_V)
+  . $ This gives (by $2a b<=a^2+b^2$) $
+    int_M F eta^2 dd(mu_V)<=16int_M abs(x')^2 abs(nd eta)^2+abs(x')abs(H)eta^2 dd(mu_V)
+  . $ Choose $eta==1$ on $B(0,beta R)$, supported on $B(0,R)$ and $abs(nd eta)<=2/((1-beta)R)$, using that $
+    2abs(x')abs(H)<=abs(x')^2/R^2+R^2 abs(H)^2 quad "and" quad abs(x')=d(x,0+T)
+  , $ we get the desired inequality.
+]
+
+Now we propose the *main assumption*: (Denote $mu_V=mu$ for simplicity). \
+#h(2em)
+Assume $theta>=1$ $mu$-a.e. in $U$,
+$0 in spt mu$, $B(0,R)cc U$, and $
+  (mu(B(0,R)))/(omega_n R^n)<=1+delta,quad R^(1-n/p)norm(H)_(L^p (B(0,R)))<=delta
+, $ where $delta in (0,1/4]$ to be specified later.
+
+Note that by the canonical representatives, we have $M_V=spt mu$ and
+$Theta_V=Theta^n (mu,x)$ in place of $M,theta$. Since $Theta_V$ is upper semi-continuous, we have
+$Theta_V>=1$ a.e. in $spt mu sect B(0,R)$.
+
+By monotonicity formula, we have for any $x in B(0,2delta)$, $r<R'=(1-2delta)R$, $
+  1-C_1 delta<= mu(B(x,r))/(omega_n r^n)<=(1+C_2 delta)mu(B(x,R'))/(omega_n (R')^n)
+  <= (1+C_2 delta)/(1-2delta)^n mu(B(0,R))/(omega_n R^n)<=1+C_3 delta
+. $ In particular, we have $
+  Theta(x)<=1+C delta, quad forall x in spt mu sect B(0,2delta R)
+. $ Also, the monotonicity gives $
+  int_(B(x,(1-2delta)R)) abs((y-x)^perp)^2/abs(y-x)^(n+2)dd(mu(y))<=C delta,quad
+  x in spt mu sect B(0,2delta R)
+. $ 
+#lemma(name:"Affine approximation")[
+  If $delta<=1/16$, and the main assumption holds, then for any $x_0 in spt mu_V sect B(0,2delta R)$ and 
+  $r_0<=4delta R$, there is an $n$-dim subspace $T=T(x_0,r_0)$ such that $
+    sup_(spt mu_V sect B(x_0,r_0))d(x,x_0+T)<=C(n,k,p) delta^(1/(2n+2))r_0
+  . $ 
+]
+#proof[
+  Since $delta<=1/16$, we have $2r_0<=8delta R<(1-2delta)^2 R$, apply above discussion to smaller ball
+  $B(x_0,(1-2delta)R)cc B(0,R)$, thus for $delta<=delta_0$ small, $
+    1/2<=1-C delta<= mu(B(x,r))/(omega_n r^n)<=1+C delta<=2,quad
+    forall x in spt mu sect B(x_0,r_0),r<=2r_0
+  . $ Also we have $
+    int_(B(x,2r_0))abs(p_(N_x M)(y-x))^2/(2r_0)^(n+2)dd(mu)
+    <=int_(B(x,2r_0))abs(p_(N_x M)(y-x))^2/abs(y-x)^(n+2)dd(mu)
+    <=C delta
+  . $ Let $0<alpha<1$ to be choose later, there are finitely many $xi_j in spt mu sect B(x_0,r_0)$ such
+  that $B lr((xi_j,delta^alpha r_0\/2),size:#12pt)$ maximal disjoint, then $
+    spt mu sect B(x_0,r_0)cc union.big_(j=1)^N B lr((xi_j,delta^alpha r_0),size:#12pt)
+  . $ Then we have $
+    (N omega_n delta^(alpha n)r_0^n)/2^(n+1)
+    <=sum_(j=1)^N mu lr((B lr((xi_j,delta^alpha r_0\/2),size:#12pt)),size:#12pt)
+    <=mu(B(0,2r_0))<=omega_n 2^(n+1)r_0^n
+  . $ Hence $N<=4^(n+1) delta^(-alpha n)$. Now since $B(x_0,r_0)cc B lr((xi_j,2r_0),size:#12pt)$ we have $
+    int_(B(x_0,r_0)) sum_j abs(p_(N_x M)\(x-xi_j\))^2<=C N delta r_0^(n+2)=C' delta^(1-alpha n)r_0^(n+2)
+  . $ By Markov's inequality, for any $K>0$ we have $
+    sum_j abs(p_(N_x M)\(x-xi_j\))^2<=C'' K delta^(1-alpha n)r_0^(n+2) quad "out of a set of" mu"-measure"<=1/K
+  . $ Note that $mu(B(x_0,delta^alpha r_0))>=1/2 omega_n delta^(alpha n)r_0^n$. Let $K^(-1)=1/4 omega_n
+  delta^(alpha n)r_0^n$, then there exists some $x_1 in B(x_0,delta^alpha r_0)$ such that $
+    sum_j lr(abs(p_(N_(x_1) M)\(x_1-xi_j\)),size:#16pt)^2<=C delta^(1-2alpha n)r_0^2
+  . $ Hence $
+    lr(abs(p_(N_(x_1) M)\(x_1-xi_j\)),size:#16pt)<=C delta^(1/2-alpha n)r_0, forall 1<=j<=N
+  . $ Note that $abs(x_1)<=delta^alpha r_0$, let $alpha=1/(2n+2)$, we get $
+    lr(abs(p_(N_(x_1) M)xi_j),size:#14pt)<=C lr((delta^(1/2-alpha n)+delta^alpha),size:#12pt)r_0
+    =C delta^(1/(2n+2)) r_0 
+  . $ Choose $T=T_(x_1)M$, we have shown that all $xi_j$ lie in the $\(C delta^(1/(2n+2))r_0\)$-neighborhood
+  of $T$. By the definition of $xi_j$'s, we have $
+    d(y,T)<=C delta^(1/(2n+2)), quad forall x in B(x_0,r_0)
+  . $ 
+]
+- #text(blue)[Does closed/open ball matter??]
