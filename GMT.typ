@@ -1101,10 +1101,10 @@ are symmetric matrices, write $pi_(T_x M)=(p_(i j))$ we have  $
 
 #lemma[
   Suppose $B(x_0,R)cc U$, then for any $n$-dim $T cc RR^(n+k)$ and $beta in (0,1)$ we have $
-    1/R^n int_(B(x_0,beta r))abs(p_(T_x M)-p_T)dd(mu_V)
-    <=C/R^n int_(B(x_0,r))abs(d(x,x_0+T)/R)^2 dd(mu_V)+C/R^(n-2)int_(B(x_0,r))abs(H)^2 dd(mu_V)
+    1/R^n int_(B(x_0,beta R))abs(pi_(T_x M)-pi_T)dd(mu_V)
+    <=C/R^n int_(B(x_0,R))abs(d(x,x_0+T)/R)^2 dd(mu_V)+C/R^(n-2)int_(B(x_0,R))abs(H)^2 dd(mu_V)
   , $ where $C=C(n,beta)$
-]
+] <allard-2-4>
 #proof[
   WLOG assume $x_0=0$ and $T=RR^n times {0}$, let $
     X=eta(x)^2 x',quad x'=(0,...,0,x^(n+1),...,x^(n+k)),eta>=0 "chosen later"
@@ -1148,14 +1148,15 @@ By monotonicity formula, we have for any $x in B(0,2delta)$, $r<R'=(1-2delta)R$,
     sup_(spt mu_V sect B(x_0,r_0))d(x,x_0+T)<=C(n,k,p) delta^(1/(2n+2))r_0
   . $ 
 ]
+- #text(blue)[Need $delta$ small enough?]
 #proof[
   Since $delta<=1/16$, we have $2r_0<=8delta R<(1-2delta)^2 R$, apply above discussion to smaller ball
   $B(x_0,(1-2delta)R)cc B(0,R)$, thus for $delta<=delta_0$ small, $
     1/2<=1-C delta<= mu(B(x,r))/(omega_n r^n)<=1+C delta<=2,quad
     forall x in spt mu sect B(x_0,r_0),r<=2r_0
   . $ Also we have $
-    int_(B(x,2r_0))abs(p_(N_x M)(y-x))^2/(2r_0)^(n+2)dd(mu)
-    <=int_(B(x,2r_0))abs(p_(N_x M)(y-x))^2/abs(y-x)^(n+2)dd(mu)
+    int_(B(x,2r_0))abs(pi_(N_x M)(y-x))^2/(2r_0)^(n+2)dd(mu)
+    <=int_(B(x,2r_0))abs(pi_(N_x M)(y-x))^2/abs(y-x)^(n+2)dd(mu)
     <=C delta
   . $ Let $0<alpha<1$ to be choose later, there are finitely many $xi_j in spt mu sect B(x_0,r_0)$ such
   that $B lr((xi_j,delta^alpha r_0\/2),size:#12pt)$ maximal disjoint, then $
@@ -1165,20 +1166,46 @@ By monotonicity formula, we have for any $x in B(0,2delta)$, $r<R'=(1-2delta)R$,
     <=sum_(j=1)^N mu lr((B lr((xi_j,delta^alpha r_0\/2),size:#12pt)),size:#12pt)
     <=mu(B(0,2r_0))<=omega_n 2^(n+1)r_0^n
   . $ Hence $N<=4^(n+1) delta^(-alpha n)$. Now since $B(x_0,r_0)cc B lr((xi_j,2r_0),size:#12pt)$ we have $
-    int_(B(x_0,r_0)) sum_j abs(p_(N_x M)\(x-xi_j\))^2<=C N delta r_0^(n+2)=C' delta^(1-alpha n)r_0^(n+2)
+    int_(B(x_0,r_0)) sum_j abs(pi_(N_x M)\(x-xi_j\))^2<=C N delta r_0^(n+2)=C' delta^(1-alpha n)r_0^(n+2)
   . $ By Markov's inequality, for any $K>0$ we have $
-    sum_j abs(p_(N_x M)\(x-xi_j\))^2<=C'' K delta^(1-alpha n)r_0^(n+2) quad "out of a set of" mu"-measure"<=1/K
+    sum_j abs(pi_(N_x M)\(x-xi_j\))^2<=C'' K delta^(1-alpha n)r_0^(n+2) quad "out of a set of" mu"-measure"<=1/K
   . $ Note that $mu(B(x_0,delta^alpha r_0))>=1/2 omega_n delta^(alpha n)r_0^n$. Let $K^(-1)=1/4 omega_n
   delta^(alpha n)r_0^n$, then there exists some $x_1 in B(x_0,delta^alpha r_0)$ such that $
-    sum_j lr(abs(p_(N_(x_1) M)\(x_1-xi_j\)),size:#16pt)^2<=C delta^(1-2alpha n)r_0^2
+    sum_j lr(abs(pi_(N_(x_1) M)\(x_1-xi_j\)),size:#16pt)^2<=C delta^(1-2alpha n)r_0^2
   . $ Hence $
-    lr(abs(p_(N_(x_1) M)\(x_1-xi_j\)),size:#16pt)<=C delta^(1/2-alpha n)r_0, forall 1<=j<=N
+    lr(abs(pi_(N_(x_1) M)\(x_1-xi_j\)),size:#16pt)<=C delta^(1/2-alpha n)r_0, forall 1<=j<=N
   . $ Note that $abs(x_1)<=delta^alpha r_0$, let $alpha=1/(2n+2)$, we get $
-    lr(abs(p_(N_(x_1) M)xi_j),size:#14pt)<=C lr((delta^(1/2-alpha n)+delta^alpha),size:#12pt)r_0
+    lr(abs(pi_(N_(x_1) M)xi_j),size:#14pt)<=C lr((delta^(1/2-alpha n)+delta^alpha),size:#12pt)r_0
     =C delta^(1/(2n+2)) r_0 
   . $ Choose $T=T_(x_1)M$, we have shown that all $xi_j$ lie in the $\(C delta^(1/(2n+2))r_0\)$-neighborhood
   of $T$. By the definition of $xi_j$'s, we have $
-    d(y,T)<=C delta^(1/(2n+2)), quad forall x in B(x_0,r_0)
+    d(x,x_0+T)<=C delta^(1/(2n+2))r_0, quad forall x in B(x_0,r_0)
   . $ 
 ]
 - #text(blue)[Does closed/open ball matter??]
+
+#remark[
+  Note that $mu(B(x_0,r_0))<=2 omega_n r_0^n$, Hölder inequality gives $
+    r^(1-n/2)norm(H)_(L^2 (B(x,r)))<=C r^(1-n/p)norm(H)_(L^p (B(x,r)))
+  . $ Let $T=T(x_0,r_0)$ as in lemma and apply @allard-2-4, we further have $
+    &1/r_0^n int_(B(x_0,beta r_0))abs(pi_(T_x M)-pi_T)dd(mu_V) \
+    &<=C/r_0^n int_(B(x_0,r_0))abs(d(x,x_0+T)/r_0)^2 dd(mu_V)+C (r_0^(p-n)
+    int_(B(x_0,R))abs(H)^p dd(mu_V))^(2/p) \
+    &<=C' delta^(1/(n+1))
+  . $ 
+]
+
+#lemma(name:"Lipschitz approximation")[
+  Let $delta<=1/4$, $L<=1$ fixed. Suppose the main assumption holds for $R=1$,
+  $r<delta$ and $x_0 in B(0,delta)sect spt mu$, WLOG assume $T(x_0,4r)$ is
+  parallel to $RR^n times {0}$. Then there is $beta=beta(n,k,p)<=1/16$ such that
+  if $delta<=(beta L)^(2n+2)$, there is a Lipschitz function
+  $f: B^n (x'_0,r)->RR^k$ (where $x'=\(x^1,...,x^n\)$) with $
+    op("Lip")f<=L,quad sup abs(f(x')-f(x'_0))<=C delta^(1/(2n+2))r
+  $ and $
+    &(mu(B(x_0,r)sect (spt mu\\Gamma(f))))/r^n
+    +cal(H)^n (B(x_0,r)sect (Gamma(f)\\spt mu)) \
+    &<=C/(L^2 r^n)int_(B(x_0,3r))abs(pi_(T_x M)-pi_T)^2 dd(mu)
+    <=C L^(-2) delta^(1/(n+1))
+  . $ 
+]
