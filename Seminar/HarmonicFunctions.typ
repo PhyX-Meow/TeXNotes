@@ -1,4 +1,4 @@
-#import "@phyxmeow/preamble:0.1.0": *
+#import "@phyxmeow/preamble:1.0.0": *
 #show: preamble.with(
   font: "concrete",
   numbering: "1.1.",
@@ -604,7 +604,7 @@ For harmonic functions, we have the monotonicity formula on domain side.
   $ and the red term is still 0.
 ]
 
-#comment[
+#ignore[
 As a corollary, we prove the volume comparison theorem:
 #proposition[
   Let $(M,g)$ be a Riemannian manifold, such that $Ric_g>=(n-1)K$. Let $V_K (R)$ be the

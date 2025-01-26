@@ -1,4 +1,4 @@
-#import "@phyxmeow/preamble:0.1.0": *
+#import "@phyxmeow/preamble:1.0.0": *
 #show: preamble.with(
   font: "",
   numbering: "1.1",

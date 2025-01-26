@@ -514,7 +514,7 @@ the disk to be a unit disk. We have \[
     +A(\nabla u,\nabla u)=0
 .\end{equation}
 \begin{theorem}
-    Let \(u\colon D\to N\) be critical map of \(E_\alpha\), suppose \(\alpha-1\) is
+    Let \(u\colon D\to N\) be critical map of \(E_\alpha\), suppose \(\alpha-1>0\) is
     small (may depending on \(p\)), then for all smaller disks \(D'\subset D\),
     we have estimate \[
         \|\nabla u\|_{W^{1,p}}'\le C(p,D',{\color{orange}\|\nabla u\|_{L^4}})
@@ -563,7 +563,7 @@ the disk to be a unit disk. We have \[
 
 \begin{theorem}[Main Estimate]\label{thm:main-est}
     There exists \(\eps>0\) and \(\alpha_0>1\) such that if \(u\colon D\to N\)
-    is a critical map of \(E_\alpha\), \(\alpha\le\alpha_0\) and \(E(u)<\eps\), then \[
+    is a {\color{red}smooth} critical map of \(E_\alpha\), \(1\le\alpha\le\alpha_0\) and \(E(u)<\eps\), then \[
         \|\nabla u\|_{W^{1,p}}'\le C(p,D')\|\nabla u\|_{L^2}
     \] for any smaller disk \(D'\subset D\), uniform in \(1\le \alpha\le\alpha_0\).
 \end{theorem}
@@ -612,12 +612,13 @@ on \(M\), with normal coordinate. Notation \(D(R)\) will mean a disk of radius \
 
 Note that \(E\) is conformal invariant, so we can always do a conformal expansion
 to make \(D\) a unit disk. By shrinking \(D\) to neighbourhood of 0, we can assume
-\(E(\eval{u}_{D})<\eps\). We choose \(\eps\) later. Moreover, we can assume the
+\(E(u\big|_{D})<\eps\). We choose \(\eps\) later. Moreover, we can assume the
 metric is flat in the coordinate.
 
 We need several estimation lemmas to prove the theorem.
 \begin{lemma}\label{lem:sup-est}
-    There is \(\eps>0\) such that if \(\int_{D(2)}|\nabla u|^2\dd{\mu}<\eps\), then \[
+    There is an \(\eps>0\) such that if \(u\) is smooth harmonic on \(D(2)\setminus\{0\}\) and
+    \(\int_{D(2)}|\nabla u|^2\dd{\mu}<\eps\), then \[
         |\nabla u(x)||x|
         \le C\left(\int_{D(2|x|)}|\nabla u|^2\dd{\mu}\right)^{\frac{1}{2}}
         =C\|\nabla u\|_{L^2(D(2|x|))}
@@ -724,7 +725,7 @@ We need several estimation lemmas to prove the theorem.
     .\] This yields \[
         \dv{}{R}\left(\frac{1}{R^{1-2\delta}}\int_{D(R)}|\nabla u|^2\dd{\mu}\right)\ge 0
     .\] Integrate we have \[
-        \int_{D(r)}|\nabla u|^2+\dd{\mu}\le r^{1-2\delta}\int_{D}|\nabla u|^2\dd{\mu}
+        \int_{D(r)}|\nabla u|^2\dd{\mu}\le r^{1-2\delta}\int_{D}|\nabla u|^2\dd{\mu}
     .\] Apply \cref{lem:sup-est} again we get, for \(0<|y|<\frac{1}{2}\), \[
         |\nabla u(y)||y|
         \le C\left(\int_{D(2|y|)}|\nabla u|^2\dd{\mu}\right)^{\frac{1}{2}}

@@ -1,4 +1,4 @@
-#import "@phyxmeow/preamble:0.1.0": *
+#import "@phyxmeow/preamble:1.0.0": *
 #show: preamble.with(
   font: "concrete",
   numbering: "1.1.",
@@ -36,4 +36,70 @@
   Choose a small codim 1 submanifold $W$ through $p$ that is transverse to $X$.
   Then $Im tilde(alpha)$ can only hit $W$ countably many times while $W sect
   Im tilde(alpha)$ is a perfect set. Contradiction.
+]
+
+#let Eps = math.cal("E")
+#proposition(name:"Removable Singularity")[
+  Let $F:D\\{0}->M into RR^k$ be a smooth harmonic map with finite energy, then $F$ can be extend to a smooth
+  harmonic map $D->M$.
+]
+#proof[
+  First notice that $F$ is a weakly harmonic map on $D$ since $H_0^1 (D\\{0})=H_0^1 (D)$. We only need to prove
+  that $F$ is in $W^(1,p)$ for some $p>2$ then we can bootstrap to show $F in C^oo$.
+
+  Change coordinate $(r,theta)arrow.squiggly.r(t,theta)$ where $r=e^(-t)$, the metric becomes $
+    dd(r)^2+r^2 dd(theta)^2=e^(-2t)(dd(t)^2+dd(theta)^2) ~ dd(t)^2+dd(theta)^2 quad "conformally"
+  . $ Write $
+    F_T:[0,oo)times SS^1-->M,quad (t,theta)|-->F(t-T,theta)
+  . $ Note that $
+    Eps(F_T)=Eps(F|_(r<=e^(-T)))->0 "as" T->oo
+  $ So there is a subsequence converges in $C_"loc"^oo$ to a constant (may depend on the subsequence).
+
+  We claim that: $
+    int_(t=t_0) abs(F_t)^2dd(theta)=int_(t=t_0)abs(F_theta)^2dd(theta)
+  . $ This is true since $
+    1/2 dv(,t) int_(t=t_0) abs(F_t)^2-abs(F_theta)^2dd(theta)
+    &=int_(t=t_0)F_(t t)dot.c F_t-F_(t theta)dot.c F_theta dd(theta) \
+    &=int_(t=t_0)(F_(t t)+F_(theta theta))dot.c F_t-pt_theta (F_t dot.c F_theta) dd(theta) \
+    &=0 quad "since" F "is conformal and" lap F perp T M
+  . $ Hence LHS $-$ RHS is a constant. Note that $
+    abs(int_0^oo #h(-.4em) int_0^(2pi)abs(F_t)^2-abs(F_theta)^2 dd(theta)dd(t))<=
+    int_0^oo #h(-.4em) int_0^(2pi)abs(F_t)^2+abs(F_theta)^2 dd(theta)dd(t)=Eps(F)<oo
+  , $ the constant has to be 0.
+
+  Now let $
+    p(t)=int_0^(2pi) abs(F_theta)dd(theta)
+  . $ By the convergence we know $abs(nd F)->0$ as $t->oo$, we have $
+    1/2 p''(t)&=int_0^(2pi) abs(F_(t theta))^2+F_theta dot.c F_(t t theta)dd(theta) \
+    &=int_0^(2pi) abs(F_(t theta))^2-F_(theta theta) dot.c F_(t t)dd(theta) & "(by parts)" \
+    &=int_0^(2pi) abs(F_(t theta))^2+abs(F_(theta theta))^2-A(nd F,nd F)dot.c F_(theta theta)dd(theta)
+    & quad quad "(equation)" \
+    // text(#red, &???=int_0^(2pi) abs(F_(t theta))^2+abs(F_(theta theta))^2+pt_theta (A(nd F,nd F))dot.c F_theta dd(theta)) \
+    &>=int_0^(2pi)abs(F_(theta theta))^2-abs(A)abs(nd F)^2 abs(F_(theta theta)) dd(theta) \
+    &>=int_0^(2pi)3/4 abs(F_(theta theta))^2-abs(A)^2 abs(nd F)^4 dd(theta) \
+    &>=int_0^(2pi)3/4 abs(F_(theta theta))^2-1/4 abs(F_theta)^2 dd(theta) quad "when" abs(nd F) "small"
+  . $ Since $int_0^(2pi)F_theta dd(theta)=0$, 1-dimensional Poincaré inequality gives $
+    int_0^(2pi)abs(F_theta)^2 dd(theta)<=int_0^(2pi)abs(F_(theta theta))^2 dd(theta)
+  . $ Hence for $t>=T_0$ sufficiently large, $p''(t)>=p(t)$. Let $q(t)=p(t)e^t$, then  $
+    q'(t)&=p'(t)e^t+p(t)e^t
+  , $ and $ 
+    q''(t)&=p''(t)e^t+p(t)e^t+2p'(t)e^t>=2p(t)e^t+2p'(t)e^t=2q'(t)
+  . $ So $(q'(t)e^(-2t))'>=0$. If $q'(t)>0$ at some $T_1$, then $
+    q'(t)>=e^(2(t-T_1))q'(T_1)
+  . $ We will have $q(t)$ grows at at least $e^(2t)$. This contradicts to $p(t)->0$. Hence $q'(t)<=0$ and
+  $p(t)<=p(T_0)e^(T_0-t)$.
+
+  Now for $T_0<=a<b$, $
+    norm(F_a-F_b)_(L^2)^2&=int_0^oo #h(-.4em)int_0^(2pi)abs(F(t+a)-F(t+b))^2 dd(theta)dd(t) \
+    &<=abs(a-b)int_0^oo sup_([a,b])int_0^(2pi)abs(nd F)^2 dd(theta)dd(t) \
+    &<=C e^(-a)
+  . $ Hence $F_T$ converges in $L^2$ to a constant.
+
+  We have obtained that $
+    int_(t>=T)abs(nd F)^2 dd(theta)dd(t)=O(e^(-T))
+  . $ Back to polar coordinate, this is $
+    Eps(F|_(D(0,r)))=O(r)
+  . $ Rescale $D(z,abs(z))$ to $D(2)$ and apply $eps$-regularity we get $
+    abs(z)abs(nd F)=O\(abs(z)^(1/2-delta)\), forall delta>0
+  . $ Hence $nd F in L^(2+delta)$ for some $delta>0$. This guarantees $u in C^(0,alpha)$.
 ]

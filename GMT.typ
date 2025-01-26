@@ -1,4 +1,4 @@
-#import "@phyxmeow/preamble:0.1.0": *
+#import "@phyxmeow/preamble:1.0.0": *
 #show: preamble.with(
   font: "xcharter",
   numbering: "1.1.",
@@ -1084,6 +1084,42 @@ be the harmonic function that agrees with $u$ on $pt B(0,R)$, we have $
 . $ If $sup_(B(0,R))abs(nd u)=eps<eps_0$, we have $
   norm(nd (u-v))_(L^2)<=C eps^2 norm(nd u)_(L^2) "on" B(0,R)
 . $ 
+#lemma[
+  Given any $eps>0$, there is $delta=delta(n,eps)$ such that if $u in H^1 (B)$, $B=B(0,1)cc RR^n$, satisfying $
+    norm(nd u)_(L^2(B))<=1,quad abs(pari(nd u,nd vphi))<=delta norm(nd vphi)_(L^oo),
+    forall vphi in C_0^oo (B)
+  , $ then there exists a harmonic $v$ on $B$ such that $
+    norm(nd v)_(L^2 (B))<=1,quad "and" norm(u-v)_(L^2 (B))<=eps
+  . $ 
+]
+- #text(blue)[Could we get a relation of $eps$ and $delta$?]
+#proof[
+  Suppose not true, there is $eps>0$ and ${u_k}cc H^1$ such that $
+    norm(nd u_k)_(L^2)<=1,quad 
+    abs(pari(nd u_k,nd vphi))<=1/k dot.c norm(nd vphi)_(L^oo), forall vphi in C_0^oo
+  $ but $norm(u_k-v)_(L^2)>eps$ for any harmonic $v$ with $norm(nd v)_(L^2)<=1$.
+
+  WLOG assume $int_B u_k=0$, then Poincaré inequality shows that ${u_k}$ are uniformly bounded in $H^1$.
+  Hence there is an subsequence converges in $H^1$-weak and $L^2$ to some $u in H^1$. We have  $
+    norm(nd u)_(L^2)&<=liminf_(k->oo) norm(nd u_k)_(L^2)<=1, \
+    pari(nd u,nd vphi)&=lim_(k->oo)pari(nd u_k,nd vphi)=0,forall vphi in C_0^oo
+  . $ But then $u$ is harmonic and we have $norm(u_k-u)_(L^2)->0$, this is a contradiction.
+]
+
+Recall the gradient estimate says that for $u$ harmonic on $B=B(0,R)$ and $B'=B(0,R')cc cc B$, $
+  R^k lr(norm(nd^k u),size:#12pt)'_(L^oo)<=C R^(-n/2) norm(u)_(L^2), quad C=C(k,n)
+. $ Apply this to $nd u$ we also have $
+  R^(k-1) lr(norm(nd^k u),size:#12pt)'_(L^oo)<=C R^(-n/2) norm(nd u)_(L^2), quad C=C(k,n)
+. $ Let $u_1(x)=u(0)+x dot.c nd u(0)$ be the linear approximation of $u$, then we get $
+  &abs(u_1(0))=abs(u(0))<=C R^(-n/2)norm(u)_(L^2),quad abs(nd u_1)=abs(nd u(0))<=C R^(-n/2)norm(nd u)_(L^2) \
+  &norm(u-u_1)_(L^oo (B(0,beta R)))<=(beta R)^2 lr(norm(nd^2 u),size:#12pt)_(L^oo (B(0,R\/2)))
+  <=C beta^2 R^(1-n/2)norm(nd u)_(L^2)
+, $ where $beta<=1/4$, and then $C=C(n)$ is independent of $beta$.
+
+Apply these to $v$ in above lemma, we get $
+  abs(v(0))<=C norm(v)_(L^2)<=C(norm(u-v)_(L^2)+norm(u)_(L^2))<=C(eps+norm(u)_(L^2)),\
+  abs(nd v(0))<=C norm(nd u)_(L^2)<=C
+. $ 
 
 == Lipschitz approximation
 Define the quantity _tilt excess_ $
@@ -1209,3 +1245,19 @@ By monotonicity formula, we have for any $x in B(0,2delta)$, $r<R'=(1-2delta)R$,
     <=C L^(-2) delta^(1/(n+1))
   . $ 
 ]
+
+
+#corollary[
+  Under same assumption, there is a choice of $beta$ such that if $
+    sup_(rho in (0,r]) 1/rho^n int_(B(y,rho)) abs(pi_(T_x M)-pi_T)^2 dd(mu)<=beta^2 L^2
+  $ for every $y in spt mu sect B(x_0,2r)$, then $spt mu sect B(x_0,r)$ is graph of some Lipschitz $f$
+  with $op("Lip")f<=L$ and $sup abs(f(x')-f(x_0'))<=C delta^(1/(2n+2))r$.
+]
+
+== Tilt-excess decay
+
+// == The regularity theorem
+// 
+// == Some application
+// 
+// = Currents
