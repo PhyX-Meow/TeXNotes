@@ -518,9 +518,9 @@ For harmonic functions, we have the monotonicity formula on domain side.
     dv(,R) E(R) =& (n-2)/R E(R)+Int(diff B(0,R),,)abs(u_r)^2 dd(V_(tilde(g)))
     -1/R Int(B(0,R),,)r u_r lap_g u dd(V_g) \
     &+ 1/(2R) Int(B(0,R),,)(r pdv(,r) log sqrt(det g)) dot.c abs(nabla u)^2 dd(V_g) \
-    &+ 1/R Int(B(0,R),,) abs(u_theta)^2 dd(V_g)
-    + 1/R Int(B(0,R),,)r II^(diff B(0,r)) (u_theta, u_theta) dd(V_g)
-  $ where $u_theta$ is the projection vector of $nd u$ onto $T pt B(0,R)$.
+    &+ 1/R Int(B(0,R),,) abs(u_theta)^2+r II^(diff B(0,r)) (u_theta, u_theta) dd(V_g)
+  $ where $u_theta$ is the projection vector of $nd u$ onto $T pt B(0,R)$, $II^(pt B(0,r))$ is the 2nd
+  fundamental form of $pt B(0,r) cc B(0,R)$, projected to the outer normal.
 ]
 #proof[
   Choose geodesic normal coordinate on $B(0,R)$, we use $dd(x),dd(V_g)$ for the Euclidean
@@ -568,7 +568,7 @@ For harmonic functions, we have the monotonicity formula on domain side.
     -1/R Int(B(0,R),,)r u_r lap u dd(V_g) \
     &#hide[=]+ 1/(2R) Int(B(0,R),,)(r pdv(,r)log sqrt(det g))dot.c abs(nd u)^2 dd(V_g) \
     &#hide[=]+ 1/R Int(B(0,R),,)abs(nd u)^2-abs(u_r)^2 dd(V_g)
-    -1/R Int(B(0,R),,)r Hess r(nd u,nd u)dd(V_g)(nd u,nd u)dd(V_g)
+    -1/R Int(B(0,R),,)r Hess r(nd u,nd u)dd(V_g)
   $ Let $(xi^1,...,x^n)=(r,theta^1,...,theta^(n-1))$, we have $
     nd^2_(i,j)r=pdv(r,xi^i,xi^j)-Gamma_(i j)^k pdv(r,xi^k)=-Gamma_(i j)^1
   $ since $pdv(r,r)=1, pdv(r, theta^i)=0$. If we denote by $rho$ the index of $r$
@@ -591,8 +591,7 @@ For harmonic functions, we have the monotonicity formula on domain side.
     dv(,R) E(R) =& (n-2)/R E(R)+Int(diff B(0,R),,)abs(u_r)^2 dd(V_(tilde(g)))
     #text(red)[$-1/R Int(B(0,R),,)r u_r lap_g u dd(V_g)$] \
     &+ 1/(2R) Int(B(0,R),,)(r pdv(,r) log sqrt(det g)) dot.c abs(nabla u)^2 dd(V_g) \
-    &+ 1/R Int(B(0,R),,) abs(u_theta)^2 dd(V_g)
-    + 1/R Int(B(0,R),,)r II^(diff B(0,r)) (u_theta, u_theta) dd(V_g)
+    &+ 1/R Int(B(0,R),,) abs(u_theta)^2+r II^(diff B(0,r)) (u_theta, u_theta) dd(V_g)
   $ as desired.
 ]
 #remark[
@@ -656,29 +655,31 @@ Next, we calculate the monotonicity formula of the frequency function.
     +1/(2R E)ini (r pdv(,r)log sqrt(det g))abs(nd u)^2 \
     &#hide[=]+1/(R E)ini abs(u_theta)^2+1/(R E)ini r II(u_theta,u_theta) \
     &#hide[=]-(2E)/I-2/I ini u lap_g u-1/(2I)inb (pdv(,r)log sqrt(det g))abs(u)^2 \
-    &=1/E inb abs(u_r)^2-1/I inb pdv(,r)abs(u)^2-1/(R E)ini r u_r lap_g u
-    +1/(R E)ini r II(u_theta,u_theta) \
+    &=1/E inb abs(u_r)^2-(2E)/I-2/I ini u lap_g u-1/(R E)ini r u_r lap_g u \
+    &#hide[=]+1/(R E)ini abs(u_theta)^2+ r II(u_theta,u_theta) \
     &#hide[=]+1/(2R E)ini (r pdv(,r)log sqrt(det g))abs(nd u)^2
     -1/(2I)inb (pdv(,r)log sqrt(det g))abs(u)^2
   $ Now suppose $lap_g u=0$, we have $
     dv(,R)log F(R)
-    &=1/E inb abs(u_r)^2-1/I inb pdv(,r)abs(u)^2+1/(R E)ini r II(u_theta,u_theta) \
+    &=1/E inb abs(u_r)^2-(2E)/I+1/(R E)ini abs(u_theta)^2+r II(u_theta,u_theta) \
     &#hide[=]+1/(2R E)ini (r pdv(,r)log sqrt(det g))abs(nd u)^2
     -1/(2I)inb (pdv(,r)log sqrt(det g))abs(u)^2
   $ Note that $
-    1/E inb abs(u_r)^2-1/I inb pdv(,r)abs(u)^2
-    =1/(I E)(inb abs(u_r)^2 inb abs(u)^2-2inb u u_r)>=0
+    2E(R)=ini abs(nd u)^2=-ini u lap_g u+inb u u_r=inb u u_r
+  . $ Then $
+    1/E inb abs(u_r)^2-(2E)/I
+    =1/(2I E)(inb abs(u_r)^2 inb abs(u)^2-(inb u u_r)^2)>=0
   $ Hence $
-    dv(,R)log F(R)&>=1/(R E)ini r II(u_theta,u_theta)
+    dv(,R)log F(R)&>=1/(R E)ini abs(u_theta)^2+r II(u_theta,u_theta)
     +1/(2R E)ini (r pdv(,r)log sqrt(det g))abs(nd u)^2 \
     &#hide[=]-1/(2I)inb (pdv(,r)log sqrt(det g))abs(u)^2
   $ Locally, we can assume $-k^2<=K_Sigma<=K^2$, then $
-    -(n-1)K<=lap_g r-(n-1)/r<=(n-1)k,quad r <= pi/(2K)
+    -(n-1)K<=lap_g r-(n-1)/r<=(n-1)k,quad "for" r <= pi/(2K)
   $ Then $
-    dv(,R)log F(R)&>=1/(R E)ini r II(u_theta,u_theta)
+    dv(,R)log F(R)&>=1/(R E)ini abs(u_theta)^2+r II(u_theta,u_theta)
     -((n-1)K)/(2R E)ini r abs(nd u)^2-((n-1)k)/(2I)inb abs(u)^2 \
-    &>=1/(R E)ini 2 k r cosh(k r)/sinh(k r)abs(u_theta)^2-(n-1)(k+K) \
-    &>=4/R-(n+3)k-(n-1)K 
+    &>=1/(R E)ini (1-k r cosh(k r)/sinh(k r))abs(u_theta)^2-(n-1)(k+K) \
+    &>=-(n+1)k-(n-1)K 
   $ We can essentially get that in a small neighborhood, $
     dv(,R)log((R e^(c R)E(R))/I(R))>=0
   $ 
