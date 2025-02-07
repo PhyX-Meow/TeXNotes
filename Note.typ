@@ -4,7 +4,15 @@
   numbering: "1.1.",
 )
 
+#show heading.where(level: 1): it => block(width: 100%)[
+  #set align(center)
+  #set text(size:20pt, font: "Miama Nueva")
+  #it.body
+  #v(12pt)
+]
+#show heading.where(level: 2): it => text(font: "Miama Nueva", it) + v(12pt)
 = Geometry
+== Geodesic flow
 #theorem[
   Let $G$ be a locally compact Lie group with at most countably many connect
   components, $X$ a locally compact Hausdorff space. Suppose $G acts X$
@@ -38,8 +46,9 @@
   Im tilde(alpha)$ is a perfect set. Contradiction.
 ]
 
+== Removable Singularity
 #let Eps = math.cal("E")
-#proposition(name:"Removable Singularity")[
+#proposition[
   Let $F:D\\{0}->M into RR^k$ be a smooth harmonic map with finite energy, then $F$ can be extend to a smooth
   harmonic map $D->M$.
 ]
@@ -103,3 +112,19 @@
     abs(z)abs(nd F)=O\(abs(z)^(1/2-delta)\), forall delta>0
   . $ Hence $nd F in L^(2+delta)$ for some $delta>0$. This guarantees $u in C^(0,alpha)$.
 ]
+
+== Weyl Tensor
+Let $ 
+  (A dot.circle B)_(i j k l)=A_(i l) B_(j k)+A_(j k)B_(i l)-A_(i k)B_(j l)-A_(j l)B_(i k)
+. $ Define $
+  W=R-1/(n-2)(Ric-S/n g)dot.circle g-S/(2n(n-1))g dot.circle g
+, $ #ie $
+  W_(i j k l)=R_(i j k l)&-1/(n-2)(g_(i l)R_(j k)+g_(j k)R_(i l)-g_(i k)R_(j l)-g_(j l)R_(i k)) \
+  &+S/((n-1)(n-2)) (g_(i l)g_(j k)-g_(i k)g_(j l))
+. $ The decomposition is orthogonal in the sense of $
+  abs(R)^2:=R_(i j k l)R^(i j k l)
+  =abs(W)^2+abs(1/(n-2)(Ric-S/n g)dot.circle g)^2+abs(S/(2n(n-1))g dot.circle g)^2
+. $ $W$ has the same symmetry and Bianchi identities as $R$, while $W$ is totally trace free, #ie
+$g^(i l)R_(i j k l)=0$.
+
+For a 4-manifold

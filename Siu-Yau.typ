@@ -139,3 +139,5 @@ energy-minimizing map $PP^1->N$.
   By Sacks-Uhlenbeck, there is a constant $c>0$ that any non-trivial harmonic map and homotopically non-trivial
   $C^1$ map $SS^2->N$ has energy $>c$. Let $k$ be the smallest integer with $E(f)<= (k c)/2$
 ]
+
+= Holomorphic deformation of rational curves
