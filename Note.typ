@@ -10,8 +10,8 @@
   #it.body
   #v(12pt)
 ]
-#show heading.where(level: 2): it => text(font: "Miama Nueva", it) + v(12pt)
-= Geometry
+#show heading.where(level: 2): it => text(font: "Miama Nueva", it) + v(9pt)
+= I. Geometry
 == Geodesic flow
 #theorem[
   Let $G$ be a locally compact Lie group with at most countably many connect
@@ -114,7 +114,7 @@
 ]
 
 == Weyl Tensor
-Let $ 
+Let $(M,g)$ be a Riemannian manifold with curvature tensor $R$, $ 
   (A dot.circle B)_(i j k l)=A_(i l) B_(j k)+A_(j k)B_(i l)-A_(i k)B_(j l)-A_(j l)B_(i k)
 . $ Define $
   W=R-1/(n-2)(Ric-S/n g)dot.circle g-S/(2n(n-1))g dot.circle g
@@ -126,5 +126,129 @@ Let $
   =abs(W)^2+abs(1/(n-2)(Ric-S/n g)dot.circle g)^2+abs(S/(2n(n-1))g dot.circle g)^2
 . $ $W$ has the same symmetry and Bianchi identities as $R$, while $W$ is totally trace free, #ie
 $g^(i l)R_(i j k l)=0$.
+#theorem[
+  $(M,g)$ is conformally flat if and only if $W==0$.
+]
 
-For a 4-manifold
+For a 4-manifold $M$, $Omega^2 (M)$ splits into self-dual and anti-self-dual parts $Omega^2_+ dsum Omega^2_-$,
+which are $plus.minus 1$ eigenspaces of Hodge star "$op(*)$". Under an ONB, we have $
+  Omega^2_+&=span{e_1 wed e_2+e_3 wed e_4,e_1 wed e_3-e_2 wed e_4,e_1 wed e_4+e_2 wed e_3} \
+  Omega^2_-&=span{e_1 wed e_2-e_3 wed e_4,e_1 wed e_3+e_2 wed e_4,e_1 wed e_4-e_2 wed e_3}
+. $ The curvature operator splits _w.r.t._ the direct sum as $
+  cal(R)=mat(delim:"[",
+    A,B;B^*,C
+  )
+. $ This gives a decomposition of $cal(R)$ by $
+  cal(R)|-->(tr A,B,A-1/3 tr A,C-1/3 tr C)
+, $ where $tr A=tr C=1/4 S$, $B$ is the traceless Ricci tensor, and last 2 components, denote by $W_+$ and
+$W_-$, sum to the Weyl tensor $W=W_++W_-$
+
+== Berger's inequality
+#theorem[
+  Suppose $(M,g)$ has sectional curvature bound $lambda<=K_sigma<=Lambda$, then for an ONB ${e_i}$, we have $
+    abs(R_(i j k i))<=1/2(Lambda-lambda),quad abs(R_(i j k l))<=1/3 (Lambda-lambda)
+  . $
+]
+#proof[
+  Let $K(X,Y)=R(X,Y,Y,X)/(abs(X)^2 abs(Y)^2-pari(X,Y)^2)$, we have $
+    lambda&<=K(e_i,b e_j+c e_k)&&<=Lambda \
+    lambda&<=K(a e_i+b e_k,c e_j+d e_l)&&<=Lambda
+  . $ For first inequality, note that $R_(i j k i)=R_(i k j i)$, we have $
+    0&<=(R_(i j j i)-lambda)b^2+2R_(i j k i) b c+(R_(i k k i)-lambda)c^2 \
+    0&<=(Lambda-R_(i j j i))b^2-2R_(i j k i) b c+(Lambda-R_(i k k i))c^2
+  . $ Hence we see $abs(R_(i j k i))<=1/2 (Lambda-lambda)$. Then let $
+    F(i,j,k,l)&=K(a e_i+b e_j,c e_k+d e_l)-lambda(a^2+b^2)(c^2+d^2) \
+    G(i,j,k,l)&=1/2 lr((F(i,j,k,l)+F(i,-j,k,-l)),size:#16pt) \
+    H(i,j,k,l)&=G(i,l,k,j)+G(-i,j,l,k) \
+    &=A a^2c^2+B a^2d^2+C b^2c^2+D b^2d^2+2E a b c d
+  , $ where $-i$ means $-e_i$ and $
+    A&=R_(i k k i)+R_(i l l i)-2lambda & quad quad B&=R_(i j j i)+R_(i k k i)-2lambda \
+    C&=R_(k l l k)+R_(j l l j)-2lambda & quad quad D&=R_(j l l j)+R_(j k k j)-2lambda \
+    E&=3R_(i j k l)
+  . $ View $H>=0$ as a quadratic polynomial in $a,b$ we see $
+    0<=(A c^2+B d^2)(C c^2+D d^2)-(E c d)^2=A C c^4+(A D+B C-E^2)c^2 d^2+B D d^4
+  . $ Divide by $c^2d^2$ and let $u=c^2\/d^2=sqrt(B D\/A C)$ we get $
+    E^2<=A D+B C+A C u+B D u^(-1)=(sqrt(A D)+sqrt(B C))^2
+  . $ Hence $
+    abs(R_(i j k l))<= (sqrt(A D)+sqrt(B C))/3<=1/6 (A+B+C+D)
+  . $ Similarly we have $
+    Lambda(a^2+b^2)(c^2+d^2)-K(a e_i+b e_j,c e_k+d e_l)>=0
+  . $ This gives $
+    abs(R_(i j k l))<= (sqrt(A' D')+sqrt(B' C'))/3<=1/6 (A'+B'+C'+D')
+  , $ where $
+    A'&=2Lambda-R_(i k k i)-R_(i l l i) & quad quad B'&=2Lambda-R_(i j j i)-R_(i k k i) \
+    C'&=2Lambda-R_(k l l k)-R_(j l l j) & quad quad D'&=2Lambda-R_(j l l j)-R_(j k k j)
+  . $ Then we see $
+    abs(R_(i j k l))<=1/6 (A+B+C+D+A'+B'+C'+D')=2/3 (Lambda-lambda)
+  . $ 
+]
+
+#let ddot = math.dot.double
+== 2nd variation of surface with boundary
+Let $F_t:Sigma times (-eps,eps)->(M,g)$ where $Sigma$ is compact, smooth, with smooth boundary $pt Sigma$.
+Write $nd$ for derivative and connection on $M$, $hat(nd)_V W=nd_V W-II(V,W)$ for the induced connection on
+$Sigma$. Let $X=dot(F_t)|_(t=0),Z=ddot(F_t)|_(t=0)$, we have $
+  lr(dv(,t)|)_(t=0) cal(A)(F_t)=int_Sigma div_Sigma X dd(mu_Sigma)
+  =int_(pt Sigma)X dot.c nu dd(mu_(pt Sigma))-int_Sigma X dot.c H dd(mu_Sigma)
+, $ where $dd(mu_Sigma)=sqrt(det pari(nd_i F,nd_j F)_g)dd(x)$ and $nu$ is the unit outer normal. Write $
+  M_(i j) (t)=pari(nd_i F_t,nd_j F_t)_g
+, $ we have Taylor expansion $
+  dot(M)_(i j)(0)&=pari(nd_i X,nd_j F)+pari(nd_i F,nd_j X) \
+  ddot(M)_(i j)(0)&=2pari(nd_i nd_t F,nd_j nd_t F)+pari(nd_t nd_i nd_t F,nd_j F)+pari(nd_i F,nd_t nd_j nd_t F) \
+  &=2pari(nd_i X,nd_j X)+pari(nd_i Z,nd_j F)+pari(nd_i F,nd_j Z) \
+  &#hide[=]+R(X,e_i,X,e_j)+R(X,e_j,X,e_i)
+. $ Note that if we choose coordinate such that $F_i=e_i$ orthonormal, then $M_0=(delta_(i j))$, $
+  dv(,t,2) det M_t=tr ddot(M)+(tr dot(M))^2-tr \(dot(M)^2\)
+. $ We have $
+  tr dot(M)&=2div_Sigma X, \
+  tr ddot(M)&=2|hat(nd) X|^2+2div_Sigma Z-2R(X,e_i,e_i,X)
+, $ $ 
+  tr \(dot(M)\)^2&=2sum_(i,j) pari(nd_i X,e_j)^2+2sum_(i,j)pari(nd_i X,nd_j F)pari(nd_j X,nd_i F) \
+  &=2|\(hat(nd) X\)^breb|^2+2sum_(i,j)pari(nd_i X,e_j)pari(nd_j X,e_i)
+. $ Using the fact $(sqrt(u))''(0)=-1/4 u'(0)^2+1/2 u''(0)$ for $u(0)=1$, we have $
+  lr(dv(,t,2)|,size:#24pt)_(t=0)cal(A)(F_t)&=int_(Sigma)1/2 tr ddot(M)+1/4 (tr dot(M))^2-1/2 tr \(dot(M)\)^2
+  dd(mu_Sigma)\
+  &=int_Sigma div_Sigma Z+(div_Sigma X)^2+|\(hat(nd) X\)^perp|^2 \
+  &#hide[$=int_Sigma$]-sum_(i,j)pari(nd_i X,e_j)pari(nd_j X,e_i)-sum_i R(X,e_i,e_i,X)dd(mu_Sigma)
+. $ More generally, if $F=F_(s,t)$, with variation field $X$ and $Y$, only need to replace $Z$ by $nd_X Y$.
+Note that $nd_X Y-nd_Y X=[X,Y]=0$.
+
+If $Sigma=gamma$ is 1-dimensional, #ie a geodesic, the formula reduces to $
+  &lr(dv(,t,2)|,size:#24pt)_(t=0)cal(L)(F_t) \
+  &=int_(pt gamma) Z dot.c nu (dd(\#))
+  +int_gamma |\(hat(nd) X\)^perp|^2-R(X,gamma',gamma',X)dd(ell) \
+  &=int_(pt gamma) Z dot.c nu (dd(\#))
+  +int_gamma pari(nd_(gamma')X,nd_(gamma')X)-pari(nd_(gamma')X,gamma')^2-R(X,gamma',gamma',X)dd(ell) \
+  &=int_(pt gamma) Z dot.c nu+X dot.c nd_nu X (dd(\#))
+  -int_gamma pari(nd_(gamma')nd_(gamma')X+R(X,gamma')gamma',X)+pari(nd_(gamma')X,gamma')^2 dd(ell)
+. $ For a geodesic net with smooth $X$, there are only the interior terms, #ie $
+  lr(dv(,t,2)|,size:#24pt)_(t=0)cal(L)(F_t)=int_gamma |\(nd_(gamma')X\)^perp|^2-R(X,gamma',gamma',X)dd(ell)
+. $ If we choose the variation be "moving nodes", then $X$ can be chosen to be Jacobi, #ie $
+  nd_(gamma')nd_(gamma')X+R(X,gamma')gamma'=0
+. $ Then we have $
+  nd_(gamma')pari(nd_(gamma')X,gamma')=pari(nd_(gamma')nd_(gamma')X,gamma')+pari(nd_(gamma')X,H)=0
+. $ Hence $pari(nd_(gamma')X,gamma')=nd_(gamma')pari(X,gamma')$ is a constant. We get $
+  lr(dv(,t,2)|,size:#24pt)_(t=0)cal(L)(F_t)=int_(pt gamma) Z dot.c nu+X dot.c nd_nu X (dd(\#))
+  -int_gamma pari(nd_(gamma')X,gamma')^2 dd(ell)
+. $ Note that $Z$ takes the same value at a node whichever string we view from, but $nd_nu X$ may not be 
+addable in $nu$.
+
+#example[
+  Suppose $M$ is the round 2-sphere, $Sigma$ is a geodesic net consists of nodes ${P_i}$ and strings
+  $\{gamma_j:P_(a_j)->P_(b_j)\}$, the formula reduces to $
+    I(X,X)=-1/2 sum_(gamma:P_i->(dot.c))nd_(gamma')abs(X)^2
+    -sum_j lr((nd_(gamma'_j)pari(X,gamma'_j)),size:#14pt)^2 ell_j
+    =sum_j (\(A_j^2+B_j^2\)cos ell_j-2A_j B_j)/(sin ell_j)
+  , $ where $ell=cal(L)(gamma_j),A_j=X dot.c gamma'_j (0),B_j=X dot.c gamma'_j (ell_j)$.
+]
+
+
+
+
+
+
+
+
+
+#pagebreak()
+= II. Analysis

@@ -4,9 +4,9 @@
   numbering: "1.1.",
 )
 
-#align(center)[#text(20pt)[
+#title[
   *Notes of Siu-Yau*
-]#v(0.5cm)]
+]
 
 = The idea
 
