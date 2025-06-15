@@ -11,6 +11,10 @@
   #v(12pt)
 ]
 #show heading.where(level: 2): it => text(font: "Miama Nueva", it) + v(9pt)
+
+#show link: underline
+#let placeholder = text(red,smallcaps("Placeholder"))
+
 = I. Geometry
 == Geodesic flow
 #theorem[
@@ -146,7 +150,7 @@ $W_-$, sum to the Weyl tensor $W=W_++W_-$
 == Berger's inequality
 #theorem[
   Suppose $(M,g)$ has sectional curvature bound $lambda<=K_sigma<=Lambda$, then for an ONB ${e_i}$, we have $
-    abs(R_(i j k i))<=1/2(Lambda-lambda),quad abs(R_(i j k l))<=1/3 (Lambda-lambda)
+    abs(R_(i j k i))<=1/2(Lambda-lambda),quad abs(R_(i j k l))<=2/3 (Lambda-lambda)
   . $
 ]
 #proof[
@@ -228,10 +232,14 @@ If $Sigma=gamma$ is 1-dimensional, #ie a geodesic, the formula reduces to $
 . $ Then we have $
   nd_(gamma')pari(nd_(gamma')X,gamma')=pari(nd_(gamma')nd_(gamma')X,gamma')+pari(nd_(gamma')X,H)=0
 . $ Hence $pari(nd_(gamma')X,gamma')=nd_(gamma')pari(X,gamma')$ is a constant. We get $
-  lr(dv(,t,2)|,size:#24pt)_(t=0)cal(L)(F_t)=int_(pt gamma) Z dot.c nu+X dot.c nd_nu X (dd(\#))
+  lr(dv(,t,2)|,size:#24pt)_(t=0)cal(L)(F_t)&=int_(pt gamma) Z dot.c nu+X dot.c nd_nu X (dd(\#))
   -int_gamma pari(nd_(gamma')X,gamma')^2 dd(ell)
 . $ Note that $Z$ takes the same value at a node whichever string we view from, but $nd_nu X$ may not be 
-addable in $nu$.
+addable in $nu$. We can further simplify this to $
+  lr(dv(,t,2)|,size:#24pt)_(t=0)cal(L)(F_t)
+  &=sum_j int_(pt gamma_j)X dot.c nd_nu X (dd(\#))-sum_j ell_j dot.c \(nd_(gamma'_j)pari(X,gamma'_j)\)^2 \
+  &=sum_j int_(pt gamma_j)pari(X^perp,nd_nu X) (dd(\#))
+. $ 
 
 #example[
   Suppose $M$ is the round 2-sphere, $Sigma$ is a geodesic net consists of nodes ${P_i}$ and strings
@@ -239,16 +247,231 @@ addable in $nu$.
     I(X,X)=-1/2 sum_(gamma:P_i->(dot.c))nd_(gamma')abs(X)^2
     -sum_j lr((nd_(gamma'_j)pari(X,gamma'_j)),size:#14pt)^2 ell_j
     =sum_j (\(A_j^2+B_j^2\)cos ell_j-2A_j B_j)/(sin ell_j)
-  , $ where $ell=cal(L)(gamma_j),A_j=X dot.c gamma'_j (0),B_j=X dot.c gamma'_j (ell_j)$.
+  , $ where $ell_j=cal(L)(gamma_j),A_j=X dot.c gamma'_j (0)^perp,B_j=X dot.c gamma'_j (ell_j)^perp$.
+  
+  Let $phi$ be the distance to north pole $N$ on $SS^2$, $X=sin phi pdv(,phi)$, we claim any geodesic net is 
+  unstable in the direction of $X$. Consider the geodesic triangle $N P Q$, where  $P,Q$ is the end points 
+  of $gamma_j$. By geometry of sphere triangles, we have $A_j=C sin phi_Q,B_j=C sin phi_P$. Hence  $
+    I(X,X)=2C^2 sin phi_P sin phi_Q dot.c (cos ell-1)/(sin ell)<0
+  , $ provided by $0<ell<pi$. Actually we can just take $X$ to be the variation field, then suppose
+  $P in gamma_j$, and $alpha_P$ is the angle between $gamma'$ and the direction of $P N$, then $
+    nd_(gamma')X=nd_(cos alpha_P pt_phi+(sin alpha_P)/(sin phi_P) pt_theta)(sin phi pt_phi)
+    =cos alpha_P cos phi_P pt_phi+(sin alpha_P cos phi_P)/(sin phi_P) pt_theta=cos phi_P dot.c gamma'
+  . $ Thus $|\(nd_(gamma')X\)^perp|=0$. Hence $I(X,X)=-int_gamma R(X,gamma',gamma',X)<0$.
 ]
 
+== 2nd variation of hypersurfaces
+If $Sigma^n cc M^(n+1)$ is a hypersurface, then the variation field $X$ can be chosen as $f nu$ for some
+function $f$ on $Sigma$, where $nu$ is the unit normal. Then the 2nd variation reads $
+  I(X,X)=int_(Sigma)abs(H)dot(f)+abs(H)^2 f^2+abs(nd f)^2-(abs(II)^2+Ric(nu,nu))f^2 dd(mu_Sigma)
+. $ Hence $Sigma$ is stable (w.r.t. fixed boundary) if and only for any $f in C_0^oo (Sigma)$, $
+  int_(Sigma)abs(nd f)^2 dd(mu_Sigma)>=int_Sigma (abs(II)^2+Ric(nu,nu))f^2 dd(mu_Sigma)
+. $ Take $f==1$, we see we must have $abs(II)^2+Ric(nu,nu)<=0$. Hence if $Ric_M>0$ there are no stable
+hypersurfaces. And if $Ric_M>=0$, all stable hypersurfaces must be totally geodesic.
+#lemma[
+  Let $Sigma$ be a compact Riemannian manifold with $V in C^oo (Sigma)$ a smooth potential. Then $
+    lambda_0=inf_(f in C^oo (Sigma),f|_(pt Sigma)=0,norm(f)_(L^2)=1) int_(Sigma)abs(nd f)^2-V f^2 dd(mu_Sigma)
+  $ is achieved by a smooth $phi_0$ with $phi_0>0$ on $Sigma\\pt Sigma$, $phi_0=0$ on $pt Sigma$, and
+  solves $
+    -lap^Sigma phi-V phi=lambda phi
+  . $ Moreover, this eigenvalue is single.
+]
+We call $
+  L_Sigma:=-lap^Sigma-abs(II)^2-Ric(nu,nu)
+$ the #emph[stability operator].
 
+#theorem(name:"Barta")[
+  A 2-sided minimal hypersurface $Sigma$ is stable if and only if there is a positive
+  $u in C^oo (Sigma\\pt Sigma)$ such that $L_Sigma u<=0$.
+]
+#proof[
+  #placeholder  
+]
+#remark[
+  The 2-sided assumption is essential.
+]
+#corollary[
+  If $Sigma->(M,g)$ is a 2-sided stable minimal surface, $tilde(Sigma)->Sigma$ is any cover, then $tilde(Sigma)$
+  is also a stable minimal surface (with multiplicity).
+]
 
+Now consider a minimal graph $
+  Sigma=Gamma(u):={(x,u(x)):x in Omega},quad u in C^oo (Omega)
+. $
+#proposition[
+  A minimal graph is stable.
+]
+#proof[
+  Let $F_t$ be the variation that move $Sigma$ to $Sigma+t e_(n+1)$. The normal projection is $f=pari(nu,
+  e_(n+1))$, which is positive. Obviously $L_Sigma f=0$, by Barta's theorem $Sigma$ is stable.
+]
+#remark[
+  Also proved by a _calibration & foliation_ argument.
+]
 
+#theorem[
+  For $n<=7$, an entire minimal graph in $RR^(n+1)$ is a hyperplane. While for $n>=8$ there exists non-flat 
+  entire minimal graphs.
+]
+#remark[
+  Flemming and De Giorgi proved a non-flat entire minimal graph would yield a non-flat area minimizing 
+  cone $C^(n-1)cc RR^n$. Example: Simons cone.
+]
+- #text(blue)[How?]
 
+== Stable minimal surface in 3-manifolds
+#lemma(name:"Traced Gauss equation")[
+  Let $Sigma^n->(M^(n+1),g)$, then $
+    S_M=S_Sigma+2Ric(nu,nu)+abs(II)^2-abs(H)^2
+  . $ Note when $n=2$, $S_Sigma=2K$.
+]
+#proposition[
+  Suppose $(M^3,g)$ has $S>0$, then each component of $Sigma^2->M$ 2-sided stable minimal, has genus 0.
+]
+#proof[
+  By lemma, the stable inequality becomes $
+    2int_Sigma abs(nd f)^2>=int_Sigma (S+abs(II)^2-2K)f^2
+  . $ Take $f==1$, we see $
+    0<int_Sigma S+abs(II)^2=2int_Sigma K=4pi chi(Sigma)
+  . $ 
+]
+#theorem[
+  $n+1<=7$, $(M^(n+1),g)$ be closed oriented Riemannian manifold. For any $alpha in H_n (M;ZZ)$, we can 
+  minimize area among representatives of $alpha$ to write $
+    alpha=[Sigma_1]+dots.c+[Sigma_k]
+  . $ Where $Sigma_j$'s are embedded 2-sided minimal surfaces.
+]
+- #text(blue)[What's happening here?]
 
+#theorem(name:"Geroch conjecture")[
+  $bb(T)^(n+1)$ does not admit a positive scalar curvature metric. (Note that $n=1$ follows from Gauss-Bonnet).
+]
+#proof(name:[for $n=2$])[
+  #placeholder
+]
 
+== Non-compact stable minimal surfaces 
+- #text(blue)[How to do for $n>7$?]
+- #text(green)[Use spinor method.]
 
+== $mu$-bubbles
+
+== Geometry of PSC
+
+== Sphere theorem for 3-manifolds.
+#theorem[
+  Let $M$ be a 3-manifold with non-trivial $pi_2$. Then there exists $0!=sigma in pi_2$ represented by an 
+  embedded $SS^2$.
+] #h(-2em)
+See also: #text(purple)[Loop theorem and Dehn's lemma.]
+- #text(blue)[When can homology group be represented by embedded submanifolds?]
+- #link("https://math.stackexchange.com/questions/933363/codimension-1-homology-represented-by-embedded-submanifold")[Codim-1 case].
+
+== Kato's inequality
+#proposition[
+  On $(M,g)$, let $u$ be a smooth function. Then on ${abs(nd u)!=0}$, $
+    abs(nd abs(nd u))^2=(|pari(nd^2 u,nd u)|^2)/abs(nd u)^2<= |nd^2 u|^2
+  . $ Further, if $u$ is harmonic, then on ${abs(nd u)!=0}$, $
+    (1+1/(n-1))abs(nd abs(nd u))^2<=|nd^2 u|^2
+  . $
+]
+#proof[
+  Choose orthonormal frame ${e_i}$ such that locally $nd u=abs(nd u)e_1$. Then $
+    abs(nd abs(nd u))^2=|nd^2_(dot.c,1) u|^2=sum_i abs(nd_i nd_1 u)^2
+  . $ On the other hand, $
+    |nd^2 u|^2&>=sum_i u_(i 1)^2+sum_(j!=1)u_(1 j)^2+sum_(i!=1)u_(i i)^2 \
+    &>=sum_i u_(i 1)^2+sum_(j!=1)u_(1 j)^2+1/(n-1)lr((sum_(i!=1)u_(i i)),size:#20pt)^2 \
+    &=sum_i u_(i 1)^2+sum_(j!=1)u_(1 j)^2+1/(n-1)u_(11)^2 \
+    &>=(1+1/(n-1))sum_i u_(i 1)^2
+  . $ 
+]
+#remark[
+  This can be used in Bochner formula. On ${abs(nd u)!=0}$, $
+    abs(nd u)lap abs(nd u)=1/2 lap abs(nd u)^2-abs(nd abs(nd u))^2>=1/(n-1)abs(nd abs(nd u))^2+Ric(nd u,nd u)
+  . $ 
+]
+
+#proposition[
+  Let $Sigma^n into (M^(n+1),g)$ be a minimal immersion, one have $
+    Ric^Sigma (X,Y)=H dot.c II(X,Y)-pari(II(X,dot.c),II(Y,dot.c))=-pari(II(X,dot.c),II(Y,dot.c))
+  . $ So $
+    Ric^Sigma (X,X)>=-abs(II)^2 abs(X)^2
+  . $ This can be refined to $
+    Ric^Sigma (X,X)>=-(1-1/n)abs(II)^2 abs(X)^2
+  . $
+]
+#proof[
+  Again let $X=e_1$, write $h_(i j)=II(e_i,e_j)$ then by the same reason as above $
+    Ric^Sigma (X,X)=-sum_i h_(1 i)^2>=-(1-1/n)sum_(i,j)h_(i j)^2
+  , $ provided by $sum_i h_(i i)=0$.
+]
+Plug into Bochner's formula, we get $
+  lap abs(nd u)+(1-1/n)abs(II)^2 abs(nd u)>=1/(n-1)abs(nd u)^(-1) abs(nd abs(nd u))^2
+. $ 
+
+#proposition[
+  Let $Sigma^n into (M^(n+1),g)$ be a minimal immersion, then $
+    1/2 lap abs(II)^2=abs(nd II)^2-abs(II)^4
+  . $
+]
+#proposition[
+  Let $Sigma^n into (M^(n+1),g)$ be a minimal immersion, then $
+    abs(nd II)^2>=(1+2/n)abs(nd abs(II))^2
+  . $ 
+]
+#proof[
+  Choose ONB such that $II$ is diagonal at one point. Then $
+    abs(nd abs(II))^2&=abs(nd abs(II)^2)^2/(4abs(II)^2)
+    =1/abs(II)^2 sum_i lr((sum_j nd_i h_(j j)dot.c h_(j j)),size:#20pt)^2 \
+    &<=1/abs(II)^2 sum_i lr((sum_j (nd_i h_(j j))^2),size:#20pt)lr((sum_j h_(j j)^2),size:#20pt)
+    =text(#purple,sum_(i,j)(nd_i h_(j j))^2) \
+    &=sum_(i!=j)(nd_i h_(j j))^2+sum_i (nd_i h_(i i))^2 \
+    &=sum_(i!=j)(nd_i h_(j j))^2+sum_i lr((-sum_(j!=i)nd_i h_(j j)),size:#20pt)^2 \
+    &<=n sum_(i!=j)(nd_i h_(j j))^2
+  . $ Hence $
+    abs(nd II)^2&=sum_(i,j,k)(nd_i h_(j k))^2 \
+    &>=sum_i (nd_i h_(i i))^2+sum_(i!=j) (nd_i h_(j j))^2+(nd_j h_(i j))^2+(nd_j h_(j i))^2 \
+    &=sum_(i,j)(nd_i h_(j j))^2+2sum_(i!=j)(nd_i h_(j j))^2 \
+    &>=(1+2/n)abs(nd abs(II))^2
+  . $ Note that $nd_i h_(j k)=nd_j h_(i k)$.
+]
+Combine them together, we see $
+  lap abs(II)+abs(II)^3>=2/n abs(II)^(-1)abs(nd abs(II))^2
+$ on ${abs(II)!=0}$.
+
+== Stable minimal hypersurfaces in Euclidean space
+#theorem[
+  For $n>=2$, TFAE:
+  - A complete connected 2-sided stable minimal immersion $Sigma^n->RR^(n+1)$ is flat.
+  - There exists $C$ such that $abs(II_Sigma (x))dot.c d_Sigma (x,pt Sigma)<=C$ for any 2-sided stable minimal
+    immersion $Sigma^n->RR^(n+1)$, where $d_Sigma (x,pt Sigma)$ is understood as the infimum of the maximum
+    length of unit speed geodesics. (Note that $d_Sigma (x,pt Sigma)=oo$ implies $Sigma$ is complete).
+]
+#proof[
+  (2) $=>$ (1) is trivial since complete surfaces has $d_Sigma (x,pt Sigma)=oo$.
+
+  Conversely, suppose (1) holds. Then there is sequence $Sigma_k$ of 2-sided stable minimal immersions with $
+    sup_(Sigma_k) abs(II_(Sigma_k) (x))dot.c d_(Sigma_k) (x,pt Sigma_k)=oo
+  . $ Exhaust each $Sigma_k$ we can assume $Sigma_k$ is compact with boundary. Then we can assume the maximum
+  for each $k$ occur at $x=0$. Let $lambda_k=abs(II_(Sigma_k) (0)),r_k=d_(Sigma_k) (0,pt Sigma)$. 
+  Define $Sigma'_k=lambda_k dot.c B_(Sigma_k)(0,r_k)$, then $|II_(Sigma'_k)(0)|=1$ and $
+    |II_(Sigma'_k) (x)|dot.c d_(Sigma'_k) (x,pt Sigma'_k)<=("when" x=0)=lambda_k r_k
+  . $ Hence for $x in Sigma'_k$ with $d_(Sigma'_k) (0,x)<=R$, we have  $
+    |II_(Sigma'_k) (x)|<= (lambda_k r_k)/(lambda_k r_k-R)->1
+  . $ #ie $Sigma'_k$ has uniformly bounded curvature on compact sets. Pass to subsequence we find a limit 
+  $Sigma_oo$ complete stable minimal immersion. By construction, $II_(Sigma_oo (0))=1$. Contradiction.
+]
+#theorem[
+  Suppose $vphi_k:Sigma_k->RR^(n+1)$ and $p_k in Sigma_k$ is a sequence of pointed minimal immersions.
+  Suppose $abs(vphi_k (p_k))<=r_0$,  $|II_(Sigma_k)|<=C$ and $liminf_k d_(Sigma_k)(p_k pt Sigma_k)>=R>0$.
+  Then there is a subsequence which converges to a minimal immersion $(Sigma_oo,p_oo)$ with $vphi_oo (p_oo)<=
+  r_0$, $abs(II_(Sigma_oo))<=C$ and $d_(Sigma_oo)(p_oo,pt Sigma_oo)>=R$.
+]
+#proof[
+  See notes by Otis.
+]
+- #text(blue)[Do stable surfaces limit to stable surface?]
 
 #pagebreak()
 = II. Analysis
+== Yau's gradient estimate
