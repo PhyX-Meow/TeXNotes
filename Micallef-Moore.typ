@@ -14,7 +14,7 @@
 #show math.equation: set math.lr(size:12pt)
 #show math.angle.l: set text(size:14pt)
 #show math.angle.r: set text(size:14pt)
-#let lr(body) = math.lr("("+body+")", size:auto)
+#let lr(body,s:100%+0pt) = math.lr($(body)$, size:s)
 #let bigl(body) = math.lr(body, size:100%+0pt)
 
 = Intro

@@ -227,7 +227,7 @@ If $Sigma=gamma$ is 1-dimensional, #ie a geodesic, the formula reduces to $
   -int_gamma pari(nd_(gamma')nd_(gamma')X+R(X,gamma')gamma',X)+pari(nd_(gamma')X,gamma')^2 dd(ell)
 . $ For a geodesic net with smooth $X$, there are only the interior terms, #ie $
   lr(dv(,t,2)|,size:#24pt)_(t=0)cal(L)(F_t)=int_gamma |\(nd_(gamma')X\)^perp|^2-R(X,gamma',gamma',X)dd(ell)
-. $ If we choose the variation be "moving nodes", then $X$ can be chosen to be Jacobi, #ie $
+. $ If we choose the variation be "moving nodes", then $X$ can be chosen to be Jacobi #text(red)[WRONG!!!], #ie $
   nd_(gamma')nd_(gamma')X+R(X,gamma')gamma'=0
 . $ Then we have $
   nd_(gamma')pari(nd_(gamma')X,gamma')=pari(nd_(gamma')nd_(gamma')X,gamma')+pari(nd_(gamma')X,H)=0
@@ -475,3 +475,22 @@ $ on ${abs(II)!=0}$.
 #pagebreak()
 = II. Analysis
 == Yau's gradient estimate
+
+== Nash-Moser for quasilinear equations
+Setup: Equations from variation of functional $
+  cal(F)(u)=int_Omega F(x,u,nd u) dd(x)
+, $ where $F(x,z,p)$ is a given $C^2$ function. The Euler-Lagrange equation has form $
+  cal(Q)(u)=f(x,u,nd u),quad quad cal(Q)(u)=sum_(i,j)a_(i j)(x,u,nd u)nd^2_(i,j)u
+. $ $cal(Q)$ is called uniformly elliptic if $
+  lambda<=(a_(i j))<=Lambda,quad forall (x,z,p) in ov(Omega)times RR times RR^n
+. $ But this is not always the case, e.g. minimal surface equation.
+
+== Hardy's Sobolev inequality
+#theorem[
+  Suppose $u in H^1 (RR^n)$, then $
+    (n-2)/2 norm(u/r)_(L^2)<=norm(nd u)_(L^2)
+  . $
+]
+#proof[
+  Consider $norm(nd u+lambda (x u)\/r^2)_(L^2)^2>=0$ for $u in C_0^oo (RR^n\\{0})$. Then approximate.
+]
