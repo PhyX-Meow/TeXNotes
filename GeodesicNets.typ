@@ -254,8 +254,52 @@ it where $t$ is the arclength parameter and $ell$ is the total length. $K<=1$ im
 ]
 
 #slide[
-Following the idea from Lawson-Simons, we know 
-#theorem(name:"Franz-Trinca 2023",numbering:none)[
-  
+Following the idea from Lawson-Simons, for any quarter-pinched $M$ embedded in
+$RR^(n+1)$, suppose $T_p Sigma={e_1,...,e_k}$ and $T_p M=span{e_1,...,e_n}$ we
+could calculate $
+  cal(I):=sum_(j=1)^(n+1)I(v_j,v_j)=sum_(i<=k,j>k)(2h_(i j)^2-h_(i i)h_(j j))
+, $ where $h_(i j)$ is the 2nd fundamental form of $M$.
+
+Assume $k_1<=...<=k_n$ are the principal curvatures of $h_(i j)$, $delta^2$-pinch
+translates into $delta<k_i k_j<=1,forall i!=j$. When $n>=3$, this implies
+estimates $
+  delta^2<=k_1,quad delta<=k_j<=1,j!=1,n, quad k_n<=2
+. $ Using this, Shen-Xu proved $cal(I)<0$ pointwise for $delta=1/4$ and $n>=3$.
+Later Shen-He and Hu-Wei improved it to $delta=1/5$.
 ]
+
+#slide[
+For $M^n$ not necessarily embedded in $RR^(n+1)$, the most general case is still 
+open.
+#theorem(name:"Franz-Trinca 2023",numbering:none)[
+  Consider $SS^n$ with metric $g=e^(2f)g_0$, where $g_0$ is the round metric.
+  If $g$ is pointwise strictly $1/r$-pinched, then $(SS^n,g)$ does not contain 
+  $2<=k<=n-r$ dimensional closed stable minimal submanifolds.
+]
+The idea is to choose a modified set of variation fields, let
+$v_i=e^(-f) lr(pdv(,x^i)|)_(SS^n)$, then $
+  sum_i I(v_i,v_i)=int_(Sigma)k e^(-2f) |nd^perp f|_g^2
+  -sum_(i<=k,j>k)K_(SS^n)(e_i,e_j) dd(mu_Sigma)
+. $ The positive term could be estimated by sectional curvatures when 
+$k>=2$.
+]
+
+#slide[
+The method of Franz-Trinca could also be applied to geodesic nets in $SS^2$,
+#ie $k=1,n=2$. One would get $
+  cal(I)_p=sum_i I(v_i,v_i)_p=|nd^perp f|_g^2-e^(2f)K
+. $ Where $f$ should satisfy the prescribed Gaussian curvature equation $
+  lap_(g_0) f=1-e^(2f)K
+. $ However, it's unknown if one can make an gradient estimate on $f$ without 
+involve derivatives of $K$. By computing $lap abs(nd f)^2$ and using maximum
+principal we could get: If $abs(nd log K)<2sqrt(2)$, then $cal(I)_p$ is negative
+for any $p$.
+]
+
+==
+#slide[
+  #v(8cm)
+  #align(center)[
+    #text(size:36pt)[Thank you for attention!]
+  ]
 ]
