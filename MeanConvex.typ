@@ -29,7 +29,7 @@ Denote by $g_0$ the Euclidean metric and the induced metric on submanifolds. Let
 $f=-log u$ and $u=R^2-abs(x)^2$. Suppose $Sigma$ is some hypersurface, $e_0,e_1,...,e_n$ is an Euclidean
 orthonormal basis where $e_0$ is normal to $Sigma$, then:
 
-- The sectional curvature of $RR^(n+1)$ under $g$ is $tilde(R)_(i j j i)=-(2R^2)/(R^2-abs(x)^2)^4<0$.
+- The sectional curvature of $RR^(n+1)$ under $g$ is $tilde(R)_(i j j i)=-(4R^2)/(R^2-abs(x)^2)^4<0$.
 - The mean curvature of $Sigma$ becomes $tilde(H)_Sigma=e^(-f)(H_Sigma-n nd f)^perp$.
 - The covariant derivative becomes $tilde(nd)_X Y=nd_X Y+(nd_X f)Y+(nd_Y f)X-(X dot.c Y)nd f$.
 
@@ -68,16 +68,22 @@ normal parallel variation field $X$ along $gamma$, we have $
   I(X,X)=gamma'(q)dot.c_g tilde(nd)_X X-gamma'(p)dot.c_g tilde(nd)_X X
   +int_gamma abs((underbrace(tilde(nd)_(gamma')X,=0))^perp)^2-tilde(R)(X,gamma',gamma',X)dd(tilde(s))
 . $ Taking trace for $X(p)in T_p Sigma_1$ we get $
-  tr I&=u T(q)dot.c_g tilde(H)_2-u T(p)dot.c_g tilde(H)_1+n int_gamma 2R^2 dd(tilde(s)) \
-  &=T(q)dot.c (H_2-n nd f)-T(p)dot.c (H_1-n nd f)+2n R^2 tilde(L)(gamma) \
-  &=-abs(H_1(p))-abs(H_2(q))-n(T(q)dot.c nd f-T(p)dot.c nd f)+2n R^2 tilde(L)(gamma)
+  tr I&=u T(q)dot.c_g tilde(H)_2-u T(p)dot.c_g tilde(H)_1+n int_gamma 4R^2 dd(tilde(s)) \
+  &=u T(q)dot.c (H_2-n nd f)-u T(p)dot.c (H_1-n nd f)+4n R^2 tilde(L)(gamma) \
+  &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-n(u T(q)dot.c nd f-u T(p)dot.c nd f)+4n R^2 tilde(L)(gamma)
 . $ Here $
-  T(q)dot.c nd f-T(p)dot.c nd f&=int_gamma nd_T nd_T f dd(s)=int_gamma nd_T lr( (2x dot.c T)/u ) dd(s) \
-  &=int_gamma 2+2kpa (x dot.c N)+(2x dot.c T)^2/u dd(tilde(s)) \
-  &=int_gamma 2+(2x dot.c N)^2+(2x dot.c T)^2/u dd(tilde(s)) \
-  &>0
-. $ Note that $tilde(L)(gamma)<tilde(L)(ov(p_0 q_0))<2eps R^(-2)$, so $
-  tr I< -abs(H_1(p))-abs(H_2(q))+2n R^2 tilde(L)(gamma)<=-c+4n eps<0
+  u T(q)dot.c nd f-u T(p)dot.c nd f&=int_gamma nd_T (u nd_T f) dd(s)
+  =int_gamma nd_T (2x dot.c T) dd(s) \
+  &=int_gamma 2+2kpa (x dot.c N) dd(s) \
+  &=int_gamma 2+(2x dot.c N)^2 dd(s)
+. $
+
+
+
+
+
+Note that $tilde(L)(gamma)<tilde(L)(ov(p_0 q_0))<2eps R^(-2)$, so $
+  tr I< -abs(H_1(p))-abs(H_2(q))+4n R^2 tilde(L)(gamma)<=-c+8n eps<0
 . $ 
 
 Hence $gamma$ is unstable, this is a #underline[contradiction].
