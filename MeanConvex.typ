@@ -75,17 +75,17 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
   &=-int_gamma nd^2_(T,T)u+nd u dot.c kpa N \
   &=int_gamma -u_(T T)+abs(u_N)^2
 . $ Then $
-  tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma n u abs(u_N)^2+(lap u-u_(T T))u
+  tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma (lap u-u_(T T))u-n u abs(u_N)^2
   -n abs(nd u)^2dd(tilde(s)) \
-  &<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2 dd(tilde(s))-(lap u-u_(T T))u dd(tilde(s))
+  &<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2-(lap u-u_(T T))u dd(tilde(s))
 . $ Now let $u=(R^2-abs(x)^2)^2$, then  $
   nd u&=-4(R^2-abs(x)^2)x \
   u_(i i)&=-4(R^2-abs(x)^2)+8x_i^2
-. $ So $
-  tr I<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2 dd(tilde(s))-(lap u-u_(T T))u dd(tilde(s))
-. $ We have $abs(nd u)^2<=16R^2 u$, $-(lap u-u_(T T))u=(4n R^2-4n r^2-8r^2+8(x dot.c T)^2)<=8n R^2 u$.
-Then $
-  tr I<=-u(p)c+8n R^2 int_gamma u dd(tilde(s))
+. $ We have $
+  n abs(nd u)^2-(lap u-u_(T T))u&=(16n abs(x)^2+4n R^2-4n abs(x)^2-8abs(x)^2+8(x dot.c T)^2)u \
+  &<=16n R^2 u
+  . $ Then $
+  tr I<=-u(p)c+16n R^2 int_gamma u dd(tilde(s))
 . $ Fix $p_0 in Sigma_1,q_0in Sigma_2$ such that segment $ov(p_0q_0)cc Omega$. Then $
   tilde(L)(ov(p_0q_0))=O(R^(-4))
   . $ Note that $u<=R^4$, so $u(p)<=C R^2$. Hence $
