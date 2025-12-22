@@ -29,79 +29,74 @@ Denote by $g_0$ the Euclidean metric and the induced metric on submanifolds. Let
 $f=-log u$ and $u=R^2-abs(x)^2$. Suppose $Sigma$ is some hypersurface, $e_0,e_1,...,e_n$ is an Euclidean
 orthonormal basis where $e_0$ is normal to $Sigma$, then:
 
-- The sectional curvature of $RR^(n+1)$ under $g$ is $tilde(R)_(i j j i)=-(4R^2)/(R^2-abs(x)^2)^4<0$.
-- The mean curvature of $Sigma$ becomes $tilde(H)_Sigma=e^(-f)(H_Sigma-n nd f)^perp$.
+- The sectional curvature of $RR^(n+1)$ under $g$ is #h(1fr) $
+   tilde(R)(tilde(e)_i,tilde(e)_j,tilde(e)_j,tilde(e)_i)
+   &=e^(-2f) dot.c (2g_(i j)T_(i j)-T_(i i)-T_(j j)) \
+   &"where" quad T_(i j)=nd_i nd_j f-nd_i f nd_j f+1/2 abs(nd f)^2 g_(i j)
+  . $ 
 - The covariant derivative becomes $tilde(nd)_X Y=nd_X Y+(nd_X f)Y+(nd_Y f)X-(X dot.c Y)nd f$.
+- The mean curvature vector of $Sigma$ becomes $
+  tilde(H)_Sigma&=sum_(i=1)^n tilde(nd)_(tilde(e)_i) tilde(e)_i=u sum_i (tilde(nd)_(e_i) (u e_i))^perp
+  =u^2 sum_i (tilde(nd)_(e_i) e_i)^perp\
+  &=u^2 sum_i (nd_(e_i)e_i+2(nd_i f)e_i-nd f)^perp \
+  &=u^2 dot.c (H_Sigma-nd f)^perp
+  . $ And the mean curvature is $
+    abs(tilde(H)_Sigma)_g=tilde(e)_0 dot.c_g tilde(H)_Sigma=u abs((H_Sigma-nd f)^perp)
+  . $ 
 
-#text(gray)[
-So we have $
-  abs(tilde(H)_Sigma)=(R^2-abs(x)^2)(abs(H_Sigma)pm (2n pari(x,e_0))/(R^2-abs(x)^2))
-  >=(R^2-abs(x)^2)abs(H_Sigma)-2n abs(x)
-. $ If $H_Sigma>=c>0$, then for $R$ sufficiently large and $|x|<R_0:=R-R^(-1)-n\/c=R-O(1)$, we have
-$tilde(H)_Sigma>=H_Sigma$.
-
-#underline[Suppose] both $|p|,|q|<R_1=R_0-n\/c$, let $gamma'$ be the $g$-unit tangent of $gamma$, denote
-$H_(Sigma_i)$ by $H_i$, then by the mean-convex assumption, $ 
-  gamma'(p) dot.c tilde(H)_1-gamma'(q) dot.c tilde(H)_2
-  &>=(R^2-abs(p)^2)abs(H_1)-2n abs(p)-2n abs(q) \
-  &>=(R^2-R_1^2)abs(H_1)-4n R_1 \
-  &>=abs(H_1)>0 quad quad "(for" R "large)".
-$
-] #indent
-
-Fix a $eps>0$. If $d:=inf_(x in Sigma_1,y in Sigma_2) abs(x-y)<eps$, there exists a pair of points in $Sigma_1$
-and $Sigma_2$ with distance at most $eps$. If $d>eps$, note that for any $|v|<d$, $Sigma_1 sect (Sigma_2+v)=OO$.
-Pick $p_0 in Sigma_1$, $q_0 in Sigma_2$ with $abs(p_0-q_0)<d+eps/2$, let $v=(d-eps/2)(p_0-q_0)/abs(p_0-q_0)$,
-replace $Sigma_2$ by $Sigma_2+v$. Hence we can assume there are $p_0 in Sigma_1$, $q_0 in Sigma_2$ such that
-$abs(p-q)<eps$. Further, we could assume the segment $ov(p_0 q_0)$ lies between $Sigma_1$ and $Sigma_2$, #ie
-in $Omega$. Finally, move the origin so that $p_0+q_0=0$. Note that under conformal metric $g$, $
-  tilde(d)(p_0,q_0)<=eps/(R^2-|p_0|^2)<=2eps R^(-2) quad "for large" R
-. $ #indent
+#indent
 
 There exists a shortest geodesic from $Sigma_1$ to $Sigma_2$ under $g$, denoted by $gamma:p->q$. Let $T$ be
 the Euclidean unit tangent of $gamma$, $gamma'=u T$ be the $g$-unit tangent. Then the equation of $gamma$ is $
   0=tilde(nd)_(gamma')gamma'&=nd_(gamma')gamma'+2(nd_(gamma') f)gamma'-abs(gamma')^2nd f \
-  &=u (nd_T T+2(T dot.c x)T-2x) \
-  &=(kpa-2x dot.c N)u N
-. $ Hence the Euclidean curvature of $gamma$ satisfy $kpa=2x dot.c N$. Take a $g$-unit length
+  &=u dot.c (nd_T T-(nd_T u)T+nd u) \
+  &=(kpa+nd_N u)u N+u dot.c (nd u-(nd_T u)T-(nd_N u)N)
+. $ Hence the Euclidean curvature of $gamma$ satisfy $kpa=-nd_N u$. Take a $g$-unit length
 normal parallel variation field $X$ along $gamma$, we have $
   I(X,X)=gamma'(q)dot.c_g tilde(nd)_X X-gamma'(p)dot.c_g tilde(nd)_X X
   +int_gamma abs((underbrace(tilde(nd)_(gamma')X,=0))^perp)^2-tilde(R)(X,gamma',gamma',X)dd(tilde(s))
-. $ Taking trace for $X(p)in T_p Sigma_1$ we get $
-  tr I&=u T(q)dot.c_g tilde(H)_2-u T(p)dot.c_g tilde(H)_1+n int_gamma 4R^2 dd(tilde(s)) \
-  &=u T(q)dot.c (H_2-n nd f)-u T(p)dot.c (H_1-n nd f)+4n R^2 tilde(L)(gamma) \
-  &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-n(u T(q)dot.c nd f-u T(p)dot.c nd f)+4n R^2 tilde(L)(gamma)
-. $ Here $
-  u T(q)dot.c nd f-u T(p)dot.c nd f&=int_gamma nd_T (u nd_T f) dd(s)
-  =int_gamma nd_T (2x dot.c T) dd(s) \
-  &=int_gamma 2+2kpa (x dot.c N) dd(s) \
-  &=int_gamma 2+(2x dot.c N)^2 dd(s)
-. $
-
-
-
-
-
-Note that $tilde(L)(gamma)<tilde(L)(ov(p_0 q_0))<2eps R^(-2)$, so $
-  tr I< -abs(H_1(p))-abs(H_2(q))+4n R^2 tilde(L)(gamma)<=-c+8n eps<0
-. $ 
-
-Hence $gamma$ is unstable, this is a #underline[contradiction].
-
-#set text(gray)
-
-So there is at least one of $p,q$ lies $O(1)$ close to ${|x|=R}$. Note that when $|x|=R-O(1)$, $u=R^2-abs(x)^2
-=O(R)$, so the conformal factor is $Omega(R^(-1))$. Since $tilde(L)(gamma)$ is $O(R^(-2))$, we see $|p-q|$ is 
-$O(R^(-1))$.
-#remark[
-  Actually this could be upgrade to $O(R^(-k))$ for any integer $k$ by the following:
-  Consider a large $R$, we know there is pair of points in $B(0,R\/2)$ with distance $O(R^(-1))$, when
-  $R$ gets large this pair will have $g$-distance $O(R^(-3))$. The same argument shows the ends of the shortest
-  geodesic in $B(0,R)$ will have distance $O(R^(-2))$. Repeat this we may get $O(R^(-k))$ for any $k$.
-]
-
-Now let $a=max(R-|p|,R-|q|)$, Then $a=O(1)$ and around here $u=O(a R)$, similar argument as above gives
-$|p-q|=O(a R^(-1))$. (Constant depends only on $n,c$, not $R$ and $a$). Consider the ball $B_1=B(p,2|p-q|)$.
-In $B_1$, $
-  1/u=1/(2 a R)dot.c (1+O(R^(-1))) quad => quad g=1/(2a R)^2 (g_0+ O(R^(-1)))
+. $ We have $
+  T_(i j)=nd_i nd_j f-nd_i f nd_j f+1/2 abs(nd f)^2 g_(i j)
+  =-1/u nd_i nd_j u+1/(2u^2)abs(nd u)^2 g_(i j)
 , $
+  and the curvature $
+  tilde(R)(tilde(e)_i,tilde(e)_j,tilde(e)_j,tilde(e)_i)=cases(
+    0\, & quad i=j\,,
+    (u_(i i)+u_(j j))u-abs(nd u)^2\, & quad i!=j.
+  )
+$ Taking trace for $X(p)in T_p Sigma_1$ we get $
+  tr I&=u T(q)dot.c_g tilde(H)_2-u T(p)dot.c_g tilde(H)_1
+  -int_gamma tr_X tilde(R)(X,gamma',gamma',X) dd(tilde(s)) \
+  &=u T(q)dot.c (H_2-n nd f)-u T(p)dot.c (H_1-n nd f)-int_gamma dots.c \
+  &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-n(u T(q)dot.c nd f-u T(p)dot.c nd f)-int_gamma dots.c
+. $ Here $
+  u T(q)dot.c nd f-u T(p)dot.c nd f&=int_gamma hat(nd)_T (u nd_T f) dd(s) \
+  &=-int_gamma hat(nd)_T nd_T u dd(s)=-int_gamma hat(nd)_T (nd u dot.c T)dd(s) \
+  &=-int_gamma nd^2_(T,T)u+nd u dot.c kpa N \
+  &=int_gamma -u_(T T)+abs(u_N)^2
+. $ Then $
+  tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma n u abs(u_N)^2+(lap u-u_(T T))u
+  -n abs(nd u)^2dd(tilde(s)) \
+  &<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2 dd(tilde(s))-(lap u-u_(T T))u dd(tilde(s))
+. $ Now let $u=(R^2-abs(x)^2)^2$, then  $
+  nd u&=-4(R^2-abs(x)^2)x \
+  u_(i i)&=-4(R^2-abs(x)^2)+8x_i^2
+. $ So $
+  tr I<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2 dd(tilde(s))-(lap u-u_(T T))u dd(tilde(s))
+. $ We have $abs(nd u)^2<=16R^2 u$, $-(lap u-u_(T T))u=(4n R^2-4n r^2-8r^2+8(x dot.c T)^2)<=8n R^2 u$.
+Then $
+  tr I<=-u(p)c+8n R^2 int_gamma u dd(tilde(s))
+. $ Fix $p_0 in Sigma_1,q_0in Sigma_2$ such that segment $ov(p_0q_0)cc Omega$. Then $
+  tilde(L)(ov(p_0q_0))=O(R^(-4))
+  . $ Note that $u<=R^4$, so $u(p)<=C R^2$. Hence $
+  a:=R-abs(p)=sqrt(u(p))/(R+abs(p))=O(1)
+  . $ Then $u=O(a^2 R^2)$ for points close to $p$, and we have estimate $
+  abs(gamma(t)-p)<=int_0^t u dd(tilde(s))=O(a^2 R^(-2)) quad "for all" t
+. $ Finally, we have $
+  tr I<=-c a^2(2R-a)^2+C a^2<0 quad "for large" R
+. $ Hence $gamma$ is unstable, this is a #underline[contradiction].
+
+#remark[
+  If $R$ is fixed, say $R=1$. And assume both surface have $H>=c>0$, then the above arguments could
+  give $c<="constant"$, where the constant is around 16. I'm thinking how to improve it to 2.
+]
