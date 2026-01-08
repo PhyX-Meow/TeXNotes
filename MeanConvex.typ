@@ -78,11 +78,13 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
   tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma (lap u-u_(T T))u-n u abs(u_N)^2
   -n abs(nd u)^2dd(tilde(s)) \
   &<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2-(lap u-u_(T T))u dd(tilde(s))
-. $ Now let $u=(R^2-abs(x)^2)^2$, then  $
+. $ Now let $u=F(r)=(R^2-abs(x)^2)^2$, then  $
   nd u&=-4(R^2-abs(x)^2)x \
   u_(i i)&=-4(R^2-abs(x)^2)+8x_i^2
 . $ We have $
-  n abs(nd u)^2-(lap u-u_(T T))u&=(16n abs(x)^2+4n R^2-4n abs(x)^2-8abs(x)^2+8(x dot.c T)^2)u \
+  & n abs(nd u)^2-(lap u-u_(T T))u \ 
+  &=lr((F'(r)^2)/F(r)-(F'(r))/r)n u+lr(1-(x dot.c T)^2/abs(x)^2)lr(-F''(r)+(F'(r))/r)u \
+  &=(16n abs(x)^2+4n R^2-4n abs(x)^2-8abs(x)^2+8(x dot.c T)^2)u \
   &<=16n R^2 u
   . $ Then $
   tr I<=-u(p)c+16n R^2 int_gamma u dd(tilde(s))
@@ -100,3 +102,8 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
   If $R$ is fixed, say $R=1$. And assume both surface have $H>=c>0$, then the above arguments could
   give $c<="constant"$, where the constant is around 16. I'm thinking how to improve it to 2.
 ]
+
+Find a function $u$ satisfy:
++ $u(0)=1$, $u(R)=0$,
++ $u'<=0$, $-u''+u'\/r<=0$
++ $(u')^2\/u-u'\/r$ small.
