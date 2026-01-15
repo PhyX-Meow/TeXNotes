@@ -39,9 +39,9 @@ orthonormal basis where $e_0$ is normal to $Sigma$, then:
   tilde(H)_Sigma&=sum_(i=1)^n tilde(nd)_(tilde(e)_i) tilde(e)_i=u sum_i (tilde(nd)_(e_i) (u e_i))^perp
   =u^2 sum_i (tilde(nd)_(e_i) e_i)^perp\
   &=u^2 sum_i (nd_(e_i)e_i+2(nd_i f)e_i-nd f)^perp \
-  &=u^2 dot.c (H_Sigma-nd f)^perp
+  &=u^2 dot.c (H_Sigma-n nd f)^perp
   . $ And the mean curvature is $
-    abs(tilde(H)_Sigma)_g=tilde(e)_0 dot.c_g tilde(H)_Sigma=u abs((H_Sigma-nd f)^perp)
+    abs(tilde(H)_Sigma)_g=tilde(e)_0 dot.c_g tilde(H)_Sigma=u abs((H_Sigma-n nd f)^perp)
   . $ 
 
 #indent
@@ -49,9 +49,9 @@ orthonormal basis where $e_0$ is normal to $Sigma$, then:
 There exists a shortest geodesic from $Sigma_1$ to $Sigma_2$ under $g$, denoted by $gamma:p->q$. Let $T$ be
 the Euclidean unit tangent of $gamma$, $gamma'=u T$ be the $g$-unit tangent. Then the equation of $gamma$ is $
   0=tilde(nd)_(gamma')gamma'&=nd_(gamma')gamma'+2(nd_(gamma') f)gamma'-abs(gamma')^2nd f \
-  &=u dot.c (nd_T T-(nd_T u)T+nd u) \
-  &=(kpa+nd_N u)u N+u dot.c (nd u-(nd_T u)T-(nd_N u)N)
-. $ Hence the Euclidean curvature of $gamma$ satisfy $kpa=-nd_N u$. Take a $g$-unit length
+  &=u dot.c (u nd_T T-(nd_T u)T+nd u) \
+  &=(kpa u+nd_N u)u N+u dot.c (nd u-(nd_T u)T-(nd_N u)N)
+. $ Hence the Euclidean curvature of $gamma$ satisfy $kpa=-(nd_N u)\/u$. Take a $g$-unit length
 normal parallel variation field $X$ along $gamma$, we have $
   I(X,X)=gamma'(q)dot.c_g tilde(nd)_X X-gamma'(p)dot.c_g tilde(nd)_X X
   +int_gamma abs((underbrace(tilde(nd)_(gamma')X,=0))^perp)^2-tilde(R)(X,gamma',gamma',X)dd(tilde(s))
@@ -72,18 +72,21 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
 . $ Here $
   u T(q)dot.c nd f-u T(p)dot.c nd f&=int_gamma hat(nd)_T (u nd_T f) dd(s) \
   &=-int_gamma hat(nd)_T nd_T u dd(s)=-int_gamma hat(nd)_T (nd u dot.c T)dd(s) \
-  &=-int_gamma nd^2_(T,T)u+nd u dot.c kpa N \
-  &=int_gamma -u_(T T)+abs(u_N)^2
+  &=-int_gamma nd^2_(T,T)u+nd u dot.c kpa N dd(s) \
+  &=int_gamma -u_(T T)+abs(u_N)^2 u^(-1)dd(s) \
+  &=int_gamma -u u_(T T)+abs(u_N)^2 dd(tilde(s))
 . $ Then $
-  tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma (lap u-u_(T T))u-n u abs(u_N)^2
+  tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma sum_(i=1)^n (u_(i i)+u_(T T))u -n u u_(T T)+n abs(u_N)^2
+  -n abs(nd u)^2dd(tilde(s)) \
+  &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma (lap u-u_(T T))u+n abs(u_N)^2
   -n abs(nd u)^2dd(tilde(s)) \
   &<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2-(lap u-u_(T T))u dd(tilde(s))
-. $ Now let $u=F(r)=(R^2-abs(x)^2)^2$, then  $
+. $ Now let $u=F(|x|)=(R^2-abs(x)^2)^2$, then  $
   nd u&=-4(R^2-abs(x)^2)x \
   u_(i i)&=-4(R^2-abs(x)^2)+8x_i^2
 . $ We have $
   & n abs(nd u)^2-(lap u-u_(T T))u \ 
-  &=lr((F'(r)^2)/F(r)-(F'(r))/r)n u+lr(1-(x dot.c T)^2/abs(x)^2)lr(-F''(r)+(F'(r))/r)u \
+  &#text(green)[$=lr((F'(r)^2)/F(r)-(F'(r))/r)n u-lr(1-(x dot.c T)^2/abs(x)^2)lr((F'(r))/r)' r u$] \
   &=(16n abs(x)^2+4n R^2-4n abs(x)^2-8abs(x)^2+8(x dot.c T)^2)u \
   &<=16n R^2 u
   . $ Then $
@@ -104,6 +107,6 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
 ]
 
 Find a function $u$ satisfy:
-+ $u(0)=1$, $u(R)=0$,
-+ $u'<=0$, $-u''+u'\/r<=0$
++ $u(0)=1$, $u(R)=0$;
++ $u'<=0$, $(u'\/r)'>=0$;
 + $(u')^2\/u-u'\/r$ small.
