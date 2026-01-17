@@ -81,12 +81,11 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
   &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma (lap u-u_(T T))u+n abs(u_N)^2
   -n abs(nd u)^2dd(tilde(s)) \
   &<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2-(lap u-u_(T T))u dd(tilde(s))
-. $ Now let $u=F(|x|)=(R^2-abs(x)^2)^2$, then  $
+. $ Now let $u=(R^2-abs(x)^2)^2$, then  $
   nd u&=-4(R^2-abs(x)^2)x \
   u_(i i)&=-4(R^2-abs(x)^2)+8x_i^2
 . $ We have $
   & n abs(nd u)^2-(lap u-u_(T T))u \ 
-  &#text(green)[$=lr((F'(r)^2)/F(r)-(F'(r))/r)n u-lr(1-(x dot.c T)^2/abs(x)^2)lr((F'(r))/r)' r u$] \
   &=(16n abs(x)^2+4n R^2-4n abs(x)^2-8abs(x)^2+8(x dot.c T)^2)u \
   &<=16n R^2 u
   . $ Then $
@@ -101,12 +100,20 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
   tr I<=-c a^2(2R-a)^2+C a^2<0 quad "for large" R
 . $ Hence $gamma$ is unstable, this is a #underline[contradiction].
 
-#remark[
-  If $R$ is fixed, say $R=1$. And assume both surface have $H>=c>0$, then the above arguments could
-  give $c<="constant"$, where the constant is around 16. I'm thinking how to improve it to 2.
-]
+#pagebreak()
+Consider $u=u(r)$ satisfying $u(0)=1$ and $u(R)=0$.
+The 2nd variation is $
+  tr I=&-u(p)abs(H_1 (p))-u(q)abs(H_2 (q))\
+  &+int_gamma n lr((u')^2/u abs(r_T)^2-(u')/r)-abs(r_N)^2 lr((u')/r)'r dd(s)
+. $ Where $r_T=nd_T r=(T dot.c x)\/r$, and we have $abs(r_T)^2+abs(r_N)^2=1$ (#ie $gamma$ lies in the plane 
+spanned by $gamma'$ and $arrow(x)$), implied by the geodesic equation.
+It is somehow reasonable to get rid off the last term since it does not contain $n$. And use $abs(r_T)<=1$
+we get $
+  tr I<=&-u(p)c_1-u(q)c_2+n int_gamma (u')^2/u-(u')/r dd(s)
+. $ Where we require: $u>0$, $u'<=0$ and $(u'\/r)'>=0$.
 
-Find a function $u$ satisfy:
-+ $u(0)=1$, $u(R)=0$;
-+ $u'<=0$, $(u'\/r)'>=0$;
-+ $(u')^2\/u-u'\/r$ small.
+Let $K(u)=(u')^2/u-(u')/r$. For $u=(1-(r/R)^2)^2$, $K(u)<=16R^(-2)$, for $u=(1-(r/R)^2)^1$, $K(u)->oo$ when
+$r->R$. The best constant I could find is to solve ODE $K(u)=c R^(-2)$, where I get $u=(1-t^2)^2(1+t^2)$,
+$r=t(1+t^2)/2 R$, and $c=8$. All these three $u$'s satisfy the requirements. I tried but failed to prove
+$sup K(u)>=8$ for any $u$ satisfying the requirements and $R=1$. I'm not sure if there is a better way to do
+the scaling so that the constant is better.
