@@ -63,12 +63,14 @@ normal parallel variation field $X$ along $gamma$, we have $
   tilde(R)(tilde(e)_i,tilde(e)_j,tilde(e)_j,tilde(e)_i)=cases(
     0\, & quad i=j\,,
     (u_(i i)+u_(j j))u-abs(nd u)^2\, & quad i!=j.
-  )
+  ) \
+  tilde(Ric)(tilde(e)_j,tilde(e)_j)=u lap u+(n-1)u u_(j j)-n abs(nd u)^2
 $ Taking trace for $X(p)in T_p Sigma_1$ we get $
   tr I&=u T(q)dot.c_g tilde(H)_2-u T(p)dot.c_g tilde(H)_1
   -int_gamma tr_X tilde(R)(X,gamma',gamma',X) dd(tilde(s)) \
-  &=u T(q)dot.c (H_2-n nd f)-u T(p)dot.c (H_1-n nd f)-int_gamma dots.c \
-  &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-n(u T(q)dot.c nd f-u T(p)dot.c nd f)-int_gamma dots.c
+  &=u T(q)dot.c (H_2-n nd f)-u T(p)dot.c (H_1-n nd f)-int_gamma tilde(Ric)(gamma',gamma') dd(tilde(s)) \
+  &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-n(u T(q)dot.c nd f-u T(p)dot.c nd f)
+  -int_gamma tilde(Ric)(gamma',gamma') dd(tilde(s))
 . $ Here $
   u T(q)dot.c nd f-u T(p)dot.c nd f&=int_gamma hat(nd)_T (u nd_T f) dd(s) \
   &=-int_gamma hat(nd)_T nd_T u dd(s)=-int_gamma hat(nd)_T (nd u dot.c T)dd(s) \
@@ -76,9 +78,7 @@ $ Taking trace for $X(p)in T_p Sigma_1$ we get $
   &=int_gamma -u_(T T)+abs(u_N)^2 u^(-1)dd(s) \
   &=int_gamma -u u_(T T)+abs(u_N)^2 dd(tilde(s))
 . $ Then $
-  tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma sum_(i=1)^n (u_(i i)+u_(T T))u -n u u_(T T)+n abs(u_N)^2
-  -n abs(nd u)^2dd(tilde(s)) \
-  &=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma (lap u-u_(T T))u+n abs(u_N)^2
+  tr I&=-u(p)abs(H_1(p))-u(q)abs(H_2(q))-int_gamma (lap u-u_(T T))u+n abs(u_N)^2
   -n abs(nd u)^2dd(tilde(s)) \
   &<=-u(p)abs(H_1(p))+int_gamma n abs(nd u)^2-(lap u-u_(T T))u dd(tilde(s))
 . $ Now let $u=(R^2-abs(x)^2)^2$, then  $
