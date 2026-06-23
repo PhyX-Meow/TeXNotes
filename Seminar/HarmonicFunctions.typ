@@ -33,12 +33,12 @@ on $Omega$.
 #proof[
   Let $F(R)=1/(omega_n R^n)int_(B(x_0,R))u(x)dd(x)$, $r=abs(x-x_0)$, we have  $
     F(R)&=1/(omega_n R^n)Int(B(x_0,R),,)u(x)abs(nabla r)^2 dd(x) \
-    &=1/(omega_n R^n)(Int(diff B(x_0,R),,)r u(x)dd(sigma)
+    &=1/(omega_n R^n)(Int( B(x_0,R),,)r u(x)dd(sigma)
     -Int(B(x_0,R),,)u r laplace r dd(x)-Int(B(x_0,R),,)u_r dd(x))
   $ Since $u$ is harmonic, $
-    0&#text(blue)[=]Int(B(x_0,R),,)laplace u(x)dd(x)=Int(diff B(x_0,R),,)u_r dd(sigma)
+    0&#text(blue)[=]Int(B(x_0,R),,)laplace u(x)dd(x)=Int( B(x_0,R),,)u_r dd(sigma)
   $ This also shows that $
-    Int(B(x_0,R),,)u_r dd(x)=Int(0,R)Int(diff B(x_0,R),,)u_r dd(sigma)dd(r)
+    Int(B(x_0,R),,)u_r dd(x)=Int(0,R)Int( B(x_0,R),,)u_r dd(sigma)dd(r)
     #text(red)[=]0
   $ Hence $
     F(R)&#text(blue)[=]1/(omega_n R^n)(dv(,R)(omega_n R^(n-1) F(R))
@@ -66,15 +66,15 @@ Using mean-value property, we can prove a series of important properties.
 ]
 
 #corollary[
-  - If $u$ is sub-harmonic, continuous to $diff Omega$, then $u$ must attain its
-    maximum on $diff Omega$.
+  - If $u$ is sub-harmonic, continuous to $ Omega$, then $u$ must attain its
+    maximum on $ Omega$.
   - If $u,v$ are both harmonic with same boundary value, then $u equiv v$.
 ]
 
 #corollary[
   If $laplace u>=f$ for some continuous $f$ then we have the following estimates: $
     u(x_0)&<= 1/(omega_n R^n)Int(B(x_0,R),,)u+C R^2 sup_(B(x_0,R)) f_- \
-    sup_Omega u&<=sup_(diff Omega)u+C d^2 sup_Omega f_-
+    sup_Omega u&<=sup_( Omega)u+C d^2 sup_Omega f_-
   $ where $C$ depend only on $n$, $d=op("diam")Omega$, $f_-=max{-f,0}$
 ]
 #proof[
@@ -87,14 +87,14 @@ Using mean-value property, we can prove a series of important properties.
 = Green's function & Elliptic regularity
 
 By divergence theorem, $
-  Int(Omega,,)v laplace u dd(x)+Int(Omega,,)nabla u dot.c nabla v=Int(diff Omega,,)
+  Int(Omega,,)v laplace u dd(x)+Int(Omega,,)nabla u dot.c nabla v=Int( Omega,,)
   v nabla_nu u dd(sigma) 
 $ Interchange $u,v$ and subtract we get $
-  Int(Omega,,)(v laplace u-u laplace v) dd(x)=Int(diff Omega,,)
+  Int(Omega,,)(v laplace u-u laplace v) dd(x)=Int( Omega,,)
   v nabla_nu u-u nabla_nu v dd(sigma) #h(2em)"(Green's identity)"
 $ Let $Gamma(x)$ be the fundamental solution of $laplace$, #ie $laplace Gamma=delta_0$.
 Let $v_y(x)=Gamma(y-x)$, we get  $
-  u(y)=Int(Omega,,)Gamma(y-x) laplace u+Int(diff Omega,,)u nabla_nu (Gamma(y-x))
+  u(y)=Int(Omega,,)Gamma(y-x) laplace u+Int( Omega,,)u nabla_nu (Gamma(y-x))
   -Gamma(y-x)nabla_nu u dd(sigma).
 $ We remark that $
   Gamma(x)=cases(
@@ -103,10 +103,10 @@ $ We remark that $
   )
 $ Now suppose that there is a harmonic $h in C^1 paren.l macron(Omega)paren.r
 sect C^2(Omega)$, again by green's identity we have $
-  0=Int(Omega,,)h laplace u+Int(diff Omega,,) u nabla_nu h-h nabla_nu u dd(sigma).
-$ Let $G(x,y)=Gamma(x,y)+h(x)$, for choose $h=h_y$ such that $G=0$ on $diff Omega$,
+  0=Int(Omega,,)h laplace u+Int( Omega,,) u nabla_nu h-h nabla_nu u dd(sigma).
+$ Let $G(x,y)=Gamma(x,y)+h(x)$, for choose $h=h_y$ such that $G=0$ on $ Omega$,
 then we have more generally $
-  u(y)=Int(Omega,,)G(x,y)laplace u(x)dd(x)+Int(diff Omega,,)u nabla_nu G(x,y)
+  u(y)=Int(Omega,,)G(x,y)laplace u(x)dd(x)+Int( Omega,,)u nabla_nu G(x,y)
   dd(sigma(x)).
 $ This $G$ is called the *Green function* of $laplace$ w.r.t region $Omega$.
 
@@ -125,15 +125,15 @@ $ Note $
 $ Here $r=abs(x)$.
 
 This gives the Poisson integral formula: $
-  u(y)=(R^2-abs(y)^2)/(n omega_n R)Int(diff B(0,R),,) u(x)/abs(y-x)^n dd(sigma(x))
+  u(y)=(R^2-abs(y)^2)/(n omega_n R)Int( B(0,R),,) u(x)/abs(y-x)^n dd(sigma(x))
 $ 
 #remark[
   This shows that a harmonic $u in C^2$ is always smooth.
 ]
-Easy to verify that for any $vphi in L^1(diff B(0,R))$, $
-  u(y)=(R^2-abs(y)^2)/(n omega_n R)Int(diff B(0,R),,) vphi(x)/abs(y-x)^n dd(sigma(x))
+Easy to verify that for any $vphi in L^1( B(0,R))$, $
+  u(y)=(R^2-abs(y)^2)/(n omega_n R)Int( B(0,R),,) vphi(x)/abs(y-x)^n dd(sigma(x))
 $ is a smooth harmonic function in $B(0,R)$. Moreover if $u(y)->vphi(x)$ as $y->x$
-for any continuous point $x in diff Omega$ of $vphi$.
+for any continuous point $x in  Omega$ of $vphi$.
 
 #theorem(name: "Elliptic regularity of Laplacian")[
   Let $u in L_"loc"^1(Omega)$, or more generally, $u in cal(D)'(Omega)$, satisfying
@@ -260,8 +260,8 @@ $ where $r_i=abs(z_(i-1)-z_i)$, $R_i=3r_(j_i)$.
 #theorem[
   Let $u$ be harmonic on $Omega$, $B(x_0,R) subset subset Omega$, then $
     abs(nabla u(x_0))=1/(omega_n R^n) abs(Int(B(x_0,R),,) nabla u dd(x))
-    =1/(omega_n R^n)abs(Int(diff B(x_0,R),,)u nabla r dd(sigma))
-    <= n/R sup_(diff B(x_0,R)) abs(u).
+    =1/(omega_n R^n)abs(Int( B(x_0,R),,)u nabla r dd(sigma))
+    <= n/R sup_( B(x_0,R)) abs(u).
   $ Further, we have $
     abs(u(x_0))=1/(omega_n R^n)abs(Int(B(x_0,R),,)u(x)dd(x))<=1/(omega_n R^n)Int(B(x_0,R),,)abs(u)dd(x)
   $ Hence we can improve the result as $
@@ -270,12 +270,12 @@ $ where $r_i=abs(z_(i-1)-z_i)$, $R_i=3r_(j_i)$.
   $ 
 ]
 #corollary[
-  + Let $d_x=d(x,diff Omega)$, then #h(1fr) $
+  + Let $d_x=d(x, Omega)$, then #h(1fr) $
       abs(nabla u(x))<= n/d_x sup_Omega u
     $ 
   + Let $alpha$ be any multiple index, then $
       sup_(Omega')abs(nabla_alpha u)<= ((n abs(alpha))/d)^abs(alpha) sup_Omega abs(u).
-    $ Where $d=d(Omega',diff Omega)$. In particular, $
+    $ Where $d=d(Omega', Omega)$. In particular, $
       norm(nabla u)_(L^oo (B_r)) <= n/(R-r) norm(u)_(L^oo (B_R))
     $ 
 ] <gradient_est>
@@ -284,9 +284,9 @@ We can prove a better result:
 
 For a positive harmonic $u$ and $B(x_0,2R) subset Omega$, $
   abs((nabla u(x_0))/u(x_0))=(1/(omega_n R^n) abs(int_(B(x_0,R)) nabla u dd(x)))/
-  (1/(n omega_n R^(n-1))abs(int_(diff B(x_0,R)) u dd(sigma)))
-  =n/R abs((int_(diff B(x_0,R))u nabla r dd(sigma))/(int_(diff B(x_0,R))u dd(sigma)))
-  <= n/R (sup_(diff B(x_0,R)) u)/(inf_(diff B(x_0,R)) u)
+  (1/(n omega_n R^(n-1))abs(int_( B(x_0,R)) u dd(sigma)))
+  =n/R abs((int_( B(x_0,R))u nabla r dd(sigma))/(int_(pt B(x_0,R))u dd(sigma)))
+  <= n/R (sup_( B(x_0,R)) u)/(inf_(pt B(x_0,R)) u)
   <= (n e^n)/R
 $ 
 
@@ -329,7 +329,7 @@ On the other hand, we can prove these results by estimate $lap abs(nabla u)^2$ a
 $laplace abs(nabla log u)^2$.
 
 #proof[
-  + We have $
+  For 1., We have $
     1/2 lap abs(nd u)^2&=abs(nd^2 u)^2+pari(nd u,nd lap u)=abs(nd^2 u)^2 \
     1/2 lap abs(u)^2&=abs(nd u)^2+u lap u =abs(nd u)^2
   $ Then for a smooth bump $eta$ that is $1$ in $B(x_0,R\/2)$ and supported in $B(x_0,R)
@@ -343,7 +343,7 @@ $laplace abs(nabla log u)^2$.
     sup_(B(x_0,R\/2)) abs(nd u)<=C' sup_(B(x_0,R)) abs(u)
   $
 
-  + Let $v=log u$, $w=abs(nabla v)^2$, note $laplace v=-abs(nabla v)^2$, $
+  For 2., Let $v=log u$, $w=abs(nabla v)^2$, note $laplace v=-abs(nabla v)^2$, $
     1/2 laplace w&=abs(nabla^2 v)^2+pari(laplace nabla v, nabla v)
     =abs(nabla^2 v)^2-pari(nabla abs(nabla v)^2,nabla v) \
     &=abs(nd^2 v)^2-pari(nd w,nd v)
@@ -379,8 +379,8 @@ _Reference to @han_elliptic_2011, lemma 1.31, 1.32._
 ]
 #proof[
   Fix a ball $B(x_0,R) subset subset Omega$, there exists a harmonic $v$ in $B$ that
-  agrees with $u$ on $diff Omega$, then $u-v$ satisfy mean value property for any ball
-  contained in $B$ and $u-v=0$ on $diff B$. Then $u-v$ satisfy maximum principle and
+  agrees with $u$ on $ Omega$, then $u-v$ satisfy mean value property for any ball
+  contained in $B$ and $u-v=0$ on $ B$. Then $u-v$ satisfy maximum principle and
   hence identically 0.
 ]
 
@@ -515,10 +515,10 @@ For harmonic functions, we have the monotonicity formula on domain side.
   Let $u$ be a smooth function on $(M,g)$, define $
     E(R)=1/2 Int(B(0,R),,)abs(nabla u)^2 dd(V_g)
   $ Then $
-    dv(,R) E(R) =& (n-2)/R E(R)+Int(diff B(0,R),,)abs(u_r)^2 dd(V_(tilde(g)))
+    dv(,R) E(R) =& (n-2)/R E(R)+Int( B(0,R),,)abs(u_r)^2 dd(V_(tilde(g)))
     -1/R Int(B(0,R),,)r u_r lap_g u dd(V_g) \
     &+ 1/(2R) Int(B(0,R),,)(r pdv(,r) log sqrt(det g)) dot.c abs(nabla u)^2 dd(V_g) \
-    &+ 1/R Int(B(0,R),,) abs(u_theta)^2+r II^(diff B(0,r)) (u_theta, u_theta) dd(V_g)
+    &+ 1/R Int(B(0,R),,) abs(u_theta)^2+r II^( B(0,r)) (u_theta, u_theta) dd(V_g)
   $ where $u_theta$ is the projection vector of $nd u$ onto $T pt B(0,R)$, $II^(pt B(0,r))$ is the 2nd
   fundamental form of $pt B(0,r) cc B(0,R)$, projected to the outer normal.
 ]
@@ -588,10 +588,10 @@ For harmonic functions, we have the monotonicity formula on domain side.
   For $u$, note $
     nd u=u_r dd(r)+pdv(u,theta^alpha)dd(theta^alpha)=u_r dd(r)+u_theta
   $ Hence $abs(nd u)^2=abs(u_r)^2+abs(u_theta)^2$. Plug this in, we get $
-    dv(,R) E(R) =& (n-2)/R E(R)+Int(diff B(0,R),,)abs(u_r)^2 dd(V_(tilde(g)))
+    dv(,R) E(R) =& (n-2)/R E(R)+Int( B(0,R),,)abs(u_r)^2 dd(V_(tilde(g)))
     #text(red)[$-1/R Int(B(0,R),,)r u_r lap_g u dd(V_g)$] \
     &+ 1/(2R) Int(B(0,R),,)(r pdv(,r) log sqrt(det g)) dot.c abs(nabla u)^2 dd(V_g) \
-    &+ 1/R Int(B(0,R),,) abs(u_theta)^2+r II^(diff B(0,r)) (u_theta, u_theta) dd(V_g)
+    &+ 1/R Int(B(0,R),,) abs(u_theta)^2+r II^( B(0,r)) (u_theta, u_theta) dd(V_g)
   $ as desired.
 ]
 #remark[
